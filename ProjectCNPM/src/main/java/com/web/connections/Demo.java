@@ -13,21 +13,24 @@ public class Demo {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		try (Session session = HibernateUtil.getFactory().openSession()) {
+		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 
-			Transaction t = null;
-			t = session.beginTransaction();// giao tác để thực hiện thêm xóa sửa có thể lưu xuống csdl
+			Transaction t = session.beginTransaction();// giao tác để thực hiện thêm xóa sửa có thể lưu xuống csdl
 
 //			User user = session.get(User.class, 100);
 //			Cart cart = new Cart();
 //			cart.setUserId(user);
 
 			User user = new User();
-			user.setAccountName("luanlt");
+			user.setAccountName("canhnam357");
 			user.setPassword("123456");
 			user.setRole(0);
-			session.persist(user);
-//
+			session.save(user);
+
+//			ProductType p = new ProductType();
+//			p.setPtypeName("Chuột");
+//			session.save(p);
+
 			t.commit();
 			session.close();
 			System.out.println("success!");
