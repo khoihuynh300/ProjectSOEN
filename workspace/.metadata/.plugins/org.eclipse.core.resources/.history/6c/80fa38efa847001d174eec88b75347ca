@@ -1,0 +1,28 @@
+package com.sunny.api;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.sunny.model.User;
+
+@RestController
+@RequestMapping("/User")
+public class UserAPI {
+	
+	@GetMapping("")
+    public ResponseEntity<?> getAllUser() {
+		
+		User a = new User();
+		
+		a.setUserId(1);
+		a.setAccountName("abc");
+		a.setPassword("def");
+		a.setRole(0);
+		
+		
+		
+		return a;
+	}
+}

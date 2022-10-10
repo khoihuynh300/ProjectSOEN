@@ -1,0 +1,34 @@
+package com.sunny.dao.impl;
+
+import java.util.List;
+
+import com.sunny.dao.IUserDao;
+import com.sunny.model.User;
+
+public class UserDaoImpl implements IUserDao {
+
+	@Override
+	public void create(User category) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(User catery) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<User> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}
