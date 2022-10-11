@@ -25,7 +25,6 @@
 		<mapping class="com.sunny.model.Customer" />
 		<mapping class="com.sunny.model.Discount" />
 		<mapping class="com.sunny.model.Employee" />
-		
 		<mapping class="com.sunny.model.PaymentMethod" />
 		<mapping class="com.sunny.model.Product" />
 		<mapping class="com.sunny.model.ProductType" />

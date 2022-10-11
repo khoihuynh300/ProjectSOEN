@@ -50,8 +50,8 @@ public class User implements Serializable {
 		return AccountName;
 	}
 
-	public void setAccountName(String acountName) {
-		AccountName = acountName;
+	public void setAccountName(String accountName) {
+		AccountName = accountName;
 	}
 
 	public String getPassword() {
