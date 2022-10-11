@@ -25,6 +25,14 @@ public class ProductToAttribute {
 	@Column(nullable = false)
 	private int values;
 
+	public int getId() {
+		return Id;
+	}
+
+	public void setId(int id) {
+		Id = id;
+	}
+
 	public Product getPid() {
 		return Pid;
 	}

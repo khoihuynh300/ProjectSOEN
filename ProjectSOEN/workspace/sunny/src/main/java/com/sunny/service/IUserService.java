@@ -14,5 +14,7 @@ public interface IUserService {
 
 	void delete(int id);
 
-	List<User> findAll();
+	List<User> getAllUser();
+
+	boolean verifyerUser(String accountName, String password);
 }
