@@ -2,8 +2,6 @@ package com.sunny.dao.impl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -18,32 +16,27 @@ import com.sunny.model.User;
 public class UserDaoImpl implements IUserDao {
 
 	@Override
-	@Transactional
-	public User update(int userId, String password) {
-		// TODO Auto-generated method stub
+	public void update(String accountName, String password) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			String hashPassword = BCrypt.hashpw(password, BCrypt.gensalt(4));
 			Transaction t = session.beginTransaction();
-			User user = findUser(userId);
-//			String qryString = "update User u set u.Password=:newPassword where u.UserId=:id";
-//			int query = session.createQuery(qryString).setString("newPassword", user.getPassword())
-//					.setLong("id", user.getUserId()).executeUpdate();
+			User user = findUserByAccountName(accountName);
+			user.setPassword(hashPassword);
 			session.saveOrUpdate(user);
-			user.setPassword(password);
 			t.commit();
-			return user;
-
+			session.close();
 		}
 	}
 
 	@Override
 	public void delete(int id) {
-		// TODO Auto-generated method stub
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction t = session.beginTransaction();
 			User user = findUser(id);
 			session.saveOrUpdate(user);
 			user.setDeleted(true);
 			t.commit();
+			session.close();
 
 		}
 
@@ -54,34 +47,19 @@ public class UserDaoImpl implements IUserDao {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction t = session.beginTransaction();
 			User user = (User) session.get(User.class, userId);
+			t.commit();
 			return user;
 		}
 	}
 
 	@Override
-	public List<User> findAll() {
-		return null;
-	}
-
-	@Override
 	public User create(User user) {
-//		StandardServiceRegistry ssr =
-//				new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();  
-//		Metadata meta=new MetadataSources(ssr).getMetadataBuilder().build();  
-//
-//		SessionFactory factory=meta.getSessionFactoryBuilder().build(); 
-		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
-//		Session session=factory.openSession();  
-
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction t = session.beginTransaction();
-
-//			User user1 = new User();
-//			user1.setAccountName("KhoiHT");
-//			user1.setPassword("123456");
-//			user1.setRole(0);
-
-			session.persist(user);
+			session.save(user);
 			user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(4)));
+			user.setRole(0);
+			user.setEnable(false);
 			t.commit();
 			session.close();
 			return user;
@@ -92,8 +70,9 @@ public class UserDaoImpl implements IUserDao {
 	public List<User> getAllUser() {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction t = session.beginTransaction();
-			Query<User> query = session.createQuery("From User");
+			Query<User> query = session.createQuery("From User", User.class);
 			List<User> result = query.getResultList();
+			t.commit();
 			return result;
 		}
 	}
@@ -101,16 +80,36 @@ public class UserDaoImpl implements IUserDao {
 	@Override
 	public User findUserByAccountName(String accountName) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-//			Transaction t = session.beginTransaction();
-//			String hql = "FROM User where accountName = " + accountName;
-//			Query query = session.createQuery(hql);
-//			User results = (User) query.getSingleResult();
-//			return results;
-//		}
 			Transaction t = session.beginTransaction();
 			String hql = "FROM User where AccountName = :accountName";
 			User user = session.createQuery(hql, User.class).setParameter("accountName", accountName).uniqueResult();
+			t.commit();
+			session.close();
 			return user;
+		}
+	}
+
+	@Override
+	public User findUserByEmail(String email) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+			String hql = "FROM User where email = :email";
+			User user = session.createQuery(hql, User.class).setParameter("email", email).uniqueResult();
+			t.commit();
+			session.close();
+			return user;
+		}
+	}
+
+	@Override
+	public void verifyer(String accountName) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+			User user = findUserByAccountName(accountName);
+			user.setEnable(true);
+			session.saveOrUpdate(user);
+			t.commit();
+			session.close();
 		}
 	}
 }

@@ -8,15 +8,17 @@ import com.sunny.model.User;
 public interface IUserDao {
 	User create(User user);
 
-	User update(int UserId, String password);
+	void update(String accountName, String password);
 
 	void delete(int id);
-
-	List<User> findAll();
 
 	User findUser(int userId);
 
 	User findUserByAccountName(String accountName);
+
+	void verifyer(String accountName);
+
+	User findUserByEmail(String email);
 
 	List<User> getAllUser();
 

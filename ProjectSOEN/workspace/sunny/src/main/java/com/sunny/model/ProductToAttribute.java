@@ -23,7 +23,7 @@ public class ProductToAttribute {
 	@JoinColumn(name = "AtrId")
 	private ProductAttribute AtrId;
 	@Column(nullable = false)
-	private int val;
+	private String val;
 
 	public int getId() {
 		return Id;
@@ -49,12 +49,11 @@ public class ProductToAttribute {
 		AtrId = atrId;
 	}
 
-	public int getVal() {
+	public String getVal() {
 		return val;
 	}
 
-	public void setVal(int val) {
+	public void setVal(String val) {
 		this.val = val;
 	}
-
 }

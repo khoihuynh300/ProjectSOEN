@@ -2,39 +2,42 @@ package com.sunny.service.impl;
 
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 
 import com.sunny.dao.IUserDao;
 import com.sunny.dao.impl.UserDaoImpl;
 import com.sunny.model.User;
 import com.sunny.service.IUserService;
 
-@Component
+//@Component
+@Service
 public class UserServiceImpl implements IUserService {
 	@Autowired
-	IUserDao userdao;
+	private IUserDao userdao;
+
+	@Autowired
+	private JavaMailSender mailSender;
+
+	private int verifyerCode = (int) ((Math.random() * (999999 - 100000)) + 100000);
 
 	@Override
 	public User create(User user) throws Exception {
-		userdao = new UserDaoImpl();
-		if (checkAccountName(user))
+		if (userdao.findUserByAccountName(user.getAccountName()) == null
+				&& userdao.findUserByEmail(user.getEmail()) == null) {
 			return userdao.create(user);
-		else
+		} else
 			throw new Exception("User exist !!");
 	}
 
-	private boolean checkAccountName(User user) {
-		return true;
-//		return userdao.findUser(user) != null ? true : false;
-	}
-
 	@Override
-	public User update(User user) {
-		userdao = new UserDaoImpl();
-		return userdao.update(user.getUserId(), user.getPassword());
-
+	public void update(User user) {
+		userdao.update(user.getAccountName(), user.getPassword());
 	}
 
 	@Override
@@ -56,6 +59,44 @@ public class UserServiceImpl implements IUserService {
 			return BCrypt.checkpw(password, user.getPassword());
 		}
 		return false;
+	}
+
+	@Override
+	public void sendEmailVerify(User user) throws Exception {
+		User check1 = userdao.findUserByAccountName(user.getAccountName());
+		User check2 = userdao.findUserByEmail(user.getEmail());
+
+		if (check1 == null && check2 == null) {
+
+			String subject = "Please verify your Registration";
+			String senderName = "Thousand Sunny";
+			String mailContent = "<p>Dear :" + user.getAccountName() + ",</p>";
+			mailContent += "<p>Plase enter the verifyer code below to verify your registration.</p>";
+
+			mailContent += "<h1>" + String.valueOf(verifyerCode) + "</h1>";
+
+			mailContent += "<p>Thank You <br> Thousand Sunny Team</p>";
+
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message);
+
+			helper.setFrom("20110675@student.hcmute.edu.vn", senderName);
+			helper.setTo(user.getEmail());
+			helper.setSubject(subject);
+			helper.setText(mailContent, true);
+
+			mailSender.send(message);
+
+		} else
+			throw new Exception("User/Email exist !!");
+
+	}
+
+	@Override
+	public void verifyerRegister(User user, int code) {
+		if (code == verifyerCode) {
+			userdao.verifyer(user.getAccountName());
+		}
 	}
 
 }
