@@ -53,7 +53,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public boolean verifyerUser(String accountName, String password) {
+	public boolean verifyerLogin(String accountName, String password) {
 		User user = userdao.findUserByAccountName(accountName);
 		if (user != null) {
 			return BCrypt.checkpw(password, user.getPassword());
@@ -63,40 +63,49 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public void sendEmailVerify(User user) throws Exception {
-		User check1 = userdao.findUserByAccountName(user.getAccountName());
-		User check2 = userdao.findUserByEmail(user.getEmail());
+		String subject = "Please verify your account";
+		String senderName = "Thousand Sunny";
+		String mailContent = "<p>Dear :" + user.getAccountName() + ",</p>";
+		mailContent += "<p>Plase enter the verifyer code below to verify your account.</p>";
 
-		if (check1 == null && check2 == null) {
+		mailContent += "<h1>" + String.valueOf(verifyerCode) + "</h1>";
 
-			String subject = "Please verify your Registration";
-			String senderName = "Thousand Sunny";
-			String mailContent = "<p>Dear :" + user.getAccountName() + ",</p>";
-			mailContent += "<p>Plase enter the verifyer code below to verify your registration.</p>";
+		mailContent += "<p>Thank You <br> Thousand Sunny Team</p>";
 
-			mailContent += "<h1>" + String.valueOf(verifyerCode) + "</h1>";
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
 
-			mailContent += "<p>Thank You <br> Thousand Sunny Team</p>";
+		helper.setFrom("20110675@student.hcmute.edu.vn", senderName);
+		helper.setTo(user.getEmail());
+		helper.setSubject(subject);
+		helper.setText(mailContent, true);
 
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message);
-
-			helper.setFrom("20110675@student.hcmute.edu.vn", senderName);
-			helper.setTo(user.getEmail());
-			helper.setSubject(subject);
-			helper.setText(mailContent, true);
-
-			mailSender.send(message);
-
-		} else
-			throw new Exception("User/Email exist !!");
+		mailSender.send(message);
 
 	}
 
 	@Override
-	public void verifyerRegister(User user, int code) {
-		if (code == verifyerCode) {
+	public boolean verifyerRegister(User user, int code) throws Exception {
+		User check1 = userdao.findUserByAccountName(user.getAccountName());
+		User check2 = userdao.findUserByEmail(user.getEmail());
+
+		if (check1 != null && check2 != null && code == verifyerCode) {
 			userdao.verifyer(user.getAccountName());
-		}
+			return true;
+
+		} else
+			throw new Exception("User/Email exist !!");
 	}
 
+	@Override
+	public void resetPassword(User user, int code) throws Exception {
+		User check1 = userdao.findUserByAccountName(user.getAccountName());
+		User check2 = userdao.findUserByEmail(user.getEmail());
+		if (check1.getUserId() == check2.getUserId()) {
+			if (code == verifyerCode) {
+				userdao.update(user.getAccountName(), user.getPassword());
+			}
+		} else
+			throw new Exception("Email và tài khoản không trùng khớp");
+	}
 }

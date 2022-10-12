@@ -24,10 +24,22 @@ public class UserAPI {
 	@Autowired
 	private IUserService userservice;
 
+	@GetMapping("/user/forget-password")
+	public String forgetPassword(@RequestBody User user) throws Exception {
+		userservice.sendEmailVerify(user);
+		return "redirect:/user/reset-password";
+	}
+
+	@PostMapping("/user/reset-password")
+	public void resetPassword(@RequestBody User user, @RequestParam(defaultValue = "") Integer code) throws Exception {
+		userservice.resetPassword(user, code);
+	}
+
 	@PutMapping("/user/register/verifyer")
 	@Transactional
-	public void verifyerRegister(@RequestBody User user, @RequestParam(defaultValue = "") Integer code) {
-		userservice.verifyerRegister(user, code.intValue());
+	public boolean verifyerRegister(@RequestBody User user, @RequestParam(defaultValue = "") Integer code)
+			throws Exception {
+		return userservice.verifyerRegister(user, code.intValue());
 	}
 
 	@PostMapping("/user/register")
@@ -63,6 +75,6 @@ public class UserAPI {
 	@PostMapping("user/login")
 	@Transactional
 	public boolean verifyerUser(@RequestBody User user) {
-		return userservice.verifyerUser(user.getAccountName(), user.getPassword());
+		return userservice.verifyerLogin(user.getAccountName(), user.getPassword());
 	}
 }

@@ -10,13 +10,15 @@ public interface IUserService {
 
 	void update(User user);
 
+	void resetPassword(User user, int code) throws Exception;
+
 	void delete(int id);
 
 	List<User> getAllUser();
 
-	boolean verifyerUser(String accountName, String password);
+	boolean verifyerLogin(String accountName, String password);
 
-	void verifyerRegister(User user, int verifyerCode);
+	boolean verifyerRegister(User user, int verifyerCode) throws Exception;
 
 	void sendEmailVerify(User user) throws Exception;
 }
