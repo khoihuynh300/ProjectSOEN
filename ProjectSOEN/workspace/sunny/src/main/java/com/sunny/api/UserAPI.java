@@ -1,9 +1,13 @@
 package com.sunny.api;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
+import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sunny.model.GooglePojo;
 import com.sunny.model.User;
 import com.sunny.service.IUserService;
+import com.sunny.utils.GoogleUtils;
 
 @RestController
 public class UserAPI {
@@ -76,5 +82,22 @@ public class UserAPI {
 	@Transactional
 	public boolean verifyerUser(@RequestBody User user) {
 		return userservice.verifyerLogin(user.getAccountName(), user.getPassword());
+	}
+
+	@GetMapping("/login-google")
+	public String loginGoogle(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ClientProtocolException {
+		String code = request.getParameter("code");
+		if (code == null || code.isEmpty()) {
+			return "redirect:/login";
+		} else {
+			String accessToken = GoogleUtils.getToken(code);
+			GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
+			request.setAttribute("id", googlePojo.getId());
+			request.setAttribute("name", googlePojo.getName());
+			request.setAttribute("email", googlePojo.getEmail());
+
+			return "redirect:/user";
+		}
 	}
 }

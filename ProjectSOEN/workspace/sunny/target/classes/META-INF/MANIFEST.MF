@@ -1,10 +1,6 @@
 Manifest-Version: 1.0
-Built-By: Admin
-Build-Jdk: 17.0.3
+Build-Jdk-Spec: 17
 Implementation-Title: sunny
 Implementation-Version: 1.0
-Implementation-Vendor-Id: sunny
-Implementation-Vendor: Pivotal Software, Inc.
-Implementation-URL: https://projects.spring.io/spring-boot/sunny/
 Created-By: Maven Integration for Eclipse
 
