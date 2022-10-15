@@ -8,6 +8,8 @@ import com.sunny.model.User;
 public interface IUserDao {
 	User create(User user);
 
+	User save(User user);
+
 	void update(String accountName, String password);
 
 	void delete(int id);

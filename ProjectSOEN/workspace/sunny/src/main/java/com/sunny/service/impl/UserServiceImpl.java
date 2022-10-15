@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.sunny.dao.IUserDao;
 import com.sunny.dao.impl.UserDaoImpl;
+import com.sunny.model.GooglePojo;
 import com.sunny.model.User;
 import com.sunny.service.IUserService;
 
@@ -53,12 +54,13 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public boolean verifyerLogin(String accountName, String password) {
+	public User verifyerLogin(String accountName, String password) {
 		User user = userdao.findUserByAccountName(accountName);
 		if (user != null) {
-			return BCrypt.checkpw(password, user.getPassword());
+			if (BCrypt.checkpw(password, user.getPassword()) == true)
+				return user;
 		}
-		return false;
+		return null;
 	}
 
 	@Override
@@ -107,6 +109,19 @@ public class UserServiceImpl implements IUserService {
 			}
 		} else
 			throw new Exception("Email và tài khoản không trùng khớp");
+	}
+
+	@Override
+	public void createOrLogin(GooglePojo googlePojo) {
+		if (userdao.findUserByAccountName(googlePojo.getEmail().toString()) == null) {
+			User user = new User();
+			user.setAccountName(googlePojo.getEmail().toString());
+			user.setPassword(googlePojo.getId().toString());
+			user.setEnable(true);
+			userdao.save(user);
+		} else {
+			verifyerLogin(googlePojo.getEmail().toString(), googlePojo.getId().toString());
+		}
 	}
 
 }

@@ -80,7 +80,7 @@ public class UserAPI {
 
 	@PostMapping("user/login")
 	@Transactional
-	public boolean verifyerUser(@RequestBody User user) {
+	public User verifyerUser(@RequestBody User user) {
 		return userservice.verifyerLogin(user.getAccountName(), user.getPassword());
 	}
 
@@ -93,11 +93,10 @@ public class UserAPI {
 		} else {
 			String accessToken = GoogleUtils.getToken(code);
 			GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
-			request.setAttribute("id", googlePojo.getId());
-			request.setAttribute("name", googlePojo.getName());
-			request.setAttribute("email", googlePojo.getEmail());
 
+			userservice.createOrLogin(googlePojo);
 			return "redirect:/user";
+
 		}
 	}
 }

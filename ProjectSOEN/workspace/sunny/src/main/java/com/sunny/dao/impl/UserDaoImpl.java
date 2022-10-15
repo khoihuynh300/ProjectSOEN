@@ -112,4 +112,17 @@ public class UserDaoImpl implements IUserDao {
 			session.close();
 		}
 	}
+
+	@Override
+	public User save(User user) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+			session.save(user);
+			user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(4)));
+			user.setRole(0);
+			t.commit();
+			session.close();
+			return user;
+		}
+	}
 }
