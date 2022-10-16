@@ -18,16 +18,16 @@ public class ProductType {
 		return Ptype;
 	}
 
+	public void setPtype(Integer ptype) {
+		Ptype = ptype;
+	}
+
 	public String getPtypeName() {
 		return PtypeName;
 	}
 
 	public void setPtypeName(String ptypeName) {
 		PtypeName = ptypeName;
-	}
-
-	public void setPtype(int ptype) {
-		Ptype = ptype;
 	}
 
 }
