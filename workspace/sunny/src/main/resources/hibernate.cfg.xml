@@ -12,13 +12,29 @@
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/projectsoen</property>
 		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.connection.password">12345</property>
+		<property name="hibernate.connection.password">26122002</property>
 		<property name="show_sql">true</property>
 
 		<!-- Specifying Session Context -->
 		<property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
 		
 		<!-- Mapping With Model Class Containing Annotations -->
-		<mapping class="com.sunny.model.User"/>  
+		<mapping class="com.sunny.model.User"/>
+		<mapping class="com.sunny.model.Cart"/> 
+		<mapping class="com.sunny.model.ProductType"/> 
+		<mapping class="com.sunny.model.Product"/>
+		<mapping class="com.sunny.model.ProductAttribute"/>
+		<mapping class="com.sunny.model.ProductToAttribute"/>
+		<mapping class="com.sunny.model.CartItem"/> 
+		<mapping class="com.sunny.model.Customer"/>
+		<mapping class="com.sunny.model.Discount"/>
+		<mapping class="com.sunny.model.Employee"/>
+		<mapping class="com.sunny.model.Invoice"/>
+		<mapping class="com.sunny.model.InvoiceItem"/>
+		<mapping class="com.sunny.model.OrderDetail"/>
+		<mapping class="com.sunny.model.Orders"/>
+		<mapping class="com.sunny.model.PaymentMethod"/>
+		 
+		   
 	</session-factory>
 </hibernate-configuration>

@@ -30,4 +30,16 @@ public class ProductType {
 		Ptype = ptype;
 	}
 
+	public ProductType() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ProductType(int ptype, String ptypeName) {
+		super();
+		Ptype = ptype;
+		PtypeName = ptypeName;
+	}
+	
+
 }
