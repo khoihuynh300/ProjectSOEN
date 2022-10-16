@@ -25,11 +25,7 @@ public class Customer {
 	private String Gender;
 	private Date DateofBirth;
 	@Column(nullable = false)
-	private String Phone;
-	@Column(nullable = false)
 	private String Address;
-	@Column(nullable = false)
-	private String email;
 
 	public void setCusId(int cusId) {
 		CusId = cusId;
@@ -71,28 +67,12 @@ public class Customer {
 		DateofBirth = dateofBirth;
 	}
 
-	public String getPhone() {
-		return Phone;
-	}
-
-	public void setPhone(String phone) {
-		Phone = phone;
-	}
-
 	public String getAddress() {
 		return Address;
 	}
 
 	public void setAddress(String address) {
 		Address = address;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 }

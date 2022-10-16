@@ -23,7 +23,15 @@ public class ProductToAttribute {
 	@JoinColumn(name = "AtrId")
 	private ProductAttribute AtrId;
 	@Column(nullable = false)
-	private int values;
+	private String val;
+
+	public int getId() {
+		return Id;
+	}
+
+	public void setId(int id) {
+		Id = id;
+	}
 
 	public Product getPid() {
 		return Pid;
@@ -41,12 +49,11 @@ public class ProductToAttribute {
 		AtrId = atrId;
 	}
 
-	public int getValues() {
-		return values;
+	public String getVal() {
+		return val;
 	}
 
-	public void setValues(int values) {
-		this.values = values;
+	public void setVal(String val) {
+		this.val = val;
 	}
-
 }

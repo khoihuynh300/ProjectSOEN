@@ -3,30 +3,31 @@ package com.sunny.dao.impl;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.Metadata;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import com.sunny.connections.HibernateUtil;
 import com.sunny.dao.IUserDao;
+import com.sunny.model.Cart;
 import com.sunny.model.User;
 
 public class UserDaoImpl implements IUserDao {
 
-	
-
 	@Override
 	public void update(User user) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete(int id) {
-		// TODO Auto-generated method stub
-		
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+			User user = getUserById(id);
+			user.setDeleted(true);
+			session.saveOrUpdate(user);
+			t.commit();
+			session.close();
+		}
 	}
 
 	@Override
@@ -36,25 +37,26 @@ public class UserDaoImpl implements IUserDao {
 
 	@Override
 	public User create(User user) {
-		StandardServiceRegistry ssr =
-				new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();  
-		Metadata meta=new MetadataSources(ssr).getMetadataBuilder().build();  
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+			session.save(user);
+			t.commit();
+			session.close();
 
-		SessionFactory factory=meta.getSessionFactoryBuilder().build();  
-		Session session=factory.openSession();  
-
-		Transaction t=session.beginTransaction();
-		
-//		User user1 = new User();
-//		user1.setAccountName("KhoiHT");
-//		user1.setPassword("123456");
-//		user1.setRole(0);
-		session.persist(user);
-		
-		t.commit();    
-		session.close(); 
-		
-		return user;
+			// Tạo cart cho user
+			Cart cart = new Cart();
+			cart.setUserId(user);
+			CartDaoImpl cartDaoImpl = new CartDaoImpl();
+			cartDaoImpl.create(cart);
+			return user;
+		}
 	}
-	
+
+	@Override
+	public User getUserById(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			return session.get(User.class, id);
+		}
+	}
+
 }

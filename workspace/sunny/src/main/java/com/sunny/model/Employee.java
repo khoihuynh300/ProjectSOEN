@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,13 +16,14 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int EmpId;
-	private int UserId;
+
+	@OneToOne
+	@JoinColumn(name = "UserId", referencedColumnName = "UserId")
+	private User UserId;
 	private String Name;
 	private String Gender;
 	private Date DateofBirth;
-	private String Phone;
 	private String Address;
-	private String email;
 	private String Job;
 
 	public int getEmpId() {
@@ -31,11 +34,11 @@ public class Employee {
 		EmpId = empId;
 	}
 
-	public int getUserId() {
+	public User getUserId() {
 		return UserId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(User userId) {
 		UserId = userId;
 	}
 
@@ -63,28 +66,12 @@ public class Employee {
 		DateofBirth = dateofBirth;
 	}
 
-	public String getPhone() {
-		return Phone;
-	}
-
-	public void setPhone(String phone) {
-		Phone = phone;
-	}
-
 	public String getAddress() {
 		return Address;
 	}
 
 	public void setAddress(String address) {
 		Address = address;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getJob() {
