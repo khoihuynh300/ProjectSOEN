@@ -8,28 +8,32 @@ import com.sunny.service.IUserService;
 
 public class UserServiceImpl implements IUserService {
 
+	UserDaoImpl userDaoImpl = new UserDaoImpl();
+
 	@Override
-	public User create(User user) {
+	public User createUser(User user) {
+		return userDaoImpl.createUser(user);
+	}
+
+	@Override
+	public void updateUser(User user) {
+		userDaoImpl.updateUser(user);
+	}
+
+	@Override
+	public void deleteUser(User user) {
 		UserDaoImpl userDaoImpl = new UserDaoImpl();
-		return userDaoImpl.create(user);
+		userDaoImpl.deleteUser(user);
 	}
 
 	@Override
-	public void update(User catery) {
-		// TODO Auto-generated method stub
-
+	public List<User> getAllUser() {
+		return userDaoImpl.getAllUser();
 	}
 
 	@Override
-	public void delete(int id) {
-		UserDaoImpl userDaoImpl = new UserDaoImpl();
-		userDaoImpl.delete(id);
-	}
-
-	@Override
-	public List<User> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public User getUserById(int id) {
+		return userDaoImpl.getUserById(id);
 	}
 
 }

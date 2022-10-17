@@ -27,6 +27,16 @@ public class Discount {
 
 	@Column(nullable = false)
 	private Date StopDate;
+	@Column(name = "isDeleted", nullable = false)
+	private boolean isDeleted;
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
 	public int getDiscountId() {
 		return DiscountId;

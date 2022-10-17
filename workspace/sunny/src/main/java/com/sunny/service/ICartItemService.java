@@ -1,11 +1,17 @@
 package com.sunny.service;
 
+import java.util.List;
+
 import com.sunny.model.CartItem;
 
 public interface ICartItemService {
-	CartItem create(CartItem cartItem);
-
 	boolean existCartItem(CartItem cartItem);
 
 	void addToCart(CartItem cartItem);
+
+	void removeFromCart(CartItem cartItem);
+
+	void removeSelectedCartItem(List<CartItem> listCartItem);
+
+	List<CartItem> getAllCartItem(int CartId);
 }

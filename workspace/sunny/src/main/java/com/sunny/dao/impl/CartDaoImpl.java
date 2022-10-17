@@ -36,11 +36,8 @@ public class CartDaoImpl implements ICartDao {
 
 	@Override
 	public Cart getCartById(int id) {
-		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
-			Transaction t = session.beginTransaction();
-			Cart cart = (Cart) session.get(Cart.class, id);
-			t.commit();
-			return cart;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			return session.get(Cart.class, id);
 		}
 	}
 }

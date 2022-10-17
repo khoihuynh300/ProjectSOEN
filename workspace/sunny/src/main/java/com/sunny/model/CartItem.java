@@ -22,9 +22,7 @@ public class CartItem {
 	@ManyToOne
 	@JoinColumn(name = "Pid")
 	private Product ProductId;
-	private double Price;
 	private int Quantity;
-	private double Discount;
 
 	public Cart getCartId() {
 		return CartId;
@@ -42,28 +40,12 @@ public class CartItem {
 		ProductId = productId;
 	}
 
-	public double getPrice() {
-		return Price;
-	}
-
-	public void setPrice(double price) {
-		Price = price;
-	}
-
 	public int getQuantity() {
 		return Quantity;
 	}
 
 	public void setQuantity(int quantity) {
 		Quantity = quantity;
-	}
-
-	public double getDiscount() {
-		return Discount;
-	}
-
-	public void setDiscount(double discount) {
-		Discount = discount;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.sunny.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,16 @@ public class ProductType {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Ptype;
 	private String PtypeName;
+	@Column(name = "isDeleted", nullable = false)
+	private boolean isDeleted;
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
 	public int getPtype() {
 		return Ptype;

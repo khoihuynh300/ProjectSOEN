@@ -5,11 +5,13 @@ import java.util.List;
 import com.sunny.model.User;
 
 public interface IUserService {
-	User create(User user);
+	User createUser(User user); // C
 
-	void update(User user);
+	void updateUser(User user); // U
 
-	void delete(int id);
+	void deleteUser(User user); // D
 
-	List<User> findAll();
+	List<User> getAllUser(); // R
+
+	User getUserById(int id);
 }

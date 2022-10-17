@@ -1,5 +1,6 @@
 package com.sunny.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,16 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name = "DiscountId")
 	private Discount DiscountId;
+	@Column(name = "isDeleted", nullable = false)
+	private boolean isDeleted;
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
 	public void setPid(int pid) {
 		Pid = pid;

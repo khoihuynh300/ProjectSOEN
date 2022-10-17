@@ -8,16 +8,31 @@ import com.sunny.service.IProductTypeService;
 
 public class ProductTypeServiceImpl implements IProductTypeService {
 
+	ProductTypeDaoImpl productTypeDaoImpl = new ProductTypeDaoImpl();
+
 	@Override
-	public ProductType create(ProductType productType) {
-		ProductTypeDaoImpl productTypeDaoImpl = new ProductTypeDaoImpl();
-		return productTypeDaoImpl.create(productType);
+	public ProductType createProductType(ProductType productType) {
+		return productTypeDaoImpl.createProductType(productType);
 	}
 
 	@Override
 	public List<ProductType> getAllProductType() {
-		ProductTypeDaoImpl productTypeDaoImpl = new ProductTypeDaoImpl();
 		return productTypeDaoImpl.getAllProductType();
+	}
+
+	@Override
+	public void updateProductType(ProductType productType) {
+		productTypeDaoImpl.updateProductType(productType);
+	}
+
+	@Override
+	public void deleteProductType(ProductType productType) {
+		productTypeDaoImpl.deleteProductType(productType);
+	}
+
+	@Override
+	public ProductType getProductTypeById(int id) {
+		return productTypeDaoImpl.getProductTypeById(id);
 	}
 
 }
