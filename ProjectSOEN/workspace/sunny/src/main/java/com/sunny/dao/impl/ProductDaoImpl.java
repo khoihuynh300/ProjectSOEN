@@ -6,11 +6,13 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import com.sunny.connections.HibernateUtil;
 import com.sunny.dao.IProductDao;
 import com.sunny.model.Product;
 
+@Repository
 public class ProductDaoImpl implements IProductDao {
 
 	@Override

@@ -21,6 +21,15 @@ public class Product {
 	private String Pname;
 	private double Price;
 	private String Description;
+	private boolean isDeleted;
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "DiscountId")
