@@ -11,7 +11,7 @@ public interface IUserService {
 
 	void createOrLogin(GooglePojo googlePojo);
 
-	void update(User user);
+	void update(User user, String newPassword);
 
 	void resetPassword(User user, int code) throws Exception;
 

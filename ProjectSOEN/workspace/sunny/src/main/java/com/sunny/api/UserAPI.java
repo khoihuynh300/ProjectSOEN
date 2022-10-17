@@ -56,13 +56,12 @@ public class UserAPI {
 		userservice.create(user);
 		return "redirect:/user/register/verifyer";
 
-		// return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
 
 	@PutMapping("/user")
 	@Transactional
-	public void updateUser(@RequestBody User user) {
-		userservice.update(user);
+	public void updateUser(@RequestBody User user, @RequestParam String newPassword) {
+		userservice.update(user, newPassword);
 	}
 
 	@GetMapping("/user")

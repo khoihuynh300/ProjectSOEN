@@ -37,8 +37,8 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void update(User user) {
-		userdao.update(user.getAccountName(), user.getPassword());
+	public void update(User user, String newPassword) {
+		userdao.update(user.getAccountName(), newPassword);
 	}
 
 	@Override
