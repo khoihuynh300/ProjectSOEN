@@ -11,5 +11,7 @@ public interface IProductDao {
 
 	List<Product> searchProductWithPtypeAndName(String name, Integer ptype);
 
+	List<Product> getRecords(int start, int total);
+
 	Product getProductById(int id);
 }

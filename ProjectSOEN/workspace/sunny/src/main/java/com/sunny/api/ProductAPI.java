@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sunny.model.Product;
 import com.sunny.service.IProductService;
-import com.sunny.service.impl.ProductServiceImpl;
 
 @RestController
 public class ProductAPI {
-	IProductService productService = new ProductServiceImpl();
+	@Autowired
+	IProductService productService;
 
 	@PostMapping("/product")
 	@Transactional
@@ -27,12 +28,12 @@ public class ProductAPI {
 		return productService.create(product);
 	}
 
-	@GetMapping("/product")
-	@Transactional
-	public ResponseEntity<?> getAllProduct() {
-		List<Product> result = productService.getAllProduct();
-		return ResponseEntity.status(HttpStatus.OK).body(result);
-	}
+//	@GetMapping("/product")
+//	@Transactional
+//	public ResponseEntity<?> getAllProduct() {
+//		List<Product> result = productService.getAllProduct();
+//		return ResponseEntity.status(HttpStatus.OK).body(result);
+//	}
 
 	@GetMapping("/product/search")
 	@ResponseBody

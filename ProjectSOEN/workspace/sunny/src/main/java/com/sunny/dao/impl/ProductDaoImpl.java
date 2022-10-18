@@ -74,4 +74,21 @@ public class ProductDaoImpl implements IProductDao {
 		}
 
 	}
+
+	@Override
+	public List<Product> getRecords(int pageNumber, int pageSize) {
+		List<Product> result = new ArrayList<>();
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+
+			Query<Product> query = session
+					.createNativeQuery(
+							"SELECT * FROM Product WHERE isDeleted = 0 ORDER BY Pid LIMIT :pageNumber, :pageSize",
+							Product.class)
+					.setParameter("pageNumber", (pageNumber - 1) * pageSize).setParameter("pageSize", pageSize);
+			result = query.getResultList();
+			t.commit();
+			return result;
+		}
+	}
 }

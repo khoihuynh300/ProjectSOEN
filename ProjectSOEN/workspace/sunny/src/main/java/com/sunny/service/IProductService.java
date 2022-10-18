@@ -11,5 +11,7 @@ public interface IProductService {
 
 	List<Product> searchProductWithPtypeAndName(String name, Integer ptype);
 
+	List<Product> getProducts(int pageNumber, int pageSize);
+
 	Product getProductById(int id);
 }
