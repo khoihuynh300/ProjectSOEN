@@ -1,10 +1,10 @@
 package com.sunny.api;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.http.client.ClientProtocolException;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.sunny.model.GooglePojo;
 import com.sunny.model.User;
@@ -26,6 +27,7 @@ import com.sunny.service.IUserService;
 import com.sunny.utils.GoogleUtils;
 
 @RestController
+@SessionAttributes("user")
 public class UserAPI {
 	@Autowired
 	private IUserService userservice;
@@ -64,10 +66,20 @@ public class UserAPI {
 		userservice.update(user, newPassword);
 	}
 
+//	@GetMapping("/user")
+//	@Transactional
+//	public ResponseEntity<?> getAllUser() {
+//		List<User> result = userservice.getAllUser();
+//		return ResponseEntity.status(HttpStatus.OK).body(result);
+//	}
+
 	@GetMapping("/user")
 	@Transactional
-	public ResponseEntity<?> getAllUser() {
-		List<User> result = userservice.getAllUser();
+	public ResponseEntity<?> getUser(HttpSession session) {
+		User result = new User();
+		if (session != null) {
+			result = userservice.getUser((User) session.getAttribute("user"));
+		}
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 
@@ -77,14 +89,23 @@ public class UserAPI {
 		userservice.delete(user.getUserId());
 	}
 
-	@PostMapping("user/login")
+	@PostMapping("/login")
 	@Transactional
-	public User verifyerUser(@RequestBody User user) {
-		return userservice.verifyerLogin(user.getAccountName(), user.getPassword());
+	public String verifyerUser(@RequestBody User user, HttpSession session) {
+		User userResp = userservice.verifyerLogin(user.getAccountName(), user.getPassword());
+		session.setAttribute("user", userResp);
+		return "redirect:/home";
+	}
+
+	@GetMapping("/logout")
+	public String logOut(HttpSession session) {
+		session.getAttribute("user");
+		session.invalidate();
+		return "redirect:/login";
 	}
 
 	@GetMapping("/login-google")
-	public String loginGoogle(HttpServletRequest request, HttpServletResponse response)
+	public String loginGoogle(HttpServletRequest request, HttpServletResponse response, HttpSession session)
 			throws IOException, ClientProtocolException {
 		String code = request.getParameter("code");
 		if (code == null || code.isEmpty()) {
@@ -92,9 +113,9 @@ public class UserAPI {
 		} else {
 			String accessToken = GoogleUtils.getToken(code);
 			GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
-
-			userservice.createOrLogin(googlePojo);
-			return "redirect:/user";
+			User userResp = userservice.createOrLogin(googlePojo);
+			session.setAttribute("sessionUser", userResp);
+			return "redirect:/home";
 
 		}
 	}

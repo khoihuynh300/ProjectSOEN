@@ -9,7 +9,9 @@ import com.sunny.model.User;
 public interface IUserService {
 	User create(User user) throws Exception;
 
-	void createOrLogin(GooglePojo googlePojo);
+	User createOrLogin(GooglePojo googlePojo);
+
+	User getUser(User user);
 
 	void update(User user, String newPassword);
 

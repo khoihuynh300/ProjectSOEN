@@ -112,16 +112,22 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void createOrLogin(GooglePojo googlePojo) {
+	public User createOrLogin(GooglePojo googlePojo) {
 		if (userdao.findUserByAccountName(googlePojo.getEmail().toString()) == null) {
 			User user = new User();
 			user.setAccountName(googlePojo.getEmail().toString());
 			user.setPassword(googlePojo.getId().toString());
 			user.setEnable(true);
 			userdao.save(user);
+			return user;
 		} else {
-			verifyerLogin(googlePojo.getEmail().toString(), googlePojo.getId().toString());
+			return verifyerLogin(googlePojo.getEmail().toString(), googlePojo.getId().toString());
 		}
+	}
+
+	@Override
+	public User getUser(User user) {
+		return userdao.findUser(user.getUserId());
 	}
 
 }
