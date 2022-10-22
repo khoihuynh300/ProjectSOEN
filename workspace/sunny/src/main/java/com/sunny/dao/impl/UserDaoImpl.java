@@ -8,7 +8,6 @@ import org.hibernate.query.Query;
 
 import com.sunny.connections.HibernateUtil;
 import com.sunny.dao.IUserDao;
-import com.sunny.model.Cart;
 import com.sunny.model.User;
 
 public class UserDaoImpl implements IUserDao {
@@ -53,11 +52,6 @@ public class UserDaoImpl implements IUserDao {
 			session.save(user);
 			t.commit();
 			session.close();
-			// Tạo cart cho user
-			Cart cart = new Cart();
-			cart.setUserId(user);
-			CartDaoImpl cartDaoImpl = new CartDaoImpl();
-			cartDaoImpl.create(cart);
 			return user;
 		}
 	}

@@ -90,7 +90,7 @@ public class CartItemDaoImpl implements ICartItemDao {
 			for (CartItem cartItem : listCartItem) {
 				listPid.add(cartItem.getProductId().getPid());
 			}
-			Query query = session
+			Query<?> query = session
 					.createQuery("DELETE CartItem cartItem WHERE CartId = :CartId AND ProductId.Pid IN (:list)");
 			query.setParameter("CartId", listCartItem.get(0).getCartId());
 			query.setParameter("list", listPid);

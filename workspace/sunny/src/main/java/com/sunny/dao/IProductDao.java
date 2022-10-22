@@ -16,4 +16,8 @@ public interface IProductDao {
 	void deleteProduct(Product product);
 
 	Product getProductById(int id);
+
+	List<Product> getRecommendedProducts(int size);
+
+	List<Product> getTopItemByPtype(int Ptype);
 }

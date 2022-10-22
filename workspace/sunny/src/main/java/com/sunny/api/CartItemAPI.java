@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,7 @@ import com.sunny.service.impl.CartServiceImpl;
 import com.sunny.service.impl.ProductServiceImpl;
 
 @RestController
+@RequestMapping("/cartitem")
 public class CartItemAPI {
 	CartItemServiceImpl cartItemServiceImpl = new CartItemServiceImpl();
 
@@ -30,7 +32,7 @@ public class CartItemAPI {
 		cartItemServiceImpl.addToCart(cartItem);
 	}
 
-	@PostMapping("/remove-from-cart")
+	@PostMapping("/remove-item")
 	@Transactional
 	public void removeFromCart(@RequestBody CartItem cartItem) {
 //		CartServiceImpl cartServiceImpl = new CartServiceImpl();
@@ -40,13 +42,13 @@ public class CartItemAPI {
 		cartItemServiceImpl.removeFromCart(cartItem);
 	}
 
-	@GetMapping("/cartitem")
+	@GetMapping("/get-all-cartitem")
 	@Transactional
 	public List<CartItem> getAllCartItem(@RequestParam(required = true) Integer id) {
 		return cartItemServiceImpl.getAllCartItem(id.intValue());
 	}
 
-	@DeleteMapping("/cartitem")
+	@DeleteMapping("/remove-list")
 	@Transactional
 	public void removeSelectedCartItem(@RequestBody List<CartItem> listCartItem) {
 		cartItemServiceImpl.removeSelectedCartItem(listCartItem);

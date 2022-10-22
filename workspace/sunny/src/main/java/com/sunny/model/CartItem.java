@@ -1,5 +1,6 @@
 package com.sunny.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,13 +17,23 @@ public class CartItem {
 	private int Id;
 
 	@ManyToOne
-	@JoinColumn(name = "CartId")
+	@JoinColumn(name = "CartId", nullable = false)
 	private Cart CartId;
 
 	@ManyToOne
-	@JoinColumn(name = "Pid")
+	@JoinColumn(name = "Pid", nullable = false)
 	private Product ProductId;
+
+	@Column(nullable = false)
 	private int Quantity;
+
+	public int getId() {
+		return Id;
+	}
+
+	public void setId(int id) {
+		Id = id;
+	}
 
 	public Cart getCartId() {
 		return CartId;

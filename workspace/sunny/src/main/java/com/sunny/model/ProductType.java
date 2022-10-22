@@ -13,8 +13,11 @@ public class ProductType {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int Ptype;
+
+	@Column(nullable = false)
 	private String PtypeName;
-	@Column(name = "isDeleted", nullable = false)
+
+	@Column(name = "isDeleted", nullable = false, columnDefinition = "tinyint(1) default 0")
 	private boolean isDeleted;
 
 	public boolean isDeleted() {

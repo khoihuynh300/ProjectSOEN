@@ -17,10 +17,10 @@ public class ProductToAttribute {
 	private int Id;
 
 	@ManyToOne
-	@JoinColumn(name = "Pid")
+	@JoinColumn(name = "Pid", nullable = false)
 	private Product Pid;
 	@ManyToOne
-	@JoinColumn(name = "AtrId")
+	@JoinColumn(name = "AtrId", nullable = false)
 	private ProductAttribute AtrId;
 	@Column(nullable = false)
 	private String val;

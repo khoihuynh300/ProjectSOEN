@@ -9,8 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Check;
+
 @Entity
 @Table(name = "Discount")
+@Check(constraints = "Percent >= 0 AND Percent <= 1")
 public class Discount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -42,4 +42,14 @@ public class ProductServiceImpl implements IProductService {
 		return productDaoImpl.getAllProduct();
 	}
 
+	@Override
+	public List<Product> getRecommendedProducts(int size) {
+		return productDaoImpl.getRecommendedProducts(size);
+	}
+
+	@Override
+	public List<Product> getTopItemByPtype(int Ptype) {
+		return productDaoImpl.getTopItemByPtype(Ptype);
+	}
+
 }
