@@ -37,8 +37,18 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<Product> getProducts(int pageNumber, int pageSize) {
-		return productDao.getRecords(pageNumber, pageSize);
+	public List<Product> getProducts(int pageNumber, int pageSize, Integer ptype) {
+		return productDao.getRecords(pageNumber, pageSize, ptype);
+	}
+
+	@Override
+	public Product updateProduct(Product product) {
+		return productDao.updateProduct(product);
+	}
+
+	@Override
+	public void deleteProduct(Product product) {
+		productDao.deletedProduct(product);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.sunny.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,13 +19,25 @@ public class Employee {
 	private int EmpId;
 
 	@OneToOne
-	@JoinColumn(name = "UserId", referencedColumnName = "UserId")
+	@JoinColumn(name = "UserId", referencedColumnName = "UserId", nullable = false)
 	private User UserId;
+
+	@Column(nullable = false)
 	private String Name;
+
+	@Column(nullable = false)
 	private String Gender;
+
 	private Date DateofBirth;
+
+	@Column(nullable = false)
 	private String Address;
+
+	@Column(nullable = false)
 	private String Job;
+
+	@Column(nullable = false)
+	private double LuongThang;
 
 	public int getEmpId() {
 		return EmpId;
@@ -80,6 +93,14 @@ public class Employee {
 
 	public void setJob(String job) {
 		Job = job;
+	}
+
+	public double getLuongThang() {
+		return LuongThang;
+	}
+
+	public void setLuongThang(double luongThang) {
+		LuongThang = luongThang;
 	}
 
 }

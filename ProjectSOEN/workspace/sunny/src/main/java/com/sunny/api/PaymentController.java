@@ -1,6 +1,7 @@
 package com.sunny.api;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
@@ -32,6 +34,7 @@ public class PaymentController {
 	}
 
 	@PostMapping("/pay")
+	@Transactional
 	public String pay(HttpServletRequest request, @RequestParam("price") double price) {
 		String cancelUrl = PaypalUtils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
 		String successUrl = PaypalUtils.getBaseURL(request) + "/" + URL_PAYPAL_SUCCESS;

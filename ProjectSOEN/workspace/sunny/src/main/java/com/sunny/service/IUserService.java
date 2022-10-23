@@ -7,23 +7,31 @@ import com.sunny.model.User;
 
 //@Service
 public interface IUserService {
-	User create(User user) throws Exception;
+	User createUser(User user) throws Exception;
 
-	User createOrLogin(GooglePojo googlePojo);
+	User getUserById(int id);
+
+	User createOrLogin(GooglePojo googlePojo) throws Exception;
 
 	User getUser(User user);
+	
+	User getUserByAccountName(User user);
 
-	void update(User user, String newPassword);
+	void updateUser(User user);
+	
+	void updateUser(User user, String newPassword);
 
 	void resetPassword(User user, int code) throws Exception;
 
-	void delete(int id);
+	void deleteUser(User user);
 
 	List<User> getAllUser();
 
 	User verifyerLogin(String accountName, String password);
 
 	boolean verifyerRegister(User user, int verifyerCode) throws Exception;
+	
+	int checkRoles(User user);
 
 	void sendEmailVerify(User user) throws Exception;
 }

@@ -1,5 +1,6 @@
 package com.sunny.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,15 +17,24 @@ public class OrderDetail {
 	private int Id;
 
 	@ManyToOne
-	@JoinColumn(name = "OrderId")
+	@JoinColumn(name = "OrderId", nullable = false)
 	private Orders OrderId;
 
 	@ManyToOne
-	@JoinColumn(name = "Pid")
+	@JoinColumn(name = "Pid", nullable = false)
 	private Product ProductId;
+
+	@Column(nullable = false)
 	private double Price;
+
+	@Column(nullable = false)
 	private int Quantity;
+
+	@Column(nullable = false)
 	private double Discount;
+
+	@Column(nullable = false, columnDefinition = "tinyint(1) default 0")
+	private boolean status;
 
 	public int getId() {
 		return Id;
@@ -72,6 +82,14 @@ public class OrderDetail {
 
 	public void setDiscount(double discount) {
 		Discount = discount;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
 }

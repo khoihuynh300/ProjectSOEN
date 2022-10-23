@@ -16,17 +16,16 @@ import com.sunny.model.Product;
 import com.sunny.service.IProductService;
 
 @RestController
-@RequestMapping("/home")
 public class HomeController {
 	@Autowired
 	private IProductService productService;
 
-	private static final int PAGE_SIZE = 3;
+	private static final int PAGE_SIZE = 10;
 
-	@GetMapping("")
+	@GetMapping(value = {"/home", ""})
 	@Transactional
-	public ResponseEntity<?> getRecord(@RequestParam(required = false, defaultValue = "1") Integer pageNumber) {
-		List<Product> result = productService.getProducts(pageNumber.intValue(), PAGE_SIZE);
+	public ResponseEntity<?> pagingProduct(@RequestParam(required = false, defaultValue = "1") Integer pageNumber, @RequestParam(required = false) Integer ptype) {
+		List<Product> result = productService.getProducts(pageNumber.intValue(), PAGE_SIZE, ptype);
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 }

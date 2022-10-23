@@ -28,7 +28,7 @@ public class UserServiceImpl implements IUserService {
 	private int verifyerCode = (int) ((Math.random() * (999999 - 100000)) + 100000);
 
 	@Override
-	public User create(User user) throws Exception {
+	public User createUser(User user) throws Exception {
 		if (userdao.findUserByAccountName(user.getAccountName()) == null
 				&& userdao.findUserByEmail(user.getEmail()) == null) {
 			return userdao.create(user);
@@ -37,15 +37,20 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public void update(User user, String newPassword) {
-		userdao.update(user.getAccountName(), newPassword);
+	public void updateUser(User user) {
+		userdao.update(user.getAccountName(), user.getPassword());
 	}
 
 	@Override
-	public void delete(int id) {
+	public void deleteUser(User user) {
 		// TODO Auto-generated method stub
 		userdao = new UserDaoImpl();
-		userdao.delete(id);
+		userdao.delete(user.getUserId());
+	}
+
+	@Override
+	public User getUserById(int id) {
+		return userdao.findUser(id);
 	}
 
 	@Override
@@ -112,22 +117,41 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public User createOrLogin(GooglePojo googlePojo) {
-		if (userdao.findUserByAccountName(googlePojo.getEmail().toString()) == null) {
+	public User createOrLogin(GooglePojo googlePojo) throws Exception {
+		User ex1 = userdao.findUserByEmail(googlePojo.getEmail());
+		User ex2 = userdao.findUserByAccountName(googlePojo.getId());
+		if (ex1 == null) {
 			User user = new User();
-			user.setAccountName(googlePojo.getEmail().toString());
+			user.setAccountName(googlePojo.getId().toString());
 			user.setPassword(googlePojo.getId().toString());
+			user.setEmail(googlePojo.getEmail());
 			user.setEnable(true);
 			userdao.save(user);
 			return user;
 		} else {
-			return verifyerLogin(googlePojo.getEmail().toString(), googlePojo.getId().toString());
+			return verifyerLogin(googlePojo.getId().toString(), googlePojo.getId().toString());
 		}
+		
 	}
 
 	@Override
 	public User getUser(User user) {
 		return userdao.findUser(user.getUserId());
+	}
+
+	@Override
+	public void updateUser(User user, String newPassword) {
+		userdao.update(user.getAccountName(), newPassword);
+	}
+
+	@Override
+	public User getUserByAccountName(User user) {
+		return userdao.findUserByAccountName(user.getAccountName());
+	}
+
+	@Override
+	public int checkRoles(User user) {
+		return user.getRole().getRoleId();
 	}
 
 }

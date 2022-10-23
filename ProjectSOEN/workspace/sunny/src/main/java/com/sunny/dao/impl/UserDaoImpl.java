@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sunny.connections.HibernateUtil;
 import com.sunny.dao.IUserDao;
+import com.sunny.model.Role;
 import com.sunny.model.User;
 
 @Repository
@@ -58,7 +59,7 @@ public class UserDaoImpl implements IUserDao {
 			Transaction t = session.beginTransaction();
 			session.save(user);
 			user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(4)));
-			user.setRole(0);
+			user.setRole(new Role(0));
 			user.setEnable(false);
 			t.commit();
 			session.close();
@@ -119,7 +120,7 @@ public class UserDaoImpl implements IUserDao {
 			Transaction t = session.beginTransaction();
 			session.save(user);
 			user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(4)));
-			user.setRole(0);
+			user.setRole(new Role(0));
 			t.commit();
 			session.close();
 			return user;

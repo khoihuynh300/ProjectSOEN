@@ -24,15 +24,15 @@ public class Cart {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "UserId")
-	private User UserId;
+	@JoinColumn(name = "CusId", nullable = false)
+	private Customer CusId;
 
-	public User getUserId() {
-		return UserId;
+	public Customer getCusId() {
+		return CusId;
 	}
 
-	public void setUserId(User userId) {
-		UserId = userId;
+	public void setCusId(Customer cusId) {
+		CusId = cusId;
 	}
 
 }

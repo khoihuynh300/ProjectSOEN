@@ -1,5 +1,6 @@
 package com.sunny.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,13 +18,17 @@ public class InvoiceItem {
 	private int Id;
 
 	@ManyToOne
-	@JoinColumn(name = "InvoiceId")
+	@JoinColumn(name = "InvoiceId", nullable = false)
 	private Invoice InvoiceId;
 
 	@OneToOne
-	@JoinColumn(name = "OrderDetailId", referencedColumnName = "Id")
+	@JoinColumn(name = "OrderDetailId", referencedColumnName = "Id", nullable = false)
 	private OrderDetail OrderDetailId;
-	private int Amount;
+
+	@Column(nullable = false)
+	private int Quantity;
+
+	@Column(nullable = false)
 	private double Price;
 
 	public Invoice getInvoiceId() {
@@ -42,12 +47,12 @@ public class InvoiceItem {
 		OrderDetailId = orderDetailId;
 	}
 
-	public int getAmount() {
-		return Amount;
+	public int getQuantity() {
+		return Quantity;
 	}
 
-	public void setAmount(int amount) {
-		Amount = amount;
+	public void setQuantity(int quantity) {
+		Quantity = quantity;
 	}
 
 	public double getPrice() {

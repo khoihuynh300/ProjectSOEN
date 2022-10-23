@@ -2,11 +2,13 @@ package com.sunny.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -18,12 +20,22 @@ public class Invoice {
 	private int InvoiceId;
 
 	@OneToOne
-	@JoinColumn(name = "OrderId", referencedColumnName = "OrderId")
+	@JoinColumn(name = "OrderId", referencedColumnName = "OrderId", nullable = false)
 	private Orders OrderId;
+
+	@Column(nullable = false)
 	private String CusomerName;
-	private int PaymentMethod;
+
+	@ManyToOne
+	@JoinColumn(name = "PaymentMethod", nullable = false)
+	private PaymentMethod PaymentMethod;
+
 	private Date CreationDate;
+
+	@Column(nullable = false)
 	private double Total;
+
+	@Column(nullable = false)
 	private boolean Status;
 
 	public int getInvoiceId() {
@@ -50,14 +62,6 @@ public class Invoice {
 		CusomerName = cusomerName;
 	}
 
-	public int getPaymentMethod() {
-		return PaymentMethod;
-	}
-
-	public void setPaymentMethod(int paymentMethod) {
-		PaymentMethod = paymentMethod;
-	}
-
 	public Date getCreationDate() {
 		return CreationDate;
 	}
@@ -80,6 +84,14 @@ public class Invoice {
 
 	public void setStatus(boolean status) {
 		Status = status;
+	}
+
+	public PaymentMethod getPaymentMethod() {
+		return PaymentMethod;
+	}
+
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
+		PaymentMethod = paymentMethod;
 	}
 
 }

@@ -76,19 +76,54 @@ public class ProductDaoImpl implements IProductDao {
 	}
 
 	@Override
-	public List<Product> getRecords(int pageNumber, int pageSize) {
+	public List<Product> getRecords(int pageNumber, int pageSize, Integer ptype) {
 		List<Product> result = new ArrayList<>();
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction t = session.beginTransaction();
-
-			Query<Product> query = session
-					.createNativeQuery(
-							"SELECT * FROM Product WHERE isDeleted = 0 ORDER BY Pid LIMIT :pageNumber, :pageSize",
-							Product.class)
-					.setParameter("pageNumber", (pageNumber - 1) * pageSize).setParameter("pageSize", pageSize);
-			result = query.getResultList();
+			if (ptype != null) {
+				Query<Product> query = session.createNativeQuery(
+						"SELECT * FROM Product WHERE isDeleted = 0 and Ptype=:ptype ORDER BY Pid LIMIT :pageNumber, :pageSize",
+						Product.class).setParameter("pageNumber", (pageNumber - 1) * pageSize)
+						.setParameter("pageSize", pageSize).setParameter("ptype", ptype.intValue());
+				result = query.getResultList();
+			}
+			else {
+				Query<Product> query = session.createNativeQuery(
+						"SELECT * FROM Product WHERE isDeleted = 0 ORDER BY Pid LIMIT :pageNumber, :pageSize",
+						Product.class).setParameter("pageNumber", (pageNumber - 1) * pageSize)
+						.setParameter("pageSize", pageSize);
+				result = query.getResultList();
+			}
 			t.commit();
 			return result;
+		}
+	}
+
+	@Override
+	public Product updateProduct(Product product) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+
+			session.createNativeQuery("update Product set Ptype=:ptype, Pname=:pname, "
+					+ "Price=:price, Description=:description, isDeleted=:isDeleted, DiscountId=:discountId"
+					+ " where Pid=:pid", Product.class).setParameter("ptype", product.getPtype().getPtype())
+					.setParameter("pname", product.getPname()).setParameter("price", product.getPrice())
+					.setParameter("description", product.getDescription())
+					.setParameter("isDeleted", product.isDeleted()).setParameter("discountId", product.getDiscountId())
+					.setParameter("pid", product.getPid());
+			session.update(product);
+			t.commit();
+			return product;
+		}
+	}
+
+	@Override
+	public void deletedProduct(Product product) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+			product.setDeleted(true);
+			session.update(product);
+			t.commit();
 		}
 	}
 }

@@ -34,6 +34,9 @@
 		<mapping class="com.sunny.model.OrderDetail" />
 		<mapping class="com.sunny.model.Invoice" />
 		<mapping class="com.sunny.model.InvoiceItem" />
+		<mapping class="com.sunny.model.Image" />
+		<mapping class="com.sunny.model.Role" />
+		<mapping class="com.sunny.model.Rating" />
 
 	</session-factory>
 </hibernate-configuration>

@@ -9,8 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Check;
+
 @Entity
 @Table(name = "Discount")
+@Check(constraints = "Percent >= 0 AND Percent <= 1")
 public class Discount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +30,16 @@ public class Discount {
 
 	@Column(nullable = false)
 	private Date StopDate;
+	@Column(name = "isDeleted", nullable = false)
+	private boolean isDeleted;
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 
 	public int getDiscountId() {
 		return DiscountId;

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,23 +20,27 @@ public class User implements Serializable {
 	@Column(name = "UserId")
 	private int UserId;
 
-	@Column(name = "AccountName", nullable = true, unique = true)
+	@Column(name = "AccountName", nullable = false, unique = true)
 	private String AccountName;
 
-	@Column(name = "Password", nullable = true)
+	@Column(name = "Password", nullable = false)
 	private String Password;
 
-	@Column(nullable = true)
+	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column(nullable = true)
+	@Column(nullable = true, unique = true)
 	private String Phone;
 
-	@Column(name = "role", nullable = false)
-	private int role;
+	@OneToOne
+	@JoinColumn(name = "role", referencedColumnName = "RoleId", nullable = false)
+	private Role role;
 
-	@Column(name = "isDeleted", nullable = false)
+	@Column(name = "isDeleted", nullable = false, columnDefinition = "tinyint(1) default 0")
 	private boolean isDeleted;
+
+	@Column(name = "enable", nullable = false, columnDefinition = "tinyint(1) default 0")
+	private boolean enable;
 
 	public boolean isEnable() {
 		return enable;
@@ -43,9 +49,6 @@ public class User implements Serializable {
 	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
-
-	@Column(name = "enable", nullable = false)
-	private boolean enable;
 
 	public boolean isDeleted() {
 		return isDeleted;
@@ -79,11 +82,11 @@ public class User implements Serializable {
 		Password = password;
 	}
 
-	public int getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(int role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 

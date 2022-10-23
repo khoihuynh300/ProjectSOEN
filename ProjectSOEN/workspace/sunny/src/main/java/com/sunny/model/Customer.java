@@ -19,11 +19,17 @@ public class Customer {
 	private int CusId;
 
 	@OneToOne
-	@JoinColumn(name = "UserId", referencedColumnName = "UserId")
+	@JoinColumn(name = "UserId", referencedColumnName = "UserId", nullable = false)
 	private User UserId;
+
+	@Column(nullable = false)
 	private String Name;
+
+	@Column(nullable = false)
 	private String Gender;
+
 	private Date DateofBirth;
+
 	@Column(nullable = false)
 	private String Address;
 

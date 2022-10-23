@@ -2,36 +2,46 @@ package com.sunny.model;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Orders")
+@Table(name = "Orders", indexes = @Index(name = "sorted_date", columnList = "OrderDate ASC"))
 public class Orders {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int OrderId;
 
 	@ManyToOne
-	@JoinColumn(name = "CusId")
+	@JoinColumn(name = "CusId", nullable = false)
 	private Customer CusId;
 
 	@ManyToOne
-	@JoinColumn(name = "EmpId")
+	@JoinColumn(name = "EmpId", nullable = false)
 	private Employee ShipId;
+
+	@Column(name = "Status", nullable = false, columnDefinition = "int default 0")
 	private int Status;
+
 	private Date OrderDate;
+
 	private Date ShipedDate;
+
+	@Column(nullable = false)
 	private String ShipAddress;
 
 	@ManyToOne
 	@JoinColumn(name = "Id")
 	private PaymentMethod PaymentMethod;
+
+	private String note;
 
 	public int getOrderId() {
 		return OrderId;
@@ -95,6 +105,14 @@ public class Orders {
 
 	public void setOrderId(int orderId) {
 		OrderId = orderId;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 }

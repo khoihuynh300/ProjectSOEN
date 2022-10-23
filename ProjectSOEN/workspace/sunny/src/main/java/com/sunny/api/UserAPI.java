@@ -1,6 +1,7 @@
 package com.sunny.api;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,20 +28,27 @@ import com.sunny.service.IUserService;
 import com.sunny.utils.GoogleUtils;
 
 @RestController
-@SessionAttributes("user")
 public class UserAPI {
 	@Autowired
 	private IUserService userservice;
 
-	@GetMapping("/user/forget-password")
-	public String forgetPassword(@RequestBody User user) throws Exception {
-		userservice.sendEmailVerify(user);
-		return "redirect:/user/reset-password";
-	}
-
 	@PostMapping("/user/reset-password")
 	public void resetPassword(@RequestBody User user, @RequestParam(defaultValue = "") Integer code) throws Exception {
 		userservice.resetPassword(user, code);
+	}
+	
+	@GetMapping("/user/reset-password")
+	public void resetPasswordForm() throws Exception {
+	}
+
+	@GetMapping("/user/forget-password")
+	public void forgetPasswordForm(HttpServletResponse response) throws Exception {
+	}
+	
+	@PostMapping("/user/forget-password")
+	public void forgetPassword(@RequestBody User user, HttpServletResponse response) throws Exception {
+		userservice.sendEmailVerify(user);
+		response.sendRedirect("/user/reset-password");
 	}
 
 	@PutMapping("/user/register/verifyer")
@@ -50,20 +58,35 @@ public class UserAPI {
 		return userservice.verifyerRegister(user, code.intValue());
 	}
 
+	@GetMapping("/user/register/verifyer")
+	@Transactional
+	public void verifyerRegisterForm()
+			throws Exception {
+	}
+	
 	@PostMapping("/user/register")
 	@Transactional
-	public String createUser(@Validated @RequestBody User user) throws Exception {
-		userservice.sendEmailVerify(user);
-
-		userservice.create(user);
-		return "redirect:/user/register/verifyer";
+	public void createUser(@Validated @RequestBody User user, HttpServletResponse response) throws Exception {
+		User userResp= userservice.getUserByAccountName(user);
+		if(userResp != null && userResp.isEnable() == false) {
+			userservice.sendEmailVerify(user);
+			response.sendRedirect("/user/register/verifyer");
+		}
+		else if(userResp != null && userResp.isEnable() == true) {
+			throw new Exception("User exist!");
+		} else {
+			userservice.createUser(user);
+			userservice.sendEmailVerify(user);
+			response.sendRedirect("/user/register/verifyer");
+		}
 
 	}
 
 	@PutMapping("/user")
 	@Transactional
-	public void updateUser(@RequestBody User user, @RequestParam String newPassword) {
-		userservice.update(user, newPassword);
+	public void updateUser(@RequestBody User user, HttpSession session) {
+		if(session != null )
+			userservice.updateUser(user);
 	}
 
 //	@GetMapping("/user")
@@ -73,7 +96,7 @@ public class UserAPI {
 //		return ResponseEntity.status(HttpStatus.OK).body(result);
 //	}
 
-	@GetMapping("/user")
+	@GetMapping("/user/profile")
 	@Transactional
 	public ResponseEntity<?> getUser(HttpSession session) {
 		User result = new User();
@@ -86,37 +109,48 @@ public class UserAPI {
 	@DeleteMapping("/user")
 	@Transactional
 	public void deleteUser(@RequestBody User user) {
-		userservice.delete(user.getUserId());
+		userservice.deleteUser(user);
+	}
+	
+	@GetMapping("/login")
+	public void loginForm() {
+		
 	}
 
 	@PostMapping("/login")
 	@Transactional
-	public String verifyerUser(@RequestBody User user, HttpSession session) {
+	public void verifyerUser(@RequestBody User user, HttpSession session, HttpServletResponse response) throws IOException {
 		User userResp = userservice.verifyerLogin(user.getAccountName(), user.getPassword());
 		session.setAttribute("user", userResp);
-		return "redirect:/home";
+		if(userResp == null) 
+			response.sendRedirect("/login");
+		else
+			response.sendRedirect("/home");
 	}
 
 	@GetMapping("/logout")
-	public String logOut(HttpSession session) {
+	public void logOut(HttpSession session, HttpServletResponse response) throws IOException {
 		session.getAttribute("user");
+		session.removeAttribute("user");
 		session.invalidate();
-		return "redirect:/login";
+		response.sendRedirect("/home");
 	}
 
 	@GetMapping("/login-google")
-	public String loginGoogle(HttpServletRequest request, HttpServletResponse response, HttpSession session)
-			throws IOException, ClientProtocolException {
+	public void loginGoogle(HttpServletRequest request, HttpServletResponse response, HttpSession session)
+			throws Exception {
 		String code = request.getParameter("code");
 		if (code == null || code.isEmpty()) {
-			return "redirect:/login";
+			response.sendRedirect("/login");
 		} else {
 			String accessToken = GoogleUtils.getToken(code);
 			GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
 			User userResp = userservice.createOrLogin(googlePojo);
-			session.setAttribute("sessionUser", userResp);
-			return "redirect:/home";
-
+			if(userResp == null) throw new Exception("Tài khoản đã tồn tại");
+			else {
+			session.setAttribute("user", userResp);
+			response.sendRedirect("/home");
+			}
 		}
 	}
 }
