@@ -1,5 +1,6 @@
 package com.sunny.dao.impl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,6 @@ public class CartItemDaoImpl implements ICartItemDao {
 				session.close();
 			}
 		} else {
-			System.out.println(cartItem.getProductId().getPid());
 			try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 				Transaction t = session.beginTransaction();
 				session.save(cartItem);
@@ -97,6 +97,17 @@ public class CartItemDaoImpl implements ICartItemDao {
 			query.executeUpdate();
 			t.commit();
 			session.close();
+		}
+	}
+
+	@Override
+	public Long getAmountDistinctCartItem(int CartId) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Query query = session.createNativeQuery("SELECT COUNT(Id) FROM CartItem WHERE CartId = :CartId")
+					.setParameter("CartId", CartId);
+			Long result = ((BigInteger) query.uniqueResult()).longValue();
+			session.close();
+			return result;
 		}
 	}
 

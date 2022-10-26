@@ -17,24 +17,24 @@ import com.sunny.service.impl.ProductAttributeServiceImpl;
 @RestController
 @RequestMapping("/productAttribute")
 public class ProductAttributeAPI {
-	private IProductAttributeService iProductAttributeService = new ProductAttributeServiceImpl();
+	private IProductAttributeService productAttributeService = new ProductAttributeServiceImpl();
 
-	@PostMapping("/addProductAttribute")
+	@PostMapping("/add")
 	@ResponseBody
 	public ProductAttribute addProductAttribute(@RequestBody ProductAttribute productAttribute) {
-		return iProductAttributeService.addProductAttribute(productAttribute);
+		return productAttributeService.addProductAttribute(productAttribute);
 	}
 
-	@GetMapping("/getAllProductAttribute")
+	@GetMapping("/get")
 	@ResponseBody
 	public List<ProductAttribute> getAllProductAttribute() {
-		return iProductAttributeService.getAllProductAttributes();
+		return productAttributeService.getAllProductAttributes();
 	}
 
-	@DeleteMapping("/deleteProductAttribute")
+	@DeleteMapping("/delete")
 	@ResponseBody
 	public void deleteProductAttribute(@RequestBody ProductAttribute productAttribute) {
-		iProductAttributeService.delete(productAttribute.getAtrId());
+		productAttributeService.delete(productAttribute.getAtrId());
 	}
 
 }

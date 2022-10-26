@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Product", indexes = @Index(name = "sorted_price", columnList = "Price DESC"))
+@Table(name = "Product", indexes = @Index(name = "sorted_price", columnList = "Ptype, Price DESC"))
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -18,12 +18,12 @@ public class CustomerDaoImpl implements ICustomerDao {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction t = session.beginTransaction();
 			session.save(customer);
+			t.commit();
 			// Tạo cart cho customer
 			Cart cart = new Cart();
 			cart.setCusId(customer);
 			CartDaoImpl cartDaoImpl = new CartDaoImpl();
 			cartDaoImpl.create(cart);
-			t.commit();
 			session.close();
 			return customer;
 		}

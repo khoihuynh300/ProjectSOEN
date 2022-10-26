@@ -1,5 +1,0 @@
-package com.sunny.dao;
-
-public interface IUserDao {
-
-}

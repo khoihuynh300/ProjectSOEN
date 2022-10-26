@@ -15,4 +15,5 @@ public interface ICartItemDao {
 
 	List<CartItem> getAllCartItem(int CartId);
 
+	Long getAmountDistinctCartItem(int CartId);
 }

@@ -15,29 +15,30 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sunny.model.CartItem;
 import com.sunny.model.Orders;
 import com.sunny.model.PaymentMethod;
+import com.sunny.service.IOrdersService;
 import com.sunny.service.impl.OrdersServiceImpl;
 
 @RestController
 @RequestMapping("/orders")
 public class OrdersAPI {
-	OrdersServiceImpl ordersServiceImpl = new OrdersServiceImpl();
+	private IOrdersService ordersService = new OrdersServiceImpl();
 
 	@PostMapping("/create")
 	@Transactional
 	public Orders createOrder(@RequestPart String address, @RequestPart PaymentMethod paymentMethod,
 			@RequestPart List<CartItem> listCartItem) {
-		return ordersServiceImpl.createOrder(address, paymentMethod, listCartItem);
+		return ordersService.createOrder(address, paymentMethod, listCartItem);
 	}
 
 	@GetMapping("/get-all-orders")
 	@Transactional
 	public List<Orders> getAllOrders() {
-		return ordersServiceImpl.getAllOrders();
+		return ordersService.getAllOrders();
 	}
 
 	@PutMapping("/update")
 	@Transactional
 	public void updateStatus(@RequestBody Orders order) {
-		ordersServiceImpl.updateStatus(order);
+		ordersService.updateStatus(order);
 	}
 }

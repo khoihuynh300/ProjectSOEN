@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,11 +29,12 @@ public class User implements Serializable {
 	@Column(nullable = false, unique = true)
 	private String email;
 
-	@Column(nullable = true, unique = true)
+	@Column(nullable = false)
 	private String Phone;
 
-	@Column(name = "role", nullable = false)
-	private int role;
+	@OneToOne
+	@JoinColumn(name = "role", referencedColumnName = "RoleId")
+	private Role role;
 
 	@Column(name = "isDeleted", nullable = false, columnDefinition = "tinyint(1) default 0")
 	private boolean isDeleted;
@@ -79,11 +82,11 @@ public class User implements Serializable {
 		Password = password;
 	}
 
-	public int getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(int role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 

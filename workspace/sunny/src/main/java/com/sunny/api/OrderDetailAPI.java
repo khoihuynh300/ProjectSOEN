@@ -12,22 +12,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sunny.model.OrderDetail;
 import com.sunny.model.Orders;
+import com.sunny.service.IOrderDetailService;
 import com.sunny.service.impl.OrderDetailServiceImpl;
 
 @RestController
 @RequestMapping("/orderdetail")
 public class OrderDetailAPI {
-	OrderDetailServiceImpl orderDetailServiceImpl = new OrderDetailServiceImpl();
+	private IOrderDetailService orderDetailService = new OrderDetailServiceImpl();
 
 	@GetMapping("/get-all-order-detail")
 	@Transactional
 	public List<OrderDetail> getAllOrderDetail(@RequestBody Orders Id) {
-		return orderDetailServiceImpl.getAllOrdersDetail(Id);
+		return orderDetailService.getAllOrdersDetail(Id);
 	}
 
 	@PutMapping("/update")
 	@Transactional
 	public void updateStatus(@RequestBody OrderDetail orderDetail) {
-		orderDetailServiceImpl.updateStatus(orderDetail);
+		orderDetailService.updateStatus(orderDetail);
 	}
 }

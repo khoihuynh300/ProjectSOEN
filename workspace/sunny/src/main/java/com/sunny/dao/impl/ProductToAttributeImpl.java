@@ -31,9 +31,7 @@ public class ProductToAttributeImpl implements IProductToAttributeDao {
 		// TODO Auto-generated method stub
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction transaction = session.beginTransaction();
-
 			ProductToAttribute productToAttribute = session.get(ProductToAttribute.class, id);
-
 			session.delete(productToAttribute);
 			transaction.commit();
 			session.close();
@@ -45,9 +43,7 @@ public class ProductToAttributeImpl implements IProductToAttributeDao {
 		// TODO Auto-generated method stub
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction transaction = session.beginTransaction();
-
 			ProductToAttribute productToAttribute = session.get(ProductToAttribute.class, AtrId);
-
 			session.update(productToAttribute);
 			transaction.commit();
 			session.close();

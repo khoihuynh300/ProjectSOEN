@@ -8,24 +8,21 @@ import com.sunny.model.ProductAttribute;
 import com.sunny.service.IProductAttributeService;
 
 public class ProductAttributeServiceImpl implements IProductAttributeService {
-	private IProductAttributeDao iProductAttribute = new ProductAttributeDaoImpl();
+	private IProductAttributeDao ProductAttributeDao = new ProductAttributeDaoImpl();
 
 	@Override
 	public ProductAttribute addProductAttribute(ProductAttribute productAttribute) {
-		// TODO Auto-generated method stub
-		return iProductAttribute.addProductAttribute(productAttribute);
+		return ProductAttributeDao.addProductAttribute(productAttribute);
 	}
 
 	@Override
 	public List<ProductAttribute> getAllProductAttributes() {
-		// TODO Auto-generated method stub
-		return iProductAttribute.getAllProductAttributes();
+		return ProductAttributeDao.getAllProductAttributes();
 	}
 
 	@Override
 	public void delete(int AtrId) {
-		// TODO Auto-generated method stub
-		iProductAttribute.delete(AtrId);
+		ProductAttributeDao.delete(AtrId);
 
 	}
 

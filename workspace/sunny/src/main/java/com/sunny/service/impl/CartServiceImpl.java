@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.sunny.dao.ICartDao;
 import com.sunny.dao.impl.CartDaoImpl;
 import com.sunny.model.Cart;
 import com.sunny.service.ICartService;
@@ -11,21 +12,21 @@ import com.sunny.service.ICartService;
 public class CartServiceImpl implements ICartService {
 
 	@Autowired
-	CartDaoImpl cartDaoImpl = new CartDaoImpl();
+	private ICartDao cartDao = new CartDaoImpl();
 
 	@Override
 	public Cart create(Cart cart) {
-		return cartDaoImpl.create(cart);
+		return cartDao.create(cart);
 	}
 
 	@Override
 	public List<Cart> getAllCart() {
-		return cartDaoImpl.getAllCart();
+		return cartDao.getAllCart();
 	}
 
 	@Override
 	public Cart getCartById(int id) {
-		return cartDaoImpl.getCartById(id);
+		return cartDao.getCartById(id);
 	}
 
 }

@@ -9,16 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunny.model.PaymentMethod;
+import com.sunny.service.IPaymentMethodService;
 import com.sunny.service.impl.PaymentMethodServiceImpl;
 
 @RestController
 @RequestMapping("/paymentmethod")
 public class PaymentMethodAPI {
-	PaymentMethodServiceImpl paymentMethodServiceImpl = new PaymentMethodServiceImpl();
+	private IPaymentMethodService paymentMethodService = new PaymentMethodServiceImpl();
 
 	@GetMapping("/get-all-payment-method")
 	@Transactional
 	public List<PaymentMethod> getAllPaymentMethod() {
-		return paymentMethodServiceImpl.getAllPaymentMethod();
+		return paymentMethodService.getAllPaymentMethod();
 	}
 }

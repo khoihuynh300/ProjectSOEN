@@ -2,38 +2,38 @@ package com.sunny.service.impl;
 
 import java.util.List;
 
+import com.sunny.dao.IUserDao;
 import com.sunny.dao.impl.UserDaoImpl;
 import com.sunny.model.User;
 import com.sunny.service.IUserService;
 
 public class UserServiceImpl implements IUserService {
 
-	UserDaoImpl userDaoImpl = new UserDaoImpl();
+	private IUserDao userDao = new UserDaoImpl();
 
 	@Override
 	public User createUser(User user) {
-		return userDaoImpl.createUser(user);
+		return userDao.createUser(user);
 	}
 
 	@Override
 	public void updateUser(User user) {
-		userDaoImpl.updateUser(user);
+		userDao.updateUser(user);
 	}
 
 	@Override
 	public void deleteUser(User user) {
-		UserDaoImpl userDaoImpl = new UserDaoImpl();
-		userDaoImpl.deleteUser(user);
+		userDao.deleteUser(user);
 	}
 
 	@Override
 	public List<User> getAllUser() {
-		return userDaoImpl.getAllUser();
+		return userDao.getAllUser();
 	}
 
 	@Override
 	public User getUserById(int id) {
-		return userDaoImpl.getUserById(id);
+		return userDao.getUserById(id);
 	}
 
 }

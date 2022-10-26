@@ -24,7 +24,7 @@ public class Orders {
 	private Customer CusId;
 
 	@ManyToOne
-	@JoinColumn(name = "EmpId", nullable = false)
+	@JoinColumn(name = "EmpId")
 	private Employee ShipId;
 
 	@Column(name = "Status", nullable = false, columnDefinition = "int default 0")

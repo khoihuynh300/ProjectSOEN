@@ -14,4 +14,7 @@ public interface ICartItemService {
 	void removeSelectedCartItem(List<CartItem> listCartItem);
 
 	List<CartItem> getAllCartItem(int CartId);
+
+	Long getAmountDistinctCartItem(int CartId);
+
 }

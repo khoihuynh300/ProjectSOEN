@@ -19,4 +19,13 @@ public class PaymentMethodDaoImpl implements IPaymentMethodDao {
 			return result;
 		}
 	}
+
+	@Override
+	public PaymentMethod getById(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			PaymentMethod result = (PaymentMethod) session.get(PaymentMethod.class, id);
+			session.close();
+			return result;
+		}
+	}
 }

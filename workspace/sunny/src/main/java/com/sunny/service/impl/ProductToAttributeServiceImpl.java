@@ -8,35 +8,26 @@ import com.sunny.model.ProductToAttribute;
 import com.sunny.service.IProductToAttributeService;
 
 public class ProductToAttributeServiceImpl implements IProductToAttributeService {
-	private IProductToAttributeDao iProductToAttributeDao = new ProductToAttributeImpl();
+	private IProductToAttributeDao productToAttributeDao = new ProductToAttributeImpl();
 
 	@Override
 	public ProductToAttribute addProductToAttribute(ProductToAttribute productToAttribute) throws Exception {
-		// TODO Auto-generated method stub
-		if (productToAttribute.getAtrId() != null) {
-			return iProductToAttributeDao.addProductToAttribute(productToAttribute);
-		} else {
-			throw new Exception("Er");
-		}
-
+		return productToAttributeDao.addProductToAttribute(productToAttribute);
 	}
 
 	@Override
 	public void deleteProductToAttribute(int id) {
-		// TODO Auto-generated method stub
-		iProductToAttributeDao.deleteProductToAttribute(id);
+		productToAttributeDao.deleteProductToAttribute(id);
 	}
 
 	@Override
 	public void editProductToAttribute(int AtrId) {
-		// TODO Auto-generated method stub
-		iProductToAttributeDao.editProductToAttribute(AtrId);
+		productToAttributeDao.editProductToAttribute(AtrId);
 	}
 
 	@Override
 	public List<ProductToAttribute> getAllProducttoAttributebyPid(int Pid) {
-		// TODO Auto-generated method stub
-		return iProductToAttributeDao.getAllProducttoAttributebyPid(Pid);
+		return productToAttributeDao.getAllProducttoAttributebyPid(Pid);
 	}
 
 }

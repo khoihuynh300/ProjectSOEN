@@ -2,37 +2,43 @@ package com.sunny.service.impl;
 
 import java.util.List;
 
+import com.sunny.dao.ICartItemDao;
 import com.sunny.dao.impl.CartItemDaoImpl;
 import com.sunny.model.CartItem;
 import com.sunny.service.ICartItemService;
 
 public class CartItemServiceImpl implements ICartItemService {
 
-	CartItemDaoImpl cartItemDaoImpl = new CartItemDaoImpl();
+	private ICartItemDao cartItemDao = new CartItemDaoImpl();
 
 	@Override
 	public boolean existCartItem(CartItem cartItem) {
-		return cartItemDaoImpl.existCartItem(cartItem);
+		return cartItemDao.existCartItem(cartItem);
 	}
 
 	@Override
 	public void addToCart(CartItem cartItem) {
-		cartItemDaoImpl.addToCart(cartItem);
+		cartItemDao.addToCart(cartItem);
 	}
 
 	@Override
 	public void removeFromCart(CartItem cartItem) {
-		cartItemDaoImpl.removeFromCart(cartItem);
+		cartItemDao.removeFromCart(cartItem);
 	}
 
 	@Override
 	public List<CartItem> getAllCartItem(int CartId) {
-		return cartItemDaoImpl.getAllCartItem(CartId);
+		return cartItemDao.getAllCartItem(CartId);
 	}
 
 	@Override
 	public void removeSelectedCartItem(List<CartItem> listCartItem) {
-		cartItemDaoImpl.removeSelectedCartItem(listCartItem);
+		cartItemDao.removeSelectedCartItem(listCartItem);
+	}
+
+	@Override
+	public Long getAmountDistinctCartItem(int CartId) {
+		return cartItemDao.getAmountDistinctCartItem(CartId);
 	}
 
 }

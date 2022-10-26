@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.sunny.dao.IDiscountDao;
 import com.sunny.dao.impl.DiscountDaoImpl;
 import com.sunny.model.Discount;
 import com.sunny.service.IDiscountService;
@@ -11,31 +12,31 @@ import com.sunny.service.IDiscountService;
 public class DiscountServiceImpl implements IDiscountService {
 
 	@Autowired
-	DiscountDaoImpl discountDaoImpl = new DiscountDaoImpl();
+	private IDiscountDao discountDao = new DiscountDaoImpl();
 
 	@Override
 	public Discount createDiscount(Discount discount) {
-		return discountDaoImpl.createDiscount(discount);
+		return discountDao.createDiscount(discount);
 	}
 
 	@Override
 	public List<Discount> getAllDiscount() {
-		return discountDaoImpl.getAllDiscount();
+		return discountDao.getAllDiscount();
 	}
 
 	@Override
 	public void updateDiscount(Discount discount) {
-		discountDaoImpl.updateDiscount(discount);
+		discountDao.updateDiscount(discount);
 	}
 
 	@Override
 	public void deleteDiscount(Discount discount) {
-		discountDaoImpl.deleteDiscount(discount);
+		discountDao.deleteDiscount(discount);
 	}
 
 	@Override
 	public Discount getDiscountById(int id) {
-		return discountDaoImpl.getDiscountById(id);
+		return discountDao.getDiscountById(id);
 	}
 
 }

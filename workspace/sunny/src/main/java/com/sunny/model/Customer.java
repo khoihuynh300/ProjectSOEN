@@ -33,6 +33,9 @@ public class Customer {
 	@Column(nullable = false)
 	private String Address;
 
+	@Column(name = "isDeleted", nullable = false, columnDefinition = "tinyint(1) default 0")
+	private boolean isDeleted;
+
 	public void setCusId(int cusId) {
 		CusId = cusId;
 	}
@@ -79,6 +82,14 @@ public class Customer {
 
 	public void setAddress(String address) {
 		Address = address;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 }

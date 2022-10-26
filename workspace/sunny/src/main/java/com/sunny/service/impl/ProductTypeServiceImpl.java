@@ -2,37 +2,38 @@ package com.sunny.service.impl;
 
 import java.util.List;
 
+import com.sunny.dao.IProductTypeDao;
 import com.sunny.dao.impl.ProductTypeDaoImpl;
 import com.sunny.model.ProductType;
 import com.sunny.service.IProductTypeService;
 
 public class ProductTypeServiceImpl implements IProductTypeService {
 
-	ProductTypeDaoImpl productTypeDaoImpl = new ProductTypeDaoImpl();
+	private IProductTypeDao productTypeDao = new ProductTypeDaoImpl();
 
 	@Override
 	public ProductType createProductType(ProductType productType) {
-		return productTypeDaoImpl.createProductType(productType);
+		return productTypeDao.createProductType(productType);
 	}
 
 	@Override
 	public List<ProductType> getAllProductType() {
-		return productTypeDaoImpl.getAllProductType();
+		return productTypeDao.getAllProductType();
 	}
 
 	@Override
 	public void updateProductType(ProductType productType) {
-		productTypeDaoImpl.updateProductType(productType);
+		productTypeDao.updateProductType(productType);
 	}
 
 	@Override
 	public void deleteProductType(ProductType productType) {
-		productTypeDaoImpl.deleteProductType(productType);
+		productTypeDao.deleteProductType(productType);
 	}
 
 	@Override
 	public ProductType getProductTypeById(int id) {
-		return productTypeDaoImpl.getProductTypeById(id);
+		return productTypeDao.getProductTypeById(id);
 	}
 
 }

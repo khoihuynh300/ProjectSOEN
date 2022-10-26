@@ -35,9 +35,6 @@ public class Invoice {
 	@Column(nullable = false)
 	private double Total;
 
-	@Column(nullable = false)
-	private boolean Status;
-
 	public int getInvoiceId() {
 		return InvoiceId;
 	}
@@ -76,14 +73,6 @@ public class Invoice {
 
 	public void setTotal(double total) {
 		Total = total;
-	}
-
-	public boolean isStatus() {
-		return Status;
-	}
-
-	public void setStatus(boolean status) {
-		Status = status;
 	}
 
 	public PaymentMethod getPaymentMethod() {

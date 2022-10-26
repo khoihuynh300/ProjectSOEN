@@ -11,17 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunny.model.Cart;
+import com.sunny.service.ICartService;
 import com.sunny.service.impl.CartServiceImpl;
 
 @RestController
 @RequestMapping("/cart")
 public class CartAPI {
-	CartServiceImpl cartServiceImpl = new CartServiceImpl();
+	private ICartService cartService = new CartServiceImpl();
 
 	@GetMapping("/get-all-cart")
 	@Transactional
 	public ResponseEntity<?> getAllCart() {
-		List<Cart> result = cartServiceImpl.getAllCart();
+		List<Cart> result = cartService.getAllCart();
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
 }

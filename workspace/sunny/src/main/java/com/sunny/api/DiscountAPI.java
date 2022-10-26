@@ -14,35 +14,36 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunny.model.Discount;
+import com.sunny.service.IDiscountService;
 import com.sunny.service.impl.DiscountServiceImpl;
 
 @RestController
 @RequestMapping("/discount")
 public class DiscountAPI {
-	DiscountServiceImpl discountServiceImpl = new DiscountServiceImpl();
+	private IDiscountService discountService = new DiscountServiceImpl();
 
 	@PostMapping("/create")
 	@Transactional
 	public Discount createDiscount(@RequestBody Discount discount) {
-		return discountServiceImpl.createDiscount(discount);
+		return discountService.createDiscount(discount);
 	}
 
 	@GetMapping("/get")
 	@Transactional
 	public ResponseEntity<?> getAllDiscount(@RequestParam(required = false) Integer id) {
-		return id == null ? ResponseEntity.status(HttpStatus.OK).body(discountServiceImpl.getAllDiscount())
-				: ResponseEntity.status(HttpStatus.OK).body(discountServiceImpl.getDiscountById(id.intValue()));
+		return id == null ? ResponseEntity.status(HttpStatus.OK).body(discountService.getAllDiscount())
+				: ResponseEntity.status(HttpStatus.OK).body(discountService.getDiscountById(id.intValue()));
 	}
 
 	@PutMapping("/update")
 	@Transactional
 	public void updateDiscount(@RequestBody Discount discount) {
-		discountServiceImpl.updateDiscount(discount);
+		discountService.updateDiscount(discount);
 	}
 
 	@DeleteMapping("/delete")
 	@Transactional
 	public void deleteDiscount(@RequestBody Discount discount) {
-		discountServiceImpl.deleteDiscount(discount);
+		discountService.deleteDiscount(discount);
 	}
 }

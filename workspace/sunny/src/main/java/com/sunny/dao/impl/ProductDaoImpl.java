@@ -132,12 +132,16 @@ public class ProductDaoImpl implements IProductDao {
 	@Override
 	public List<Product> getTopItemByPtype(int Ptype) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			Query<Product> query = session.createQuery("FROM Product WHERE Ptype.Ptype = :Ptype", Product.class)
+//			Query<Product> query = session
+//					.createQuery("FROM Product WHERE Ptype.Ptype = :Ptype ORDER BY Price DESC LIMIT 8", Product.class)
+//					.setParameter("Ptype", Ptype);
+			Query<Product> query = session
+					.createNativeQuery("SELECT * FROM Product WHERE Ptype = :Ptype ORDER BY Price DESC LIMIT 8",
+							Product.class)
 					.setParameter("Ptype", Ptype);
 			List<Product> result = query.getResultList();
-			Collections.sort(result, Comparator.comparing(ele -> -ele.getPrice()));
 			session.close();
-			return result.subList(0, Math.min(8, result.size()));
+			return result;
 		}
 	}
 }

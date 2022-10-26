@@ -8,4 +8,5 @@ public interface IPaymentMethodDao {
 
 	List<PaymentMethod> getAllPaymentMethod();
 
+	PaymentMethod getById(int id);
 }

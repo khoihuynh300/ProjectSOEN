@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.sunny.connections.HibernateUtil;
+import com.sunny.dao.IRoleDao;
 import com.sunny.dao.IUserDao;
 import com.sunny.model.User;
 
@@ -49,6 +50,8 @@ public class UserDaoImpl implements IUserDao {
 	public User createUser(User user) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction t = session.beginTransaction();
+			IRoleDao roleDao = new RoleDaoImpl();
+			user.setRole(roleDao.getRoleById(1));
 			session.save(user);
 			t.commit();
 			session.close();

@@ -19,33 +19,33 @@ import com.sunny.service.impl.ProductToAttributeServiceImpl;
 @RestController
 @RequestMapping("/productToAttribute")
 public class ProductToAttributeAPI {
-	private IProductToAttributeService iProductToAttributeService = new ProductToAttributeServiceImpl();
+	private IProductToAttributeService productToAttributeService = new ProductToAttributeServiceImpl();
 
-	@PostMapping("/addProductToAttribute")
+	@PostMapping("/add")
 	@ResponseBody
 	public ProductToAttribute addProductToAttribute(@RequestBody ProductToAttribute productToAttribute)
 			throws Exception {
-		return iProductToAttributeService.addProductToAttribute(productToAttribute);
+		return productToAttributeService.addProductToAttribute(productToAttribute);
 	}
 
-	@DeleteMapping("/deleteProductToAttribute")
+	@DeleteMapping("/delete")
 	@ResponseBody
 	public void deleteProductToAttribute(@RequestBody ProductToAttribute productToAttribute) {
-		iProductToAttributeService.deleteProductToAttribute(productToAttribute.getId());
+		productToAttributeService.deleteProductToAttribute(productToAttribute.getId());
 	}
 
-	@PutMapping("/editProductToAttribute")
+	@PutMapping("/edit")
 	@ResponseBody
 	public void editProductToAttribute(@RequestBody ProductToAttribute productToAttribute) {
-		iProductToAttributeService.editProductToAttribute(productToAttribute.getId());
+		productToAttributeService.editProductToAttribute(productToAttribute.getId());
 	}
 
 	/*
 	 * Thay POST thành GET Thay ReqBody thành ReqParam
 	 */
-	@GetMapping("/getAllProductToAtributebyPid")
+	@GetMapping("/get")
 	@ResponseBody()
 	public List<ProductToAttribute> getAllProductToAttributebyPid(@RequestParam(required = true) Integer pid) {
-		return iProductToAttributeService.getAllProducttoAttributebyPid(pid.intValue());
+		return productToAttributeService.getAllProducttoAttributebyPid(pid.intValue());
 	}
 }
