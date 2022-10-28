@@ -12,4 +12,6 @@ public interface IInvoiceService {
 	List<Invoice> getInvoiceByCustomerId(Customer customer);
 
 	List<Invoice> getAllInvoice();
+
+	Invoice createInvoice(Orders order);
 }

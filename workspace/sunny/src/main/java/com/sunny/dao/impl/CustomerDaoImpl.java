@@ -5,25 +5,25 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import com.sunny.connections.HibernateUtil;
 import com.sunny.dao.ICustomerDao;
 import com.sunny.model.Cart;
 import com.sunny.model.Customer;
 
+@Repository
 public class CustomerDaoImpl implements ICustomerDao {
 
 	@Override
 	public Customer createCustomer(Customer customer) {
-		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction t = session.beginTransaction();
-			session.save(customer);
-			t.commit();
-			// Tạo cart cho customer
+			session.persist(customer);
 			Cart cart = new Cart();
 			cart.setCusId(customer);
-			CartDaoImpl cartDaoImpl = new CartDaoImpl();
-			cartDaoImpl.create(cart);
+			session.persist(cart);
+			t.commit();
 			session.close();
 			return customer;
 		}

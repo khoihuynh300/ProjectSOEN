@@ -36,9 +36,4 @@ public class CartItemServiceImpl implements ICartItemService {
 		cartItemDao.removeSelectedCartItem(listCartItem);
 	}
 
-	@Override
-	public Long getAmountDistinctCartItem(int CartId) {
-		return cartItemDao.getAmountDistinctCartItem(CartId);
-	}
-
 }

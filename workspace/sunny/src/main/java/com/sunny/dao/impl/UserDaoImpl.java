@@ -1,5 +1,6 @@
 package com.sunny.dao.impl;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -63,6 +64,17 @@ public class UserDaoImpl implements IUserDao {
 	public User getUserById(int id) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			return session.get(User.class, id);
+		}
+	}
+
+	@Override
+	public boolean existAccountName(String accountName) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			boolean exists = ((BigInteger) session
+					.createNativeQuery("select count(*) from User where AccountName = :accountName")
+					.setParameter("accountName", accountName).uniqueResult()).longValue() > 0;
+			session.close();
+			return exists;
 		}
 	}
 

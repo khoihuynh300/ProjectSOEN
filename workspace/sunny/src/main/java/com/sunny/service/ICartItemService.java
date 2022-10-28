@@ -15,6 +15,4 @@ public interface ICartItemService {
 
 	List<CartItem> getAllCartItem(int CartId);
 
-	Long getAmountDistinctCartItem(int CartId);
-
 }

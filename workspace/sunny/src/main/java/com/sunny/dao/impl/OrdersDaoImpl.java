@@ -8,8 +8,12 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.sunny.connections.HibernateUtil;
+import com.sunny.dao.ICartItemDao;
+import com.sunny.dao.IInvoiceDao;
 import com.sunny.dao.IOrdersDao;
 import com.sunny.model.CartItem;
+import com.sunny.model.Discount;
+import com.sunny.model.OrderDetail;
 import com.sunny.model.Orders;
 import com.sunny.model.PaymentMethod;
 
@@ -24,15 +28,28 @@ public class OrdersDaoImpl implements IOrdersDao {
 			result.setOrderDate(Calendar.getInstance().getTime());
 			result.setPaymentMethod(paymentMethod);
 			result.setShipAddress(address);
-			session.save(result);
-			t.commit();
-			CartItemDaoImpl cartItemDaoImpl = new CartItemDaoImpl();
-			cartItemDaoImpl.removeSelectedCartItem(listCartItem);
-			OrderDetailDaoImpl orderDetailDaoImpl = new OrderDetailDaoImpl();
+			session.persist(result);
+			ICartItemDao cartItemDao = new CartItemDaoImpl();
+			cartItemDao.removeSelectedCartItem(listCartItem);
 			for (CartItem item : listCartItem) {
-				orderDetailDaoImpl.createOrderDetail(result, item);
+				// orderDetailDaoImpl.createOrderDetail(result, item);
+				OrderDetail res = new OrderDetail();
+				res.setOrderId(result);
+				res.setProductId(item.getProductId());
+				res.setPrice(item.getProductId().getPrice());
+				res.setQuantity(item.getQuantity());
+				Discount discount = item.getProductId().getDiscountId();
+				if (discount != null)
+					res.setDiscount(Math.min(res.getPrice(),
+							discount.getAmount() * res.getQuantity() + res.getPrice() * discount.getPercent()));
+				else
+					res.setDiscount(0);
+				session.persist(res);
 			}
+			t.commit();
 			session.close();
+			IInvoiceDao invoiceDao = new InvoiceDaoImpl();
+			invoiceDao.createInvoice(result);
 			return result;
 		}
 	}

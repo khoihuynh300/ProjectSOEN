@@ -54,11 +54,4 @@ public class CartItemAPI {
 	public void removeSelectedCartItem(@RequestBody List<CartItem> listCartItem) {
 		cartItemService.removeSelectedCartItem(listCartItem);
 	}
-
-	@GetMapping("/get-distinct")
-	@Transactional
-	public Long getAmountDistinctCartItem(@RequestParam(required = true) Integer CartId) {
-		return cartItemService.getAmountDistinctCartItem(CartId.intValue());
-	}
-
 }

@@ -3,9 +3,10 @@ package com.sunny.service;
 import java.util.List;
 
 import com.sunny.model.User;
+import com.sunny.service.impl.Result;
 
 public interface IUserService {
-	User createUser(User user); // C
+	Result createUser(User user); // C
 
 	void updateUser(User user); // U
 

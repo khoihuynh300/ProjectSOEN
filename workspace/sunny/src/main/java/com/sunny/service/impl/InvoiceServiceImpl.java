@@ -28,4 +28,9 @@ public class InvoiceServiceImpl implements IInvoiceService {
 		return invoiceDao.getAllInvoice();
 	}
 
+	@Override
+	public Invoice createInvoice(Orders order) {
+		return invoiceDao.createInvoice(order);
+	}
+
 }

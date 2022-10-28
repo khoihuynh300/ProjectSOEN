@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +25,11 @@ public class CartAPI {
 	public ResponseEntity<?> getAllCart() {
 		List<Cart> result = cartService.getAllCart();
 		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
+
+	@GetMapping("/get-amount-unique-item")
+	@Transactional
+	public int getAmountUniqueItem(@RequestBody Cart cart) {
+		return cart.getAmountUniqueItem();
 	}
 }

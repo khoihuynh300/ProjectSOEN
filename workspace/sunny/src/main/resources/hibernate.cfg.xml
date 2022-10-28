@@ -13,7 +13,7 @@
 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/projectsoen</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">0856057398asd</property>
-		<property name="show_sql">false</property>
+		<property name="show_sql">true</property>
 
 		<!-- Specifying Session Context -->
 		<property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
@@ -37,5 +37,6 @@
 		<mapping class="com.sunny.model.Image" />
 		<mapping class="com.sunny.model.Role" />
 		<mapping class="com.sunny.model.Rating" />
+		<mapping class="com.sunny.model.Shipper" />
 	</session-factory>
 </hibernate-configuration>

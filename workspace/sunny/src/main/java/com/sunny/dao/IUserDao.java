@@ -14,4 +14,6 @@ public interface IUserDao {
 	List<User> getAllUser(); // R
 
 	User getUserById(int id);
+
+	boolean existAccountName(String accountName);
 }

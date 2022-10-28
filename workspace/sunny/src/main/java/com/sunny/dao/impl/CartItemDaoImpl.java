@@ -1,6 +1,5 @@
 package com.sunny.dao.impl;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +44,10 @@ public class CartItemDaoImpl implements ICartItemDao {
 		} else {
 			try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 				Transaction t = session.beginTransaction();
-				session.save(cartItem);
+				session.persist(cartItem);
+				Cart cart = cartItem.getCartId();
+				cart.setAmountUniqueItem(cart.getAmountUniqueItem() + 1);
+				session.update(cart);
 				t.commit();
 				session.close();
 			}
@@ -75,8 +77,12 @@ public class CartItemDaoImpl implements ICartItemDao {
 					.setParameter("pid", cartItem.getProductId()).uniqueResult();
 			cartItemRes.setQuantity(cartItemRes.getQuantity() - 1);
 			session.update(cartItemRes);
-			if (cartItemRes.getQuantity() == 0)
+			if (cartItemRes.getQuantity() == 0) {
 				session.delete(cartItemRes);
+				Cart cart = cartItem.getCartId();
+				cart.setAmountUniqueItem(cart.getAmountUniqueItem() - 1);
+				session.update(cart);
+			}
 			t.commit();
 			session.close();
 		}
@@ -95,20 +101,11 @@ public class CartItemDaoImpl implements ICartItemDao {
 			query.setParameter("CartId", listCartItem.get(0).getCartId());
 			query.setParameter("list", listPid);
 			query.executeUpdate();
+			Cart cart = listCartItem.get(0).getCartId();
+			cart.setAmountUniqueItem(cart.getAmountUniqueItem() - listCartItem.size());
+			session.update(cart);
 			t.commit();
 			session.close();
 		}
 	}
-
-	@Override
-	public Long getAmountDistinctCartItem(int CartId) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			Query query = session.createNativeQuery("SELECT COUNT(Id) FROM CartItem WHERE CartId = :CartId")
-					.setParameter("CartId", CartId);
-			Long result = ((BigInteger) query.uniqueResult()).longValue();
-			session.close();
-			return result;
-		}
-	}
-
 }

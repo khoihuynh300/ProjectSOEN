@@ -46,7 +46,7 @@ public class RatingDaoImpl implements IRatingDao {
 	public List<Rating> getByProductId(Product product) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction t = session.beginTransaction();
-			List<Rating> result = session.createQuery("FROM Rating WHERE Pid.Pid = :Pid", Rating.class)
+			List<Rating> result = session.createQuery("FROM Rating WHERE Pid = :Pid", Rating.class)
 					.setParameter("Pid", product).getResultList();
 			t.commit();
 			session.close();
@@ -58,7 +58,7 @@ public class RatingDaoImpl implements IRatingDao {
 	public List<Rating> getByUserId(User user) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction t = session.beginTransaction();
-			List<Rating> result = session.createQuery("FROM Rating WHERE UserId.UserId = :UserId", Rating.class)
+			List<Rating> result = session.createQuery("FROM Rating WHERE UserId = :UserId", Rating.class)
 					.setParameter("UserId", user).getResultList();
 			t.commit();
 			session.close();

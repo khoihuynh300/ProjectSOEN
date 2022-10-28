@@ -47,8 +47,8 @@ public class OrderDetailDaoImpl implements IOrderDetailDao {
 			result.setQuantity(item.getQuantity());
 			Discount discount = item.getProductId().getDiscountId();
 			if (discount != null)
-				result.setDiscount(
-						Math.min(result.getPrice(), discount.getAmount() + result.getPrice() * discount.getPercent()));
+				result.setDiscount(Math.min(result.getPrice(),
+						discount.getAmount() * result.getQuantity() + result.getPrice() * discount.getPercent()));
 			else
 				result.setDiscount(0);
 			session.save(result);

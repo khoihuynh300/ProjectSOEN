@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sunny.model.User;
 import com.sunny.service.IUserService;
+import com.sunny.service.impl.Result;
 import com.sunny.service.impl.UserServiceImpl;
 
 @RestController
@@ -24,7 +25,7 @@ public class UserAPI {
 
 	@PostMapping("/create")
 	@Transactional
-	public User createUser(@RequestBody User user) {
+	public Result createUser(@RequestBody User user) {
 		return userService.createUser(user);
 	}
 
