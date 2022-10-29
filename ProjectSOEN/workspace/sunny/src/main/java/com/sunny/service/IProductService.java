@@ -13,7 +13,7 @@ public interface IProductService {
 
 	List<Product> getAllProduct();
 
-	List<Product> searchProductWithPtypeAndName(String name, Integer ptype);
+	List<Product> searchProductWithPtypeAndName(String name, Integer ptype, int pageNumber, int pageSize);
 
 	List<Product> getProducts(int pageNumber, int pageSize, Integer ptype);
 

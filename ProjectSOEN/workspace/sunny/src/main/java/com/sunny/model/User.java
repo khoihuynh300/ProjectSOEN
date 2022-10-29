@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "User")
@@ -21,20 +23,22 @@ public class User implements Serializable {
 	private int UserId;
 
 	@Column(name = "AccountName", nullable = false, unique = true)
+	@Size(min = 4, max = 21, message = "Account name must be between 4 and 21 characters")
 	private String AccountName;
 
 	@Column(name = "Password", nullable = false)
 	private String Password;
 
 	@Column(nullable = false, unique = true)
+	@NotNull(message = "Email is not null")
 	private String email;
 
 	@Column(nullable = true, unique = true)
 	private String Phone;
 
 	@OneToOne
-	@JoinColumn(name = "role", referencedColumnName = "RoleId", nullable = false)
-	private Role role;
+	@JoinColumn(name = "RoleId", referencedColumnName = "RoleId")
+	private Role RoleId = new Role(2);
 
 	@Column(name = "isDeleted", nullable = false, columnDefinition = "tinyint(1) default 0")
 	private boolean isDeleted;
@@ -82,12 +86,12 @@ public class User implements Serializable {
 		Password = password;
 	}
 
-	public Role getRole() {
-		return role;
+	public Role getRoleId() {
+		return RoleId;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoleId(Role roleId) {
+		RoleId = roleId;
 	}
 
 	public String getEmail() {

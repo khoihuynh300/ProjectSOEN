@@ -9,7 +9,7 @@ public interface IProductDao {
 
 	List<Product> getAllProduct();
 
-	List<Product> searchProductWithPtypeAndName(String name, Integer ptype);
+	List<Product> searchProductWithPtypeAndName(String name, Integer ptype, int pageNumber, int pageSize);
 
 	Product updateProduct(Product product);
 	

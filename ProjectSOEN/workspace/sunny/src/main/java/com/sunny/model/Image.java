@@ -59,6 +59,18 @@ public class Image {
 		return picture4;
 	}
 
+	public Image(String picture1, String picture2, String picture3, String picture4) {
+		super();
+		this.picture1 = picture1;
+		this.picture2 = picture2;
+		this.picture3 = picture3;
+		this.picture4 = picture4;
+	}
+
+	public Image() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setPicture4(String picture4) {
 		this.picture4 = picture4;
 	}

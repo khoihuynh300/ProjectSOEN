@@ -25,6 +25,8 @@ public class UserAPI {
 
 	@Autowired
 	IUserService userServiceImpl;
+	
+	private static final int PAGE_SIZE = 10;
 
 	@PostMapping("/user")
 	@Transactional
@@ -49,10 +51,10 @@ public class UserAPI {
 
 	@GetMapping("/user")
 	@Transactional
-	public ResponseEntity<?> get(@RequestParam(required = false) Integer id, HttpSession session) throws Exception {
+	public ResponseEntity<?> get(@RequestParam(required = false) Integer id, @RequestParam(defaultValue = "1") Integer pageNumber, HttpSession session) throws Exception {
 		User currentUser = (User) session.getAttribute("user");
 		if (userServiceImpl.checkRoles(currentUser) == 1)
-			return id == null ? ResponseEntity.status(HttpStatus.OK).body(userServiceImpl.getAllUser())
+			return id == null ? ResponseEntity.status(HttpStatus.OK).body(userServiceImpl.getAllUser(pageNumber.intValue(), PAGE_SIZE))
 					: ResponseEntity.status(HttpStatus.OK).body(userServiceImpl.getUserById(id));
 		else
 			throw new Exception("Bạn không có quyền");

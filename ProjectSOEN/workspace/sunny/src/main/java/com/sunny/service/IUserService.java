@@ -25,7 +25,7 @@ public interface IUserService {
 
 	void deleteUser(User user);
 
-	List<User> getAllUser();
+	List<User> getAllUser(int pageNumber, int pageSize);
 
 	User verifyerLogin(String accountName, String password);
 

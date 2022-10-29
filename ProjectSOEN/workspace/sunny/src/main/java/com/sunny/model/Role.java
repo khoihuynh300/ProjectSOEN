@@ -37,4 +37,14 @@ public class Role {
 		super();
 		RoleId = roleId;
 	}
+
+	public Role(int roleId, String moTa) {
+		super();
+		RoleId = roleId;
+		MoTa = moTa;
+	}
+
+	public Role() {
+		super();
+	}
 }

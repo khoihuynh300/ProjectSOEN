@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sunny.connections.HibernateUtil;
 import com.sunny.dao.IProductDao;
+import com.sunny.model.Image;
 import com.sunny.model.Product;
 
 @Repository
@@ -30,7 +31,10 @@ public class ProductDaoImpl implements IProductDao {
 	public List<Product> getAllProduct() {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction t = session.beginTransaction();
-			Query<Product> query = session.createQuery("From Product", Product.class);
+			Query<Product> query = session.createNativeQuery(
+					"Select p.Pid, p.Pname, p.Price, i.picture1, p.Description from Product p, Image i "
+							+ "where p.image = i.id",
+					Product.class);
 			List<Product> result = query.getResultList();
 			t.commit();
 			return result;
@@ -48,25 +52,30 @@ public class ProductDaoImpl implements IProductDao {
 	}
 
 	@Override
-	public List<Product> searchProductWithPtypeAndName(String name, Integer ptype) {
+	public List<Product> searchProductWithPtypeAndName(String name, Integer ptype, int pageNumber, int pageSize) {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction t = session.beginTransaction();
 			List<Product> result = new ArrayList<>();
 			if (name == null) {
 				Query<Product> query = session
-						.createNativeQuery("Select * from Product where Ptype =:ptype", Product.class)
+						.createNativeQuery("Select * from Product where Ptype =:ptype LIMIT :pageNumber, :pageSize",
+								Product.class)
+						.setParameter("pageNumber", (pageNumber - 1) * pageSize).setParameter("pageSize", pageSize)
 						.setParameter("ptype", ptype.intValue());
 				result = query.getResultList();
 			} else if (ptype == null) {
 				Query<Product> query = session
-						.createNativeQuery("Select * From Product where Pname like :name", Product.class)
+						.createNativeQuery("Select * From Product where Pname like :name LIMIT :pageNumber, :pageSize",
+								Product.class)
+						.setParameter("pageNumber", (pageNumber - 1) * pageSize).setParameter("pageSize", pageSize)
 						.setParameter("name", "%" + name + "%");
 				result = query.getResultList();
 			} else {
-				Query<Product> query = session
-						.createNativeQuery("Select * from Product where Ptype =:ptype and Pname like :name",
-								Product.class)
-						.setParameter("ptype", ptype.intValue()).setParameter("name", "%" + name + "%");
+				Query<Product> query = session.createNativeQuery(
+						"Select * from Product where Ptype =:ptype and Pname like :name LIMIT :pageNumber, :pageSize",
+						Product.class).setParameter("pageNumber", (pageNumber - 1) * pageSize)
+						.setParameter("pageSize", pageSize).setParameter("ptype", ptype.intValue())
+						.setParameter("name", "%" + name + "%");
 				result = query.getResultList();
 			}
 			t.commit();
@@ -86,12 +95,12 @@ public class ProductDaoImpl implements IProductDao {
 						Product.class).setParameter("pageNumber", (pageNumber - 1) * pageSize)
 						.setParameter("pageSize", pageSize).setParameter("ptype", ptype.intValue());
 				result = query.getResultList();
-			}
-			else {
-				Query<Product> query = session.createNativeQuery(
-						"SELECT * FROM Product WHERE isDeleted = 0 ORDER BY Pid LIMIT :pageNumber, :pageSize",
-						Product.class).setParameter("pageNumber", (pageNumber - 1) * pageSize)
-						.setParameter("pageSize", pageSize);
+			} else {
+				Query<Product> query = session
+						.createNativeQuery(
+								"SELECT * FROM Product WHERE isDeleted = 0 ORDER BY Pid LIMIT :pageNumber, :pageSize",
+								Product.class)
+						.setParameter("pageNumber", (pageNumber - 1) * pageSize).setParameter("pageSize", pageSize);
 				result = query.getResultList();
 			}
 			t.commit();
@@ -104,13 +113,17 @@ public class ProductDaoImpl implements IProductDao {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction t = session.beginTransaction();
 
-			session.createNativeQuery("update Product set Ptype=:ptype, Pname=:pname, "
-					+ "Price=:price, Description=:description, isDeleted=:isDeleted, DiscountId=:discountId"
-					+ " where Pid=:pid", Product.class).setParameter("ptype", product.getPtype().getPtype())
+			session.createNativeQuery(
+					"update Product set Ptype=:ptype, Pname=:pname, Image=:image, Pin=:pin, Waranty=:waranty, Quantity=:quantity, "
+							+ "Price=:price, Description=:description, isDeleted=:isDeleted, DiscountId=:discountId"
+							+ " where Pid=:pid",
+					Product.class).setParameter("ptype", product.getPtype().getPtype())
 					.setParameter("pname", product.getPname()).setParameter("price", product.getPrice())
 					.setParameter("description", product.getDescription())
-					.setParameter("isDeleted", product.isDeleted()).setParameter("discountId", product.getDiscountId())
-					.setParameter("pid", product.getPid());
+					.setParameter("quantity", product.getQuantity()).setParameter("isDeleted", product.isDeleted())
+					.setParameter("discountId", product.getDiscountId()).setParameter("pid", product.getPid())
+					.setParameter("image", product.getImage().getId()).setParameter("pin", product.isPin())
+					.setParameter("waranty", product.getWaranty());
 			session.update(product);
 			t.commit();
 			return product;

@@ -1,8 +1,12 @@
 package com.sunny.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.mail.internet.MimeMessage;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +27,41 @@ public class UserServiceImpl implements IUserService {
 	private IUserDao userdao;
 
 	@Autowired
+	private Validator validator;
+
+	@Autowired
 	private JavaMailSender mailSender;
 
-	private int verifyerCode = (int) ((Math.random() * (999999 - 100000)) + 100000);
+	private Integer verifyerCode;
 
 	@Override
 	public User createUser(User user) throws Exception {
+		Set<ConstraintViolation<User>> violations = validator.validate(user);
+
+		if (!violations.isEmpty()) {
+			StringBuilder sb = new StringBuilder();
+			for (ConstraintViolation<User> constraintViolation : violations) {
+				sb.append(constraintViolation.getMessage());
+			}
+			throw new ConstraintViolationException("Error occurred: " + sb.toString(), violations);
+		}
+
 		if (userdao.findUserByAccountName(user.getAccountName()) == null
-				&& userdao.findUserByEmail(user.getEmail()) == null) {
+				&& userdao.findUserByEmail(user.getEmail()) == null || checkEnableEmail(userdao.findUserByEmail(user.getEmail())) == false) {
 			return userdao.create(user);
 		} else
 			throw new Exception("User exist !!");
 	}
 
+	public boolean checkEnableEmail(List<User> user) {
+		for(User u : user) {
+			if(u.isEnable()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public void updateUser(User user) {
 		userdao.update(user.getAccountName(), user.getPassword());
@@ -54,8 +80,8 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public List<User> getAllUser() {
-		return userdao.getAllUser();
+	public List<User> getAllUser(int pageNumber, int pageSize) {
+		return userdao.getAllUser(pageNumber, pageSize);
 	}
 
 	@Override
@@ -70,6 +96,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public void sendEmailVerify(User user) throws Exception {
+		verifyerCode = (int) ((Math.random() * (999999 - 100000)) + 100000);
 		String subject = "Please verify your account";
 		String senderName = "Thousand Sunny";
 		String mailContent = "<p>Dear :" + user.getAccountName() + ",</p>";
@@ -94,21 +121,24 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public boolean verifyerRegister(User user, int code) throws Exception {
 		User check1 = userdao.findUserByAccountName(user.getAccountName());
-		User check2 = userdao.findUserByEmail(user.getEmail());
+		// User check2 = userdao.findUserByEmail(user.getEmail());
 
-		if (check1 != null && check2 != null && code == verifyerCode) {
+		if (verifyerCode == null) {
+			throw new Exception("Luan ngu loz");
+		}
+
+		if (check1 != null && code == verifyerCode) {
 			userdao.verifyer(user.getAccountName());
 			return true;
 
 		} else
-			throw new Exception("User/Email exist !!");
+			throw new Exception("Do not correct!!");
 	}
 
 	@Override
 	public void resetPassword(User user, int code) throws Exception {
 		User check1 = userdao.findUserByAccountName(user.getAccountName());
-		User check2 = userdao.findUserByEmail(user.getEmail());
-		if (check1.getUserId() == check2.getUserId()) {
+		if (check1 != null) {
 			if (code == verifyerCode) {
 				userdao.update(user.getAccountName(), user.getPassword());
 			}
@@ -118,11 +148,12 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User createOrLogin(GooglePojo googlePojo) throws Exception {
-		User ex1 = userdao.findUserByEmail(googlePojo.getEmail());
+		List<User> ex1 = userdao.findUserByEmail(googlePojo.getEmail());
 		User ex2 = userdao.findUserByAccountName(googlePojo.getId());
-		if (ex1 == null) {
+		if (ex1.isEmpty() || checkEnableEmail(ex1) == false) {
 			User user = new User();
 			user.setAccountName(googlePojo.getId().toString());
+			System.out.println(googlePojo.getId().toString());
 			user.setPassword(googlePojo.getId().toString());
 			user.setEmail(googlePojo.getEmail());
 			user.setEnable(true);
@@ -131,7 +162,7 @@ public class UserServiceImpl implements IUserService {
 		} else {
 			return verifyerLogin(googlePojo.getId().toString(), googlePojo.getId().toString());
 		}
-		
+
 	}
 
 	@Override
@@ -151,7 +182,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public int checkRoles(User user) {
-		return user.getRole().getRoleId();
+		return user.getRoleId().getRoleId();
 	}
 
 }
