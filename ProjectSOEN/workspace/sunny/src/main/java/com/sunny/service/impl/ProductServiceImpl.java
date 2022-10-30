@@ -21,8 +21,8 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<Product> getAllProduct() {
-		return productDao.getAllProduct();
+	public List<Product> getAllProduct(int pageNumber, int pageSize) {
+		return productDao.getAllProduct(pageNumber, pageSize);
 	}
 
 	@Override

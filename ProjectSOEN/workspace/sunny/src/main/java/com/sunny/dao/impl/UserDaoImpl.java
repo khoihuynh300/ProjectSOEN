@@ -79,6 +79,8 @@ public class UserDaoImpl implements IUserDao {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction t = session.beginTransaction();
 			Query<User> query = session.createQuery("From User", User.class);
+			query.setFirstResult((pageNumber - 1) * pageSize);
+			query.setMaxResults(pageSize);
 			List<User> result = query.getResultList();
 			t.commit();
 			return result;

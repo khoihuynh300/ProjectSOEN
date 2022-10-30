@@ -75,12 +75,12 @@ public class ProductAPI {
 		}
 	}
 
-//	@GetMapping("/product")
-//	@Transactional
-//	public ResponseEntity<?> getAllProduct() {
-//		List<Product> result = productService.getAllProduct();
-//		return ResponseEntity.status(HttpStatus.OK).body(result);
-//	}
+	@GetMapping("/product")
+	@Transactional
+	public ResponseEntity<?> getAllProduct(@RequestParam(defaultValue = "1") Integer pageNumber) {
+		List<Product> result = productService.getAllProduct(pageNumber.intValue(), PAGE_SIZE);
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
 
 	@PutMapping("/product")
 	public void updateProduct(@RequestParam String product,

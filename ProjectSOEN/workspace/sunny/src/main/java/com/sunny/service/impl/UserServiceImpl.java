@@ -155,7 +155,9 @@ public class UserServiceImpl implements IUserService {
 			user.setAccountName(googlePojo.getId().toString());
 			System.out.println(googlePojo.getId().toString());
 			user.setPassword(googlePojo.getId().toString());
-			user.setEmail(googlePojo.getEmail());
+			String[] email = googlePojo.getEmail().split("@");
+			user.setEmail(email[0]+ "+" + BCrypt.hashpw("", BCrypt.gensalt(4)) + "@" + email[1]);
+			//user.setEmail(googlePojo.getEmail());
 			user.setEnable(true);
 			userdao.save(user);
 			return user;

@@ -28,13 +28,12 @@ public class ProductDaoImpl implements IProductDao {
 	}
 
 	@Override
-	public List<Product> getAllProduct() {
+	public List<Product> getAllProduct(int pageNumber, int pageSize) {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction t = session.beginTransaction();
-			Query<Product> query = session.createNativeQuery(
-					"Select p.Pid, p.Pname, p.Price, i.picture1, p.Description from Product p, Image i "
-							+ "where p.image = i.id",
-					Product.class);
+			Query<Product> query = session.createQuery("From Product", Product.class);
+			query.setFirstResult((pageNumber - 1) * pageSize);
+			query.setMaxResults(pageSize);
 			List<Product> result = query.getResultList();
 			t.commit();
 			return result;
