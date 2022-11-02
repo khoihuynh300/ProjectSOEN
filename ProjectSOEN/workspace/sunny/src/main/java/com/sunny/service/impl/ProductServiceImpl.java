@@ -35,6 +35,12 @@ public class ProductServiceImpl implements IProductService {
 		List<Product> result = productDao.searchProductWithPtypeAndName(name, ptype, pageNumber, pageSize);
 		return result;
 	}
+	
+	@Override
+	public List<Product> getProductByPrice(Double start, Double end) {
+		List<Product> result = productDao.getProductByPrice(start, end);
+		return result;
+	}
 
 	@Override
 	public List<Product> getProducts(int pageNumber, int pageSize, Integer ptype) {

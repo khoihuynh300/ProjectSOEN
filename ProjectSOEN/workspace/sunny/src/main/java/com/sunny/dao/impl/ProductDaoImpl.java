@@ -82,6 +82,36 @@ public class ProductDaoImpl implements IProductDao {
 		}
 
 	}
+	
+	@Override
+	public List<Product> getProductByPrice(Double start, Double end){
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+			List<Product> result = new ArrayList<>();
+			if (start != null && end == null) {
+				Query<Product> query = session
+						.createQuery("From Product p WHERE p.Price >= :start ORDER BY p.Price",
+								Product.class)
+						.setParameter("start", start.doubleValue());
+				result = query.getResultList();
+			} else if (start == null && end != null) {
+				Query<Product> query = session
+						.createQuery("From Product p WHERE p.Price <= :end ORDER BY p.Price DESC",
+								Product.class)
+						.setParameter("end", end.doubleValue());
+				result = query.getResultList();
+			} else if (start != null && end != null) {
+				Query<Product> query = session
+						.createQuery("FROM Product p WHERE p.Price BETWEEN :start AND :end ORDER BY p.Price",
+								Product.class)
+						.setParameter("start", start.doubleValue())
+						.setParameter("end", end.doubleValue());
+				result = query.getResultList();
+			}
+			t.commit();
+			return result;
+		}
+	}
 
 	@Override
 	public List<Product> getRecords(int pageNumber, int pageSize, Integer ptype) {

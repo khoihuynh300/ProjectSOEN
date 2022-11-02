@@ -23,18 +23,29 @@ public class HomeController {
 
 	private static final int PAGE_SIZE = 10;
 
-	@GetMapping(value = {"/home", ""})
+	@GetMapping(value = { "/home", "" })
 	@Transactional
-	public ResponseEntity<?> pagingProduct(@RequestParam(required = false, defaultValue = "1") Integer pageNumber, @RequestParam(required = false) Integer ptype) {
+	public ResponseEntity<?> pagingProduct(@RequestParam(required = false, defaultValue = "1") Integer pageNumber,
+			@RequestParam(required = false) Integer ptype) {
 		List<Product> result = productService.getProducts(pageNumber.intValue(), PAGE_SIZE, ptype);
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
-	
+
 	@GetMapping(value = { "/product", "/product/search" })
 	@ResponseBody
 	public ResponseEntity<?> searchProductWithPtypeAndName(@RequestParam(required = false) Integer ptype,
-			@RequestParam(required = false, defaultValue = "") String keyword, @RequestParam(defaultValue = "1") Integer pageNumber ) {
-		List<Product> result = productService.searchProductWithPtypeAndName(keyword, ptype, pageNumber.intValue(), PAGE_SIZE);
+			@RequestParam(required = false, defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "1") Integer pageNumber) {
+		List<Product> result = productService.searchProductWithPtypeAndName(keyword, ptype, pageNumber.intValue(),
+				PAGE_SIZE);
 		return ResponseEntity.status(HttpStatus.OK).body(result);
+	}
+
+	@GetMapping("/product/price")
+	public ResponseEntity<?> getProductByPrice(@RequestParam(required = false) Double start,
+			@RequestParam(required = false) Double end) {
+		List<Product> result = productService.getProductByPrice(start, end);
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+
 	}
 }

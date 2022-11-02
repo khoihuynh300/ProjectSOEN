@@ -10,6 +10,8 @@ public interface IProductDao {
 	List<Product> getAllProduct(int pageNumber, int pageSize);
 
 	List<Product> searchProductWithPtypeAndName(String name, Integer ptype, int pageNumber, int pageSize);
+	
+	List<Product> getProductByPrice(Double start, Double end);
 
 	Product updateProduct(Product product);
 	
