@@ -64,7 +64,7 @@ public class UserServiceImpl implements IUserService {
 	
 	@Override
 	public void updateUser(User user) {
-		userdao.update(user.getAccountName(), user.getPassword());
+		userdao.updateUser(user);
 	}
 
 	@Override
@@ -122,10 +122,6 @@ public class UserServiceImpl implements IUserService {
 	public boolean verifyerRegister(User user, int code) throws Exception {
 		User check1 = userdao.findUserByAccountName(user.getAccountName());
 		// User check2 = userdao.findUserByEmail(user.getEmail());
-
-		if (verifyerCode == null) {
-			throw new Exception("Luan ngu loz");
-		}
 
 		if (check1 != null && code == verifyerCode) {
 			userdao.verifyer(user.getAccountName());
@@ -185,6 +181,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public int checkRoles(User user) {
 		return user.getRoleId().getRoleId();
+	}
+
+	@Override
+	public boolean checkUserInfo(User user) {
+		return userdao.checkUserInfo(user.getUserId());
 	}
 
 }

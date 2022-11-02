@@ -1,6 +1,5 @@
 package com.sunny.api.admin;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
@@ -72,7 +71,7 @@ public class UserAPI {
 //			userServiceImpl.updateUser(user, newPassword);
 //		else
 //			throw new Exception("Bạn không có quyền");
-		userServiceImpl.updateUser(user, newPassword);
+		userServiceImpl.updateUser(user);
 	}
 
 }

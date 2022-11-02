@@ -17,6 +17,8 @@ public interface IUserService {
 	
 	User getUserByAccountName(User user);
 
+	boolean checkUserInfo(User user);
+	
 	void updateUser(User user);
 	
 	void updateUser(User user, String newPassword);

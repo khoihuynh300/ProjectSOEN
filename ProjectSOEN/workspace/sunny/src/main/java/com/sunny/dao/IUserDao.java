@@ -11,6 +11,8 @@ public interface IUserDao {
 	User save(User user);
 
 	void update(String accountName, String password);
+	
+	void updateUser(User user);
 
 	void delete(int id);
 
@@ -23,5 +25,6 @@ public interface IUserDao {
 	List<User> findUserByEmail(String email);
 
 	List<User> getAllUser(int pageNumber, int pageSize);
-
+	
+	boolean checkUserInfo(int userId);
 }

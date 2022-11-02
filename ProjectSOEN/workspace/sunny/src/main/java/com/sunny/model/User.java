@@ -109,4 +109,21 @@ public class User implements Serializable {
 	public void setPhone(String phone) {
 		Phone = phone;
 	}
+
+	public User(int userId, String accountName, String email, String phone, Role roleId, boolean isDeleted,
+			boolean enable) {
+		super();
+		UserId = userId;
+		AccountName = accountName;
+		this.email = email;
+		Phone = phone;
+		RoleId = roleId;
+		this.isDeleted = isDeleted;
+		this.enable = enable;
+	}
+
+	public User() {
+	}
+	
+	
 }

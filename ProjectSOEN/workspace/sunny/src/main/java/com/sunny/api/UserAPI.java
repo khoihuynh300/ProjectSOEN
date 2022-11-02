@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.apache.http.client.ClientProtocolException;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sunny.model.GooglePojo;
+import com.sunny.model.Product;
 import com.sunny.model.User;
 import com.sunny.service.IUserService;
 import com.sunny.utils.GoogleUtils;
@@ -36,7 +39,7 @@ public class UserAPI {
 	public void resetPassword(@RequestBody User user, @RequestParam(defaultValue = "") Integer code) throws Exception {
 		userservice.resetPassword(user, code);
 	}
-	
+
 	@GetMapping("/user/reset-password")
 	public void resetPasswordForm() throws Exception {
 	}
@@ -44,7 +47,7 @@ public class UserAPI {
 	@GetMapping("/user/forget-password")
 	public void forgetPasswordForm(HttpServletResponse response) throws Exception {
 	}
-	
+
 	@PostMapping("/user/forget-password")
 	public void forgetPassword(@RequestBody User user, HttpServletResponse response) throws Exception {
 		userservice.sendEmailVerify(user);
@@ -53,29 +56,33 @@ public class UserAPI {
 
 	@PutMapping("/user/register/verifyer")
 	@Transactional
-	public boolean verifyerRegister(@RequestBody User user, @RequestParam(defaultValue = "") Integer code)
+	public boolean verifyerRegister(@RequestParam(defaultValue = "") Integer code, HttpSession session)
 			throws Exception {
-		return userservice.verifyerRegister(user, code.intValue());
+		if (session != null) {
+			User userResp = (User) session.getAttribute("user");
+			return userservice.verifyerRegister(userResp, code.intValue());
+		}
+		return false;
 	}
 
 	@GetMapping("/user/register/verifyer")
 	@Transactional
-	public void verifyerRegisterForm()
-			throws Exception {
+	public void verifyerRegisterForm() throws Exception {
 	}
-	
+
 	@PostMapping("/user/register")
 	@Transactional
-	public void createUser(@Validated @RequestBody User user, HttpServletResponse response) throws Exception {
-		User userResp= userservice.getUserByAccountName(user);
-		if(userResp != null && userResp.isEnable() == false) {
+	public void createUser(@Validated @RequestBody User user, HttpServletResponse response, HttpSession session) throws Exception {
+		User userResp = userservice.getUserByAccountName(user);
+		if (userResp != null && userResp.isEnable() == false) {
+			session.setAttribute("user", userResp);
 			userservice.sendEmailVerify(user);
 			response.sendRedirect("/user/register/verifyer");
-		}
-		else if(userResp != null && userResp.isEnable() == true) {
+		} else if (userResp != null && userResp.isEnable() == true) {
 			throw new Exception("User exist!");
 		} else {
-			userservice.createUser(user);
+			userResp = userservice.createUser(user);
+			session.setAttribute("user", userResp);
 			userservice.sendEmailVerify(user);
 			response.sendRedirect("/user/register/verifyer");
 		}
@@ -84,9 +91,14 @@ public class UserAPI {
 
 	@PutMapping("/user")
 	@Transactional
-	public void updateUser(@RequestBody User user, HttpSession session) {
-		if(session != null )
-			userservice.updateUser(user);
+	public void updateUser(@RequestParam String newPassword, @RequestParam String oldPassword, HttpSession session) {
+		if (session != null) {
+			User user = (User) session.getAttribute("user");
+			if (BCrypt.checkpw(oldPassword, user.getPassword()) == true) {
+				user.setPassword(newPassword);
+				userservice.updateUser(user);
+			}
+		}
 	}
 
 //	@GetMapping("/user")
@@ -111,21 +123,27 @@ public class UserAPI {
 	public void deleteUser(@RequestBody User user) {
 		userservice.deleteUser(user);
 	}
-	
+
 	@GetMapping("/login")
 	public void loginForm() {
-		
+
 	}
 
 	@PostMapping("/login")
 	@Transactional
-	public void verifyerUser(@RequestBody User user, HttpSession session, HttpServletResponse response) throws IOException {
+	public void verifyerUser(@RequestBody User user, HttpSession session, HttpServletResponse response)
+			throws IOException {
 		User userResp = userservice.verifyerLogin(user.getAccountName(), user.getPassword());
 		session.setAttribute("user", userResp);
-		if(userResp == null) 
+		if (userResp == null || userResp.isDeleted() == true)
 			response.sendRedirect("/login");
-		else
-			response.sendRedirect("/home");
+		else {
+			if (userservice.checkUserInfo(userResp))
+				response.sendRedirect("/home");
+			else
+				//Sua lai trang cap nhat thong tin nguoi dung
+				response.sendRedirect("/info");
+		}
 	}
 
 	@GetMapping("/logout")
@@ -146,10 +164,14 @@ public class UserAPI {
 			String accessToken = GoogleUtils.getToken(code);
 			GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
 			User userResp = userservice.createOrLogin(googlePojo);
-			if(userResp == null) throw new Exception("Tài khoản đã tồn tại");
+			if (userResp == null)
+				throw new Exception("Tài khoản đã tồn tại");
 			else {
-			session.setAttribute("user", userResp);
-			response.sendRedirect("/home");
+				session.setAttribute("user", userResp);
+				if (userservice.checkUserInfo(userResp))
+					response.sendRedirect("/home");
+				else
+					response.sendRedirect("/info");
 			}
 		}
 	}
