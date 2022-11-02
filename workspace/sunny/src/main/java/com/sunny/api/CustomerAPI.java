@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sunny.model.Customer;
 import com.sunny.service.ICustomerService;
 import com.sunny.service.impl.CustomerServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/customer")
@@ -24,20 +25,20 @@ public class CustomerAPI {
 
 	@PostMapping("/create")
 	@Transactional
-	public Customer create(@RequestBody Customer customer) {
+	public Result create(@RequestBody Customer customer) {
 		return customerService.createCustomer(customer);
 	}
 
 	@PutMapping("/update")
 	@Transactional
-	public void update(@RequestBody Customer customer) {
-		customerService.updateCustomer(customer);
+	public Result update(@RequestBody Customer customer) {
+		return customerService.updateCustomer(customer);
 	}
 
 	@DeleteMapping("/delete")
 	@Transactional
-	public void delete(@RequestBody Customer customer) {
-		customerService.deleteCustomer(customer);
+	public Result delete(@RequestBody Customer customer) {
+		return customerService.deleteCustomer(customerService.getCustomerbyCusId(customer.getCusId()));
 	}
 
 //	@GetMapping("/get-all-customer")

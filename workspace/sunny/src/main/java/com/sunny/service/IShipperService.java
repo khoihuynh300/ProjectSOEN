@@ -3,15 +3,19 @@ package com.sunny.service;
 import java.util.List;
 
 import com.sunny.model.Shipper;
+import com.sunny.service.impl.Result;
 
 public interface IShipperService {
-	Shipper createShipper(Shipper shipper);
+	Result createShipper(Shipper shipper);
 
 	List<Shipper> getAllShipper();
 
-	void updateShipper(Shipper shipper);
+	Result updateShipper(Shipper shipper);
 
-	void activateShipper(Shipper shipper);
+	Result activateShipper(Shipper shipper);
 
-	void deleteShipper(Shipper shipper);
+	Result deleteShipper(Shipper shipper);
+
+	Shipper getShipperById(int id);
+
 }

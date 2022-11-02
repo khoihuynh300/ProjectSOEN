@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sunny.model.Employee;
 import com.sunny.service.IEmployeeService;
 import com.sunny.service.impl.EmployeeServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/employee")
@@ -24,20 +25,20 @@ public class EmployeeAPI {
 
 	@PostMapping("/create")
 	@Transactional
-	public Employee create(@RequestBody Employee employee) {
+	public Result create(@RequestBody Employee employee) {
 		return employeeService.createEmployee(employee);
 	}
 
 	@PutMapping("/update")
 	@Transactional
-	public void update(@RequestBody Employee employee) {
-		employeeService.updateEmployee(employee);
+	public Result update(@RequestBody Employee employee) {
+		return employeeService.updateEmployee(employee);
 	}
 
 	@DeleteMapping("/delete")
 	@Transactional
-	public void delete(@RequestBody Employee employee) {
-		employeeService.deleteEmployee(employee);
+	public Result delete(@RequestBody Employee employee) {
+		return employeeService.deleteEmployee(employeeService.getEmployeebyEmpId(employee.getEmpId()));
 	}
 
 	@GetMapping("/get-all-employee")

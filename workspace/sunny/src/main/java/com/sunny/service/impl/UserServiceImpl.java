@@ -31,7 +31,7 @@ public class UserServiceImpl implements IUserService {
 					"Mật khẩu hợp lệ phải:\n+Có ít nhất 8 ký tự\n+Có ít nhất 1 chữ thường\n+Có ít nhất 1 chữ hoa\n+Có ít nhất 1 chữ số\n+Có ít nhất 1 ký tự đặc biệt.");
 		}
 		userDao.createUser(user);
-		return new Result(true, "Tạo tài khoản thành công!");
+		return new Result(true, "Create User successfully!!!");
 	}
 
 	@Override

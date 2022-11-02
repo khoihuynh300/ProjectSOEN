@@ -32,7 +32,7 @@ public class UserAPI {
 	@DeleteMapping("/delete")
 	@Transactional
 	public void deleteUser(@RequestBody User user) {
-		userService.deleteUser(user);
+		userService.deleteUser(userService.getUserById(user.getUserId()));
 	}
 
 	@GetMapping("/get")

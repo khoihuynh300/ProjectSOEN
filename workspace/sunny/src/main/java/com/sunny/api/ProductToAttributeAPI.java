@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sunny.model.ProductToAttribute;
 import com.sunny.service.IProductToAttributeService;
 import com.sunny.service.impl.ProductToAttributeServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/productToAttribute")
@@ -23,21 +24,20 @@ public class ProductToAttributeAPI {
 
 	@PostMapping("/add")
 	@ResponseBody
-	public ProductToAttribute addProductToAttribute(@RequestBody ProductToAttribute productToAttribute)
-			throws Exception {
+	public Result addProductToAttribute(@RequestBody ProductToAttribute productToAttribute) throws Exception {
 		return productToAttributeService.addProductToAttribute(productToAttribute);
 	}
 
 	@DeleteMapping("/delete")
 	@ResponseBody
-	public void deleteProductToAttribute(@RequestBody ProductToAttribute productToAttribute) {
-		productToAttributeService.deleteProductToAttribute(productToAttribute.getId());
+	public Result deleteProductToAttribute(@RequestBody ProductToAttribute productToAttribute) {
+		return productToAttributeService.deleteProductToAttribute(productToAttribute.getId());
 	}
 
 	@PutMapping("/edit")
 	@ResponseBody
-	public void editProductToAttribute(@RequestBody ProductToAttribute productToAttribute) {
-		productToAttributeService.editProductToAttribute(productToAttribute.getId());
+	public Result editProductToAttribute(@RequestBody ProductToAttribute productToAttribute) {
+		return productToAttributeService.editProductToAttribute(productToAttribute.getId());
 	}
 
 	/*

@@ -11,18 +11,21 @@ public class ProductToAttributeServiceImpl implements IProductToAttributeService
 	private IProductToAttributeDao productToAttributeDao = new ProductToAttributeImpl();
 
 	@Override
-	public ProductToAttribute addProductToAttribute(ProductToAttribute productToAttribute) throws Exception {
-		return productToAttributeDao.addProductToAttribute(productToAttribute);
+	public Result addProductToAttribute(ProductToAttribute productToAttribute) throws Exception {
+		productToAttributeDao.addProductToAttribute(productToAttribute);
+		return new Result(true, "Create ProductToAttribute successfully!!!");
 	}
 
 	@Override
-	public void deleteProductToAttribute(int id) {
+	public Result deleteProductToAttribute(int id) {
 		productToAttributeDao.deleteProductToAttribute(id);
+		return new Result(true, "Delete ProductToAttribute successfully!!!");
 	}
 
 	@Override
-	public void editProductToAttribute(int AtrId) {
+	public Result editProductToAttribute(int AtrId) {
 		productToAttributeDao.editProductToAttribute(AtrId);
+		return new Result(true, "Update ProductToAttribute successfully!!!");
 	}
 
 	@Override

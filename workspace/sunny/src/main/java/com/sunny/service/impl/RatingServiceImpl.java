@@ -14,8 +14,9 @@ public class RatingServiceImpl implements IRatingService {
 	private IRatingDao ratingDao = new RatingDaoImpl();
 
 	@Override
-	public Rating createRating(Rating rating) {
-		return ratingDao.createRating(rating);
+	public Result createRating(Rating rating) {
+		ratingDao.createRating(rating);
+		return new Result(true, "Create Rating successfully!!!");
 	}
 
 	@Override
@@ -24,8 +25,9 @@ public class RatingServiceImpl implements IRatingService {
 	}
 
 	@Override
-	public void deleteRating(Rating rating) {
+	public Result deleteRating(Rating rating) {
 		ratingDao.deleteRating(rating);
+		return new Result(true, "Delete Rating successfully!!!");
 	}
 
 	@Override
@@ -36,6 +38,11 @@ public class RatingServiceImpl implements IRatingService {
 	@Override
 	public List<Rating> getByUserId(User user) {
 		return ratingDao.getByUserId(user);
+	}
+
+	@Override
+	public Rating getRatingById(int id) {
+		return ratingDao.getRatingById(id);
 	}
 
 }

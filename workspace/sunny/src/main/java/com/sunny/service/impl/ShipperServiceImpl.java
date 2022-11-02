@@ -12,8 +12,9 @@ public class ShipperServiceImpl implements IShipperService {
 	private IShipperDao shipperDao = new ShipperDaoImpl();
 
 	@Override
-	public Shipper createShipper(Shipper shipper) {
-		return shipperDao.createShipper(shipper);
+	public Result createShipper(Shipper shipper) {
+		shipperDao.createShipper(shipper);
+		return new Result(true, "Create Shipper successfully!!!");
 	}
 
 	@Override
@@ -22,18 +23,26 @@ public class ShipperServiceImpl implements IShipperService {
 	}
 
 	@Override
-	public void updateShipper(Shipper shipper) {
+	public Result updateShipper(Shipper shipper) {
 		shipperDao.updateShipper(shipper);
+		return new Result(true, "Update Shipper successfully!!!");
 	}
 
 	@Override
-	public void activateShipper(Shipper shipper) {
+	public Result activateShipper(Shipper shipper) {
 		shipperDao.activateShipper(shipper);
+		return new Result(true, "Activate Shipper successfully!!!");
 	}
 
 	@Override
-	public void deleteShipper(Shipper shipper) {
+	public Result deleteShipper(Shipper shipper) {
 		shipperDao.deleteShipper(shipper);
+		return new Result(true, "Delete Shipper successfully!!!");
+	}
+
+	@Override
+	public Shipper getShipperById(int id) {
+		return shipperDao.getShipperById(id);
 	}
 
 }

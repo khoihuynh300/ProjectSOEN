@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sunny.model.ProductType;
 import com.sunny.service.IProductTypeService;
 import com.sunny.service.impl.ProductTypeServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/producttype")
@@ -24,7 +25,7 @@ public class ProductTypeAPI {
 
 	@PostMapping("/create")
 	@Transactional
-	public ProductType createProductType(@RequestBody ProductType productType) {
+	public Result createProductType(@RequestBody ProductType productType) {
 		return productTypeService.createProductType(productType);
 	}
 
@@ -37,14 +38,14 @@ public class ProductTypeAPI {
 
 	@DeleteMapping("/delete")
 	@Transactional
-	public void deleteProductType(@RequestBody ProductType productType) {
-		productTypeService.deleteProductType(productType);
+	public Result deleteProductType(@RequestBody ProductType productType) {
+		return productTypeService.deleteProductType(productTypeService.getProductTypeById(productType.getPtype()));
 	}
 
 	@PutMapping("/update")
 	@Transactional
-	public void updateProductType(@RequestBody ProductType productType) {
-		productTypeService.updateProductType(productType);
+	public Result updateProductType(@RequestBody ProductType productType) {
+		return productTypeService.updateProductType(productType);
 	}
 
 }

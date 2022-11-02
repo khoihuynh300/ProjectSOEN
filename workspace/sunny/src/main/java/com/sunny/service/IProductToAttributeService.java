@@ -3,13 +3,14 @@ package com.sunny.service;
 import java.util.List;
 
 import com.sunny.model.ProductToAttribute;
+import com.sunny.service.impl.Result;
 
 public interface IProductToAttributeService {
-	ProductToAttribute addProductToAttribute(ProductToAttribute productToAttribute) throws Exception;
+	Result addProductToAttribute(ProductToAttribute productToAttribute) throws Exception;
 
-	void deleteProductToAttribute(int id);
+	Result deleteProductToAttribute(int id);
 
-	void editProductToAttribute(int AtrId);
+	Result editProductToAttribute(int AtrId);
 
 	List<ProductToAttribute> getAllProducttoAttributebyPid(int Pid);
 }

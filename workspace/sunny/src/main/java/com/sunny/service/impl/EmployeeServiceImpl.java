@@ -12,20 +12,21 @@ public class EmployeeServiceImpl implements IEmployeeService {
 	private IEmployeeDao employeeDao = new EmployeeDaoImpl();
 
 	@Override
-	public Employee createEmployee(Employee employee) {
-		return employeeDao.createEmployee(employee);
+	public Result createEmployee(Employee employee) {
+		employeeDao.createEmployee(employee);
+		return new Result(true, "Create Employee successfully!!!");
 	}
 
 	@Override
-	public void deleteEmployee(Employee employee) {
+	public Result deleteEmployee(Employee employee) {
 		employeeDao.deleteEmployee(employee);
-
+		return new Result(true, "Delete Employee successfully!!!");
 	}
 
 	@Override
-	public void updateEmployee(Employee employee) {
+	public Result updateEmployee(Employee employee) {
 		employeeDao.updateEmployee(employee);
-
+		return new Result(true, "Update Employee successfully!!!");
 	}
 
 	@Override

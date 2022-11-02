@@ -10,38 +10,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sunny.dao.IInvoiceDao;
-import com.sunny.dao.impl.InvoiceDaoImpl;
 import com.sunny.model.Customer;
 import com.sunny.model.Invoice;
 import com.sunny.model.Orders;
+import com.sunny.service.IInvoiceService;
+import com.sunny.service.impl.InvoiceServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/invoice")
 public class InvoiceAPI {
-	private IInvoiceDao invoiceDao = new InvoiceDaoImpl();
+	private IInvoiceService invoiceService = new InvoiceServiceImpl();
 
 	@GetMapping("/get-by-orderId")
 	@Transactional
 	public Invoice getInvoiceByOrderId(@RequestBody Orders order) {
-		return invoiceDao.getInvoiceByOrderId(order);
+		return invoiceService.getInvoiceByOrderId(order);
 	}
 
 	@GetMapping("/get-by-customerId")
 	@Transactional
 	public List<Invoice> getInvoiceByCustomerId(@RequestBody Customer customer) {
-		return invoiceDao.getInvoiceByCustomerId(customer);
+		return invoiceService.getInvoiceByCustomerId(customer);
 	}
 
 	@GetMapping("/get")
 	@Transactional
 	public List<Invoice> getAllInvoice() {
-		return invoiceDao.getAllInvoice();
+		return invoiceService.getAllInvoice();
 	}
 
 	@PostMapping("/create")
 	@Transactional
-	public Invoice createInvoice(@RequestBody Orders order) {
-		return invoiceDao.createInvoice(order);
+	public Result createInvoice(@RequestBody Orders order) {
+		return invoiceService.createInvoice(order);
 	}
 }

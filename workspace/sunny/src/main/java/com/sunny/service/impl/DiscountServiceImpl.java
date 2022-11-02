@@ -15,8 +15,9 @@ public class DiscountServiceImpl implements IDiscountService {
 	private IDiscountDao discountDao = new DiscountDaoImpl();
 
 	@Override
-	public Discount createDiscount(Discount discount) {
-		return discountDao.createDiscount(discount);
+	public Result createDiscount(Discount discount) {
+		discountDao.createDiscount(discount);
+		return new Result(true, "Create Discount successfully!!!");
 	}
 
 	@Override
@@ -25,13 +26,15 @@ public class DiscountServiceImpl implements IDiscountService {
 	}
 
 	@Override
-	public void updateDiscount(Discount discount) {
+	public Result updateDiscount(Discount discount) {
 		discountDao.updateDiscount(discount);
+		return new Result(true, "Update Discount successfully!!!");
 	}
 
 	@Override
-	public void deleteDiscount(Discount discount) {
+	public Result deleteDiscount(Discount discount) {
 		discountDao.deleteDiscount(discount);
+		return new Result(true, "Delete Discount successfully!!!");
 	}
 
 	@Override

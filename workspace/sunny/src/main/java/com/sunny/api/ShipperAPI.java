@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sunny.model.Shipper;
 import com.sunny.service.IShipperService;
+import com.sunny.service.impl.Result;
 import com.sunny.service.impl.ShipperServiceImpl;
 
 @RestController
@@ -23,7 +24,7 @@ public class ShipperAPI {
 
 	@PostMapping("/create")
 	@Transactional
-	public Shipper createShipper(@RequestBody Shipper shipper) {
+	public Result createShipper(@RequestBody Shipper shipper) {
 		return shipperService.createShipper(shipper);
 	}
 
@@ -35,19 +36,19 @@ public class ShipperAPI {
 
 	@PutMapping("/update")
 	@Transactional
-	public void updateShipper(@RequestBody Shipper shipper) {
-		shipperService.updateShipper(shipper);
+	public Result updateShipper(@RequestBody Shipper shipper) {
+		return shipperService.updateShipper(shipper);
 	}
 
 	@PutMapping("/activate")
 	@Transactional
-	public void activateShipper(@RequestBody Shipper shipper) {
-		shipperService.activateShipper(shipper);
+	public Result activateShipper(@RequestBody Shipper shipper) {
+		return shipperService.activateShipper(shipper);
 	}
 
 	@DeleteMapping("/delete")
 	@Transactional
-	public void deleteShipper(@RequestBody Shipper shipper) {
-		shipperService.deleteShipper(shipper);
+	public Result deleteShipper(@RequestBody Shipper shipper) {
+		return shipperService.deleteShipper(shipperService.getShipperById(shipper.getShipperId()));
 	}
 }

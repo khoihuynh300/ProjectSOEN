@@ -65,4 +65,13 @@ public class RatingDaoImpl implements IRatingDao {
 			return result;
 		}
 	}
+
+	@Override
+	public Rating getRatingById(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Rating result = session.get(Rating.class, id);
+			session.close();
+			return result;
+		}
+	}
 }

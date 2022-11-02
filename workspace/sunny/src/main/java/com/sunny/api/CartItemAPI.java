@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sunny.model.CartItem;
 import com.sunny.service.ICartItemService;
 import com.sunny.service.impl.CartItemServiceImpl;
-import com.sunny.service.impl.CartServiceImpl;
-import com.sunny.service.impl.ProductServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/cartitem")
@@ -25,22 +24,16 @@ public class CartItemAPI {
 
 	@PostMapping("/add-to-cart")
 	@Transactional
-	public void addToCart(@RequestBody CartItem cartItem) {
-		CartServiceImpl cartServiceImpl = new CartServiceImpl();
-		ProductServiceImpl productServiceImpl = new ProductServiceImpl();
-		cartItem.setCartId(cartServiceImpl.getCartById(cartItem.getCartId().getCartId()));
-		cartItem.setProductId(productServiceImpl.getProductById(cartItem.getProductId().getPid()));
-		cartItemService.addToCart(cartItem);
+	public Result addToCart(@RequestBody CartItem cartItem) {
+		return cartItemService.addToCart(
+				cartItemService.getCartItem(cartItem.getCartId().getCartId(), cartItem.getProductId().getPid()));
 	}
 
 	@PostMapping("/remove-item")
 	@Transactional
-	public void removeFromCart(@RequestBody CartItem cartItem) {
-//		CartServiceImpl cartServiceImpl = new CartServiceImpl();
-//		ProductServiceImpl productServiceImpl = new ProductServiceImpl();
-//		cartItem.setCartId(cartServiceImpl.getCartById(cartItem.getCartId().getCartId()));
-//		cartItem.setProductId(productServiceImpl.getProductById(cartItem.getProductId().getPid()));
-		cartItemService.removeFromCart(cartItem);
+	public Result removeFromCart(@RequestBody CartItem cartItem) {
+		return cartItemService.removeFromCart(
+				cartItemService.getCartItem(cartItem.getCartId().getCartId(), cartItem.getProductId().getPid()));
 	}
 
 	@GetMapping("/get-all-cartitem")
@@ -51,7 +44,7 @@ public class CartItemAPI {
 
 	@DeleteMapping("/remove-list")
 	@Transactional
-	public void removeSelectedCartItem(@RequestBody List<CartItem> listCartItem) {
-		cartItemService.removeSelectedCartItem(listCartItem);
+	public Result removeSelectedCartItem(@RequestBody List<CartItem> listCartItem) {
+		return cartItemService.removeSelectedCartItem(listCartItem);
 	}
 }

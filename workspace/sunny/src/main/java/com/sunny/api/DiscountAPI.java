@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sunny.model.Discount;
 import com.sunny.service.IDiscountService;
 import com.sunny.service.impl.DiscountServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/discount")
@@ -24,7 +25,7 @@ public class DiscountAPI {
 
 	@PostMapping("/create")
 	@Transactional
-	public Discount createDiscount(@RequestBody Discount discount) {
+	public Result createDiscount(@RequestBody Discount discount) {
 		return discountService.createDiscount(discount);
 	}
 
@@ -37,13 +38,13 @@ public class DiscountAPI {
 
 	@PutMapping("/update")
 	@Transactional
-	public void updateDiscount(@RequestBody Discount discount) {
-		discountService.updateDiscount(discount);
+	public Result updateDiscount(@RequestBody Discount discount) {
+		return discountService.updateDiscount(discount);
 	}
 
 	@DeleteMapping("/delete")
 	@Transactional
-	public void deleteDiscount(@RequestBody Discount discount) {
-		discountService.deleteDiscount(discount);
+	public Result deleteDiscount(@RequestBody Discount discount) {
+		return discountService.deleteDiscount(discountService.getDiscountById(discount.getDiscountId()));
 	}
 }

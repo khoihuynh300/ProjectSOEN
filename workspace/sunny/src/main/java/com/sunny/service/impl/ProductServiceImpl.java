@@ -14,8 +14,9 @@ public class ProductServiceImpl implements IProductService {
 	private IProductDao productDao = new ProductDaoImpl();
 
 	@Override
-	public Product createProduct(Product product) {
-		return productDao.createProduct(product);
+	public Result createProduct(Product product) {
+		productDao.createProduct(product);
+		return new Result(true, "Create Product successfully!!!");
 	}
 
 	@Override
@@ -29,13 +30,15 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public void updateProduct(Product product) {
+	public Result updateProduct(Product product) {
 		productDao.updateProduct(product);
+		return new Result(true, "Update Product successfully!!!");
 	}
 
 	@Override
-	public void deleteProduct(Product product) {
+	public Result deleteProduct(Product product) {
 		productDao.deleteProduct(product);
+		return new Result(true, "Delete Product successfully!!!");
 	}
 
 	@Override

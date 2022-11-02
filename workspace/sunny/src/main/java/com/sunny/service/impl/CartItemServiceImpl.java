@@ -17,13 +17,15 @@ public class CartItemServiceImpl implements ICartItemService {
 	}
 
 	@Override
-	public void addToCart(CartItem cartItem) {
+	public Result addToCart(CartItem cartItem) {
 		cartItemDao.addToCart(cartItem);
+		return new Result(true, "Add to cart successfully!!!");
 	}
 
 	@Override
-	public void removeFromCart(CartItem cartItem) {
+	public Result removeFromCart(CartItem cartItem) {
 		cartItemDao.removeFromCart(cartItem);
+		return new Result(true, "Remove from cart successfully!!!");
 	}
 
 	@Override
@@ -32,8 +34,14 @@ public class CartItemServiceImpl implements ICartItemService {
 	}
 
 	@Override
-	public void removeSelectedCartItem(List<CartItem> listCartItem) {
+	public Result removeSelectedCartItem(List<CartItem> listCartItem) {
 		cartItemDao.removeSelectedCartItem(listCartItem);
+		return new Result(true, "Remove from cart successfully!!!");
+	}
+
+	@Override
+	public CartItem getCartItem(int cartId, int pId) {
+		return cartItemDao.getCartItem(cartId, pId);
 	}
 
 }

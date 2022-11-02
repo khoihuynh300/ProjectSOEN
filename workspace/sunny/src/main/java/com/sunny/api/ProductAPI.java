@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sunny.model.Product;
 import com.sunny.service.IProductService;
 import com.sunny.service.impl.ProductServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/product")
@@ -27,7 +28,7 @@ public class ProductAPI {
 
 	@PostMapping("/create")
 	@Transactional
-	public Product createProduct(@RequestBody Product product) {
+	public Result createProduct(@RequestBody Product product) {
 		return productService.createProduct(product);
 	}
 
@@ -40,14 +41,14 @@ public class ProductAPI {
 
 	@PutMapping("/update")
 	@Transactional
-	public void updateProduct(@RequestBody Product product) {
-		productService.updateProduct(product);
+	public Result updateProduct(@RequestBody Product product) {
+		return productService.updateProduct(product);
 	}
 
 	@DeleteMapping("/delete")
 	@Transactional
-	public void deleteProduct(@RequestBody Product product) {
-		productService.deleteProduct(product);
+	public Result deleteProduct(@RequestBody Product product) {
+		return productService.deleteProduct(productService.getProductById(product.getPid()));
 	}
 
 	@GetMapping("/recommended")

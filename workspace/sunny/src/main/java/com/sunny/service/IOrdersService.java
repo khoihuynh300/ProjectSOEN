@@ -5,13 +5,14 @@ import java.util.List;
 import com.sunny.model.CartItem;
 import com.sunny.model.Orders;
 import com.sunny.model.PaymentMethod;
+import com.sunny.service.impl.Result;
 
 public interface IOrdersService {
 
-	Orders createOrder(String address, PaymentMethod paymentMethod, List<CartItem> listCartItem);
+	Result createOrder(String address, PaymentMethod paymentMethod, List<CartItem> listCartItem);
 
 	List<Orders> getAllOrders();
 
-	void updateStatus(Orders order);
+	Result updateStatus(Orders order);
 
 }

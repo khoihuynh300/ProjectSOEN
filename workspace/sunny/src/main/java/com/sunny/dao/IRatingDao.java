@@ -18,4 +18,6 @@ public interface IRatingDao {
 
 	List<Rating> getByUserId(User user);
 
+	Rating getRatingById(int id);
+
 }

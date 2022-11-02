@@ -14,6 +14,7 @@ import com.sunny.model.OrderDetail;
 import com.sunny.model.Orders;
 import com.sunny.service.IOrderDetailService;
 import com.sunny.service.impl.OrderDetailServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/orderdetail")
@@ -28,7 +29,7 @@ public class OrderDetailAPI {
 
 	@PutMapping("/update")
 	@Transactional
-	public void updateStatus(@RequestBody OrderDetail orderDetail) {
-		orderDetailService.updateStatus(orderDetail);
+	public Result updateStatus(@RequestBody OrderDetail orderDetail) {
+		return orderDetailService.updateStatus(orderDetail);
 	}
 }

@@ -17,7 +17,8 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
 	}
 
 	@Override
-	public void updateStatus(OrderDetail Id) {
+	public Result updateStatus(OrderDetail Id) {
 		orderDetailDao.updateStatus(Id);
+		return new Result(true, "Update OrderDetail successfully!!!");
 	}
 }

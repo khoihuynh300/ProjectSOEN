@@ -3,15 +3,16 @@ package com.sunny.service;
 import java.util.List;
 
 import com.sunny.model.Discount;
+import com.sunny.service.impl.Result;
 
 public interface IDiscountService {
-	Discount createDiscount(Discount discount);
+	Result createDiscount(Discount discount);
 
 	List<Discount> getAllDiscount();
 
-	void updateDiscount(Discount discount);
+	Result updateDiscount(Discount discount);
 
-	void deleteDiscount(Discount discount);
+	Result deleteDiscount(Discount discount);
 
 	Discount getDiscountById(int id);
 }

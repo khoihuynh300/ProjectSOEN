@@ -3,17 +3,18 @@ package com.sunny.service;
 import java.util.List;
 
 import com.sunny.model.Product;
+import com.sunny.service.impl.Result;
 
 public interface IProductService {
-	Product createProduct(Product product);
+	Result createProduct(Product product);
 
 	List<Product> getAllProductByPtype(int Ptype);
 
 	List<Product> getAllProduct();
 
-	void updateProduct(Product product);
+	Result updateProduct(Product product);
 
-	void deleteProduct(Product product);
+	Result deleteProduct(Product product);
 
 	Product getProductById(int id);
 

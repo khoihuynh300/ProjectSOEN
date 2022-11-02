@@ -48,9 +48,11 @@ public class ProductAttributeDaoImpl implements IProductAttributeDao {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction transaction = session.beginTransaction();
 
-			ProductAttribute productAttribute = session.get(ProductAttribute.class, AtrId);
-
-			session.remove(productAttribute);
+			Query query = session
+					.createQuery("update ProductAttribute set isDeleted = :isDeleted" + " where atrId = :atrId");
+			query.setParameter("isDeleted", true);
+			query.setParameter("atrId", AtrId);
+			query.executeUpdate();
 
 			transaction.commit();
 			session.close();

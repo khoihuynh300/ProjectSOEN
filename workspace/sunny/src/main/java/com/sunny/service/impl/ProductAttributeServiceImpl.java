@@ -11,8 +11,9 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	private IProductAttributeDao ProductAttributeDao = new ProductAttributeDaoImpl();
 
 	@Override
-	public ProductAttribute addProductAttribute(ProductAttribute productAttribute) {
-		return ProductAttributeDao.addProductAttribute(productAttribute);
+	public Result addProductAttribute(ProductAttribute productAttribute) {
+		ProductAttributeDao.addProductAttribute(productAttribute);
+		return new Result(true, "Create ProductAttribute successfully!!!");
 	}
 
 	@Override
@@ -21,9 +22,9 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	}
 
 	@Override
-	public void delete(int AtrId) {
+	public Result delete(int AtrId) {
 		ProductAttributeDao.delete(AtrId);
-
+		return new Result(true, "Delete ProductAttribute successfully!!!");
 	}
 
 }

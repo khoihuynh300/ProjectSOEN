@@ -17,6 +17,7 @@ import com.sunny.model.Orders;
 import com.sunny.model.PaymentMethod;
 import com.sunny.service.IOrdersService;
 import com.sunny.service.impl.OrdersServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/orders")
@@ -25,7 +26,7 @@ public class OrdersAPI {
 
 	@PostMapping("/create")
 	@Transactional
-	public Orders createOrder(@RequestPart String address, @RequestPart PaymentMethod paymentMethod,
+	public Result createOrder(@RequestPart String address, @RequestPart PaymentMethod paymentMethod,
 			@RequestPart List<CartItem> listCartItem) {
 		return ordersService.createOrder(address, paymentMethod, listCartItem);
 	}
@@ -38,7 +39,7 @@ public class OrdersAPI {
 
 	@PutMapping("/update")
 	@Transactional
-	public void updateStatus(@RequestBody Orders order) {
-		ordersService.updateStatus(order);
+	public Result updateStatus(@RequestBody Orders order) {
+		return ordersService.updateStatus(order);
 	}
 }

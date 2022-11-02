@@ -32,12 +32,8 @@ public class CartItemDaoImpl implements ICartItemDao {
 		if (existCartItem(cartItem) == true) {
 			try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 				Transaction t = session.beginTransaction();
-				String hql = "FROM CartItem where CartId = :cartId AND Pid = : pid";
-				CartItem cartItemRes = session.createQuery(hql, CartItem.class)
-						.setParameter("cartId", cartItem.getCartId()).setParameter("pid", cartItem.getProductId())
-						.uniqueResult();
-				cartItemRes.setQuantity(1 + cartItemRes.getQuantity());
-				session.update(cartItemRes);
+				cartItem.setQuantity(1 + cartItem.getQuantity());
+				session.update(cartItem);
 				t.commit();
 				session.close();
 			}
@@ -72,16 +68,14 @@ public class CartItemDaoImpl implements ICartItemDao {
 	public void removeFromCart(CartItem cartItem) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction t = session.beginTransaction();
-			String hql = "FROM CartItem where CartId = :cartId AND Pid = : pid";
-			CartItem cartItemRes = session.createQuery(hql, CartItem.class).setParameter("cartId", cartItem.getCartId())
-					.setParameter("pid", cartItem.getProductId()).uniqueResult();
-			cartItemRes.setQuantity(cartItemRes.getQuantity() - 1);
-			session.update(cartItemRes);
-			if (cartItemRes.getQuantity() == 0) {
-				session.delete(cartItemRes);
+			if (cartItem.getQuantity() == 1) {
+				session.delete(cartItem);
 				Cart cart = cartItem.getCartId();
 				cart.setAmountUniqueItem(cart.getAmountUniqueItem() - 1);
 				session.update(cart);
+			} else {
+				cartItem.setQuantity(cartItem.getQuantity() - 1);
+				session.update(cartItem);
 			}
 			t.commit();
 			session.close();
@@ -106,6 +100,17 @@ public class CartItemDaoImpl implements ICartItemDao {
 			session.update(cart);
 			t.commit();
 			session.close();
+		}
+	}
+
+	@Override
+	public CartItem getCartItem(int cartId, int pId) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			String hql = "FROM CartItem where CartId.CartId = :cartId AND ProductId.Pid = : pid";
+			CartItem cartItemRes = session.createQuery(hql, CartItem.class).setParameter("cartId", cartId)
+					.setParameter("pid", pId).uniqueResult();
+			session.close();
+			return cartItemRes;
 		}
 	}
 }

@@ -14,6 +14,7 @@ import com.sunny.model.Invoice;
 import com.sunny.model.InvoiceItem;
 import com.sunny.service.IInvoiceItemService;
 import com.sunny.service.impl.InvoiceItemServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RequestMapping("/invoiceItem")
 @RestController
@@ -22,7 +23,7 @@ public class InvoiceItemAPI {
 
 	@PostMapping("/create")
 	@Transactional
-	public InvoiceItem createInvoiceItem(@RequestBody InvoiceItem invoiceItem) {
+	public Result createInvoiceItem(@RequestBody InvoiceItem invoiceItem) {
 		return invoiceItemService.createInvoiceItem(invoiceItem);
 	}
 

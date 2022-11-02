@@ -13,8 +13,9 @@ public class InvoiceItemServiceImpl implements IInvoiceItemService {
 	private IInvoiceItemDao invoiceItemDao = new InvoiceItemDaoImpl();
 
 	@Override
-	public InvoiceItem createInvoiceItem(InvoiceItem invoiceItem) {
-		return invoiceItemDao.createInvoiceItem(invoiceItem);
+	public Result createInvoiceItem(InvoiceItem invoiceItem) {
+		invoiceItemDao.createInvoiceItem(invoiceItem);
+		return new Result(true, "Create InvoiceItem successfully!!!");
 	}
 
 	@Override

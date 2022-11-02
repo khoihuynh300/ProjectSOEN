@@ -11,20 +11,21 @@ public class CustomerServiceImpl implements ICustomerService {
 	private ICustomerDao customerDao = new CustomerDaoImpl();
 
 	@Override
-	public Customer createCustomer(Customer customer) {
-		return customerDao.createCustomer(customer);
+	public Result createCustomer(Customer customer) {
+		customerDao.createCustomer(customer);
+		return new Result(true, "Create Customer successfully!!!");
 	}
 
 	@Override
-	public void deleteCustomer(Customer customer) {
+	public Result deleteCustomer(Customer customer) {
 		customerDao.deleteCustomer(customer);
-
+		return new Result(true, "Delete Customer successfully!!!");
 	}
 
 	@Override
-	public void updateCustomer(Customer customer) {
+	public Result updateCustomer(Customer customer) {
 		customerDao.updateCustomer(customer);
-
+		return new Result(true, "Update Customer successfully!!!");
 	}
 
 	@Override

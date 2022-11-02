@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sunny.model.ProductAttribute;
 import com.sunny.service.IProductAttributeService;
 import com.sunny.service.impl.ProductAttributeServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/productAttribute")
@@ -21,7 +22,7 @@ public class ProductAttributeAPI {
 
 	@PostMapping("/add")
 	@ResponseBody
-	public ProductAttribute addProductAttribute(@RequestBody ProductAttribute productAttribute) {
+	public Result addProductAttribute(@RequestBody ProductAttribute productAttribute) {
 		return productAttributeService.addProductAttribute(productAttribute);
 	}
 
@@ -33,8 +34,8 @@ public class ProductAttributeAPI {
 
 	@DeleteMapping("/delete")
 	@ResponseBody
-	public void deleteProductAttribute(@RequestBody ProductAttribute productAttribute) {
-		productAttributeService.delete(productAttribute.getAtrId());
+	public Result deleteProductAttribute(@RequestBody ProductAttribute productAttribute) {
+		return productAttributeService.delete(productAttribute.getAtrId());
 	}
 
 }

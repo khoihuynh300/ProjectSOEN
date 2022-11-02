@@ -3,13 +3,14 @@ package com.sunny.service;
 import java.util.List;
 
 import com.sunny.model.Customer;
+import com.sunny.service.impl.Result;
 
 public interface ICustomerService {
-	Customer createCustomer(Customer customer);
+	Result createCustomer(Customer customer);
 
-	void deleteCustomer(Customer customer);
+	Result deleteCustomer(Customer customer);
 
-	void updateCustomer(Customer customer);
+	Result updateCustomer(Customer customer);
 
 	List<Customer> getAllCustomers();
 

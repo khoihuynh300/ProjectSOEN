@@ -5,6 +5,7 @@ import java.util.List;
 import com.sunny.model.Customer;
 import com.sunny.model.Invoice;
 import com.sunny.model.Orders;
+import com.sunny.service.impl.Result;
 
 public interface IInvoiceService {
 	Invoice getInvoiceByOrderId(Orders order);
@@ -13,5 +14,5 @@ public interface IInvoiceService {
 
 	List<Invoice> getAllInvoice();
 
-	Invoice createInvoice(Orders order);
+	Result createInvoice(Orders order);
 }
