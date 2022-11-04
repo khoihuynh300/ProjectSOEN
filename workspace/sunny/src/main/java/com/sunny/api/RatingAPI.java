@@ -36,7 +36,7 @@ public class RatingAPI {
 
 	@GetMapping("/get")
 	@Transactional
-	public ResponseEntity<?> getAllRating(@RequestParam(required = false) Integer pid,
+	public ResponseEntity<?> get(@RequestParam(required = false) Integer pid,
 			@RequestParam(required = false) Integer userid) {
 		if (pid != null) {
 			if (userid != null)

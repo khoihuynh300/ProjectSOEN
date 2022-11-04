@@ -13,4 +13,5 @@ public interface IInvoiceItemDao {
 
 	List<InvoiceItem> getByInvoiceId(Invoice invoice);
 
+	InvoiceItem getInvoiceItemById(int id);
 }

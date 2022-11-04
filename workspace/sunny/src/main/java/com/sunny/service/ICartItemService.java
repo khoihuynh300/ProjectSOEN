@@ -6,7 +6,8 @@ import com.sunny.model.CartItem;
 import com.sunny.service.impl.Result;
 
 public interface ICartItemService {
-	boolean existCartItem(CartItem cartItem);
+
+	Result createCartItem(CartItem cartItem);
 
 	Result addToCart(CartItem cartItem);
 
@@ -18,4 +19,5 @@ public interface ICartItemService {
 
 	CartItem getCartItem(int cartId, int pId);
 
+	CartItem getCartItemById(int id);
 }

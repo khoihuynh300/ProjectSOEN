@@ -11,4 +11,6 @@ public interface IProductAttributeService {
 	List<ProductAttribute> getAllProductAttributes();
 
 	Result delete(int AtrId);
+
+	ProductAttribute getProductAttributeById(int id);
 }

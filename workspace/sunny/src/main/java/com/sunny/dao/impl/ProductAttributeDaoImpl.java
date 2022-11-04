@@ -59,4 +59,13 @@ public class ProductAttributeDaoImpl implements IProductAttributeDao {
 		}
 	}
 
+	@Override
+	public ProductAttribute getProductAttributeById(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			ProductAttribute result = session.get(ProductAttribute.class, id);
+			session.close();
+			return result;
+		}
+	}
+
 }

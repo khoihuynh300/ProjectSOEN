@@ -14,4 +14,5 @@ public interface IOrderDetailDao {
 
 	OrderDetail createOrderDetail(Orders orderId, CartItem item);
 
+	OrderDetail getOrderDetailById(int id);
 }

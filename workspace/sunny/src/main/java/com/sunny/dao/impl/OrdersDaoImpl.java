@@ -73,4 +73,13 @@ public class OrdersDaoImpl implements IOrdersDao {
 			session.close();
 		}
 	}
+
+	@Override
+	public Orders getOrderById(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Orders result = session.get(Orders.class, id);
+			session.close();
+			return result;
+		}
+	}
 }

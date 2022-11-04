@@ -2,6 +2,8 @@ package com.sunny.api;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,9 +45,15 @@ public class ProductToAttributeAPI {
 	/*
 	 * Thay POST thành GET Thay ReqBody thành ReqParam
 	 */
-	@GetMapping("/get")
+	@GetMapping("/get-by-pid")
 	@ResponseBody()
 	public List<ProductToAttribute> getAllProductToAttributebyPid(@RequestParam(required = true) Integer pid) {
 		return productToAttributeService.getAllProducttoAttributebyPid(pid.intValue());
+	}
+
+	@GetMapping("/get")
+	@Transactional
+	public ProductToAttribute getProductToAttributeById(@RequestParam(required = true) Integer id) {
+		return productToAttributeService.getProductToAttributeById(id.intValue());
 	}
 }

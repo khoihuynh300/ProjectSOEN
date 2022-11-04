@@ -14,19 +14,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sunny.model.CartItem;
 import com.sunny.service.ICartItemService;
+import com.sunny.service.ICartService;
+import com.sunny.service.IProductService;
 import com.sunny.service.impl.CartItemServiceImpl;
+import com.sunny.service.impl.CartServiceImpl;
+import com.sunny.service.impl.ProductServiceImpl;
 import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/cartitem")
 public class CartItemAPI {
 	private ICartItemService cartItemService = new CartItemServiceImpl();
+	private ICartService cartService = new CartServiceImpl();
+	private IProductService productService = new ProductServiceImpl();
 
 	@PostMapping("/add-to-cart")
 	@Transactional
 	public Result addToCart(@RequestBody CartItem cartItem) {
-		return cartItemService.addToCart(
-				cartItemService.getCartItem(cartItem.getCartId().getCartId(), cartItem.getProductId().getPid()));
+		CartItem temp = cartItemService.getCartItem(cartItem.getCartId().getCartId(), cartItem.getProductId().getPid());
+		if (temp == null) {
+			temp = new CartItem();
+			temp.setCartId(cartService.getCartById(cartItem.getCartId().getCartId()));
+			temp.setProductId(productService.getProductById(cartItem.getProductId().getPid()));
+			temp.setQuantity(1);
+			return cartItemService.createCartItem(temp);
+		}
+		return cartItemService.addToCart(temp);
 	}
 
 	@PostMapping("/remove-item")
@@ -46,5 +59,11 @@ public class CartItemAPI {
 	@Transactional
 	public Result removeSelectedCartItem(@RequestBody List<CartItem> listCartItem) {
 		return cartItemService.removeSelectedCartItem(listCartItem);
+	}
+
+	@GetMapping("/get")
+	@Transactional
+	public CartItem getCartItemById(@RequestParam(required = true) Integer id) {
+		return cartItemService.getCartItemById(id.intValue());
 	}
 }

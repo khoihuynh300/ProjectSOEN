@@ -14,4 +14,5 @@ public interface IOrdersDao {
 
 	void updateStatus(Orders order);
 
+	Orders getOrderById(int id);
 }

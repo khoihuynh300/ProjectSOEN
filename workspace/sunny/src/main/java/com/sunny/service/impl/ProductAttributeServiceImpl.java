@@ -27,4 +27,9 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 		return new Result(true, "Delete ProductAttribute successfully!!!");
 	}
 
+	@Override
+	public ProductAttribute getProductAttributeById(int id) {
+		return ProductAttributeDao.getProductAttributeById(id);
+	}
+
 }

@@ -28,4 +28,9 @@ public class OrdersServiceImpl implements IOrdersService {
 		ordersDao.updateStatus(order);
 		return new Result(true, "Update Order successfully!!!");
 	}
+
+	@Override
+	public Orders getOrderById(int id) {
+		return ordersDao.getOrderById(id);
+	}
 }

@@ -12,11 +12,6 @@ public class CartItemServiceImpl implements ICartItemService {
 	private ICartItemDao cartItemDao = new CartItemDaoImpl();
 
 	@Override
-	public boolean existCartItem(CartItem cartItem) {
-		return cartItemDao.existCartItem(cartItem);
-	}
-
-	@Override
 	public Result addToCart(CartItem cartItem) {
 		cartItemDao.addToCart(cartItem);
 		return new Result(true, "Add to cart successfully!!!");
@@ -42,6 +37,17 @@ public class CartItemServiceImpl implements ICartItemService {
 	@Override
 	public CartItem getCartItem(int cartId, int pId) {
 		return cartItemDao.getCartItem(cartId, pId);
+	}
+
+	@Override
+	public CartItem getCartItemById(int id) {
+		return cartItemDao.getCartItemById(id);
+	}
+
+	@Override
+	public Result createCartItem(CartItem cartItem) {
+		cartItemDao.createCartItem(cartItem);
+		return new Result(true, "Add to cart successfully!!!");
 	}
 
 }

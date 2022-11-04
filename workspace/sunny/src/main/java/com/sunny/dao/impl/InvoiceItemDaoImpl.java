@@ -41,4 +41,13 @@ public class InvoiceItemDaoImpl implements IInvoiceItemDao {
 			return result;
 		}
 	}
+
+	@Override
+	public InvoiceItem getInvoiceItemById(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			InvoiceItem result = session.get(InvoiceItem.class, id);
+			session.close();
+			return result;
+		}
+	}
 }

@@ -14,4 +14,9 @@ public class PaymentMethodServiceImpl implements IPaymentMethodService {
 	public List<PaymentMethod> getAllPaymentMethod() {
 		return paymentMethodDao.getAllPaymentMethod();
 	}
+
+	@Override
+	public PaymentMethod getById(int id) {
+		return paymentMethodDao.getById(id);
+	}
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunny.model.OrderDetail;
@@ -31,5 +32,11 @@ public class OrderDetailAPI {
 	@Transactional
 	public Result updateStatus(@RequestBody OrderDetail orderDetail) {
 		return orderDetailService.updateStatus(orderDetail);
+	}
+
+	@GetMapping("/get")
+	@Transactional
+	public OrderDetail getOrderDetailById(@RequestParam(required = true) Integer id) {
+		return orderDetailService.getOrderDetailById(id.intValue());
 	}
 }

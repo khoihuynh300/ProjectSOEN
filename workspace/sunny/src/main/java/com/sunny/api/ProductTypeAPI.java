@@ -29,9 +29,9 @@ public class ProductTypeAPI {
 		return productTypeService.createProductType(productType);
 	}
 
-	@GetMapping("/get-all-producttype")
+	@GetMapping("/get")
 	@Transactional
-	public ResponseEntity<?> getAllProductType(@RequestParam(required = false) Integer id) {
+	public ResponseEntity<?> get(@RequestParam(required = false) Integer id) {
 		return id == null ? ResponseEntity.status(HttpStatus.OK).body(productTypeService.getAllProductType())
 				: ResponseEntity.status(HttpStatus.OK).body(productTypeService.getProductTypeById(id.intValue()));
 	}

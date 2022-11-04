@@ -33,4 +33,9 @@ public class ProductToAttributeServiceImpl implements IProductToAttributeService
 		return productToAttributeDao.getAllProducttoAttributebyPid(Pid);
 	}
 
+	@Override
+	public ProductToAttribute getProductToAttributeById(int id) {
+		return productToAttributeDao.getProductToAttributeById(id);
+	}
+
 }

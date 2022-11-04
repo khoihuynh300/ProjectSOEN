@@ -14,6 +14,8 @@ public interface IProductToAttributeDao {
 
 	List<ProductToAttribute> getAllProducttoAttributebyPid(int Pid);
 
+	ProductToAttribute getProductToAttributeById(int id);
+
 	// Thêm tất cả những thuộc tính cần có cho một sản phẩm
 	List<ProductToAttribute> addAllAttributeToProductbyPid(int Pid, List<ProductAttribute> listAllProductAttributes);
 

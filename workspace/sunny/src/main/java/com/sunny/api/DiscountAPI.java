@@ -31,7 +31,7 @@ public class DiscountAPI {
 
 	@GetMapping("/get")
 	@Transactional
-	public ResponseEntity<?> getAllDiscount(@RequestParam(required = false) Integer id) {
+	public ResponseEntity<?> get(@RequestParam(required = false) Integer id) {
 		return id == null ? ResponseEntity.status(HttpStatus.OK).body(discountService.getAllDiscount())
 				: ResponseEntity.status(HttpStatus.OK).body(discountService.getDiscountById(id.intValue()));
 	}

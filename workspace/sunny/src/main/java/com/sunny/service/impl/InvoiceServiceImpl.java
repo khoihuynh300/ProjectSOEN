@@ -34,4 +34,9 @@ public class InvoiceServiceImpl implements IInvoiceService {
 		return new Result(true, "Create Invoice successfully!!!");
 	}
 
+	@Override
+	public Invoice getInvoiceById(int id) {
+		return invoiceDao.getInvoiceById(id);
+	}
+
 }

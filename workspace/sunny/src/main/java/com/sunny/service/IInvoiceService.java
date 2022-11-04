@@ -15,4 +15,6 @@ public interface IInvoiceService {
 	List<Invoice> getAllInvoice();
 
 	Result createInvoice(Orders order);
+
+	Invoice getInvoiceById(int id);
 }

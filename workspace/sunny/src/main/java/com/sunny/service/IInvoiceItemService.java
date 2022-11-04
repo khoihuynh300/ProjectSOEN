@@ -12,4 +12,6 @@ public interface IInvoiceItemService {
 	List<InvoiceItem> getAll();
 
 	List<InvoiceItem> getByInvoiceId(Invoice invoice);
+
+	InvoiceItem getInvoiceItemById(int id);
 }

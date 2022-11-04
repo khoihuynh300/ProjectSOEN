@@ -13,4 +13,6 @@ public interface IProductToAttributeService {
 	Result editProductToAttribute(int AtrId);
 
 	List<ProductToAttribute> getAllProducttoAttributebyPid(int Pid);
+
+	ProductToAttribute getProductToAttributeById(int id);
 }

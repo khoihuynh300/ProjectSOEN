@@ -8,4 +8,6 @@ public interface IPaymentMethodService {
 
 	List<PaymentMethod> getAllPaymentMethod();
 
+	PaymentMethod getById(int id);
+
 }

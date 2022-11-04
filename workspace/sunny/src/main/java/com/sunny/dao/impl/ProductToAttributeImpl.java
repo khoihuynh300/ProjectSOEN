@@ -83,4 +83,13 @@ public class ProductToAttributeImpl implements IProductToAttributeDao {
 		return null;
 	}
 
+	@Override
+	public ProductToAttribute getProductToAttributeById(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			ProductToAttribute result = session.get(ProductToAttribute.class, id);
+			session.close();
+			return result;
+		}
+	}
+
 }

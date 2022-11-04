@@ -1,14 +1,14 @@
 package com.sunny.api;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sunny.model.PaymentMethod;
 import com.sunny.service.IPaymentMethodService;
 import com.sunny.service.impl.PaymentMethodServiceImpl;
 
@@ -17,9 +17,10 @@ import com.sunny.service.impl.PaymentMethodServiceImpl;
 public class PaymentMethodAPI {
 	private IPaymentMethodService paymentMethodService = new PaymentMethodServiceImpl();
 
-	@GetMapping("/get-all-payment-method")
+	@GetMapping("/get")
 	@Transactional
-	public List<PaymentMethod> getAllPaymentMethod() {
-		return paymentMethodService.getAllPaymentMethod();
+	public ResponseEntity<?> get(@RequestParam(required = false) Integer id) {
+		return id == null ? ResponseEntity.status(HttpStatus.OK).body(paymentMethodService.getAllPaymentMethod())
+				: ResponseEntity.status(HttpStatus.OK).body(paymentMethodService.getById(id.intValue()));
 	}
 }

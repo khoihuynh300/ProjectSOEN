@@ -15,4 +15,6 @@ public interface IOrdersService {
 
 	Result updateStatus(Orders order);
 
+	Orders getOrderById(int id);
+
 }

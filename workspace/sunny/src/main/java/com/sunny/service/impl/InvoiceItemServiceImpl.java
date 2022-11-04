@@ -27,4 +27,9 @@ public class InvoiceItemServiceImpl implements IInvoiceItemService {
 	public List<InvoiceItem> getByInvoiceId(Invoice invoice) {
 		return invoiceItemDao.getByInvoiceId(invoice);
 	}
+
+	@Override
+	public InvoiceItem getInvoiceItemById(int id) {
+		return invoiceItemDao.getInvoiceItemById(id);
+	}
 }

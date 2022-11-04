@@ -5,7 +5,7 @@ import java.util.List;
 import com.sunny.model.CartItem;
 
 public interface ICartItemDao {
-	boolean existCartItem(CartItem cartItem);
+	void createCartItem(CartItem cartItem);
 
 	void addToCart(CartItem cartItem);
 
@@ -16,4 +16,6 @@ public interface ICartItemDao {
 	List<CartItem> getAllCartItem(int CartId);
 
 	CartItem getCartItem(int cartId, int pId);
+
+	CartItem getCartItemById(int id);
 }

@@ -12,4 +12,6 @@ public interface IOrderDetailService {
 
 	Result updateStatus(OrderDetail Id);
 
+	OrderDetail getOrderDetailById(int id);
+
 }

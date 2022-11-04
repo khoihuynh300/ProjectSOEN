@@ -15,38 +15,13 @@ import com.sunny.model.CartItem;
 public class CartItemDaoImpl implements ICartItemDao {
 
 	@Override
-	public boolean existCartItem(CartItem cartItem) {
+	public void addToCart(CartItem cartItem) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction t = session.beginTransaction();
-			String hql = "FROM CartItem where CartId = :cartId AND Pid = : pid";
-			CartItem cartItemRes = session.createQuery(hql, CartItem.class).setParameter("cartId", cartItem.getCartId())
-					.setParameter("pid", cartItem.getProductId()).uniqueResult();
+			cartItem.setQuantity(1 + cartItem.getQuantity());
+			session.update(cartItem);
 			t.commit();
 			session.close();
-			return cartItemRes != null;
-		}
-	}
-
-	@Override
-	public void addToCart(CartItem cartItem) {
-		if (existCartItem(cartItem) == true) {
-			try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-				Transaction t = session.beginTransaction();
-				cartItem.setQuantity(1 + cartItem.getQuantity());
-				session.update(cartItem);
-				t.commit();
-				session.close();
-			}
-		} else {
-			try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-				Transaction t = session.beginTransaction();
-				session.persist(cartItem);
-				Cart cart = cartItem.getCartId();
-				cart.setAmountUniqueItem(cart.getAmountUniqueItem() + 1);
-				session.update(cart);
-				t.commit();
-				session.close();
-			}
 		}
 	}
 
@@ -111,6 +86,28 @@ public class CartItemDaoImpl implements ICartItemDao {
 					.setParameter("pid", pId).uniqueResult();
 			session.close();
 			return cartItemRes;
+		}
+	}
+
+	@Override
+	public CartItem getCartItemById(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			CartItem result = session.get(CartItem.class, id);
+			session.close();
+			return result;
+		}
+	}
+
+	@Override
+	public void createCartItem(CartItem cartItem) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+			session.persist(cartItem);
+			Cart cart = cartItem.getCartId();
+			cart.setAmountUniqueItem(cart.getAmountUniqueItem() + 1);
+			session.update(cart);
+			t.commit();
+			session.close();
 		}
 	}
 }

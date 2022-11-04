@@ -66,7 +66,7 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction t = session.beginTransaction();
 
-			String hql = "From Employee Where EmpIdd= :Empid";
+			String hql = "From Employee Where EmpId.EmpId= :Empid";
 
 			Employee employee = session.createQuery(hql, Employee.class).setParameter("Empid", EmpId).uniqueResult();
 			t.commit();

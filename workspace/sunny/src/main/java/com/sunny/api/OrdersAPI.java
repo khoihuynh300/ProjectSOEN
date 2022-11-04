@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,10 +34,11 @@ public class OrdersAPI {
 		return ordersService.createOrder(address, paymentMethod, listCartItem);
 	}
 
-	@GetMapping("/get-all-orders")
+	@GetMapping("/get")
 	@Transactional
-	public List<Orders> getAllOrders() {
-		return ordersService.getAllOrders();
+	public ResponseEntity<?> get(@RequestParam(required = false) Integer id) {
+		return id == null ? ResponseEntity.status(HttpStatus.OK).body(ordersService.getAllOrders())
+				: ResponseEntity.status(HttpStatus.OK).body(ordersService.getOrderById(id.intValue()));
 	}
 
 	@PutMapping("/update")

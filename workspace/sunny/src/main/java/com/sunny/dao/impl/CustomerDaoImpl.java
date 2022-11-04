@@ -70,7 +70,7 @@ public class CustomerDaoImpl implements ICustomerDao {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction t = session.beginTransaction();
 
-			String hql = "From Customer Where EmpId= :Cid";
+			String hql = "From Customer Where CusId = :Cid";
 
 			Customer customer = session.createQuery(hql, Customer.class).setParameter("Cid", Cid).uniqueResult();
 			t.commit();

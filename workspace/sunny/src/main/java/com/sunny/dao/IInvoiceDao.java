@@ -16,4 +16,6 @@ public interface IInvoiceDao {
 
 	Invoice createInvoice(Orders order);
 
+	Invoice getInvoiceById(int id);
+
 }

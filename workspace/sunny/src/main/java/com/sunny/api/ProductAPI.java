@@ -34,7 +34,13 @@ public class ProductAPI {
 
 	@GetMapping("/get")
 	@Transactional
-	public ResponseEntity<?> get(@RequestParam(required = false) Integer ptype) {
+	public ResponseEntity<?> get(@RequestParam(required = false) Integer id,
+			@RequestParam(required = false) Integer ptype) {
+		if (id != null) {
+			if (ptype != null)
+				throw new IllegalArgumentException("Only one parameter allowed.");
+			return ResponseEntity.status(HttpStatus.OK).body(productService.getProductById(id.intValue()));
+		}
 		return ptype == null ? ResponseEntity.status(HttpStatus.OK).body(productService.getAllProduct())
 				: ResponseEntity.status(HttpStatus.OK).body(productService.getAllProductByPtype(ptype.intValue()));
 	}

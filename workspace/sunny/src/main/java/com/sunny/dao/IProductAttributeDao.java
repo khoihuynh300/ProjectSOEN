@@ -10,4 +10,6 @@ public interface IProductAttributeDao {
 	List<ProductAttribute> getAllProductAttributes();
 
 	void delete(int AtrId);
+
+	ProductAttribute getProductAttributeById(int id);
 }

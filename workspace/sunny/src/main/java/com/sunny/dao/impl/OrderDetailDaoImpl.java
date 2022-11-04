@@ -57,4 +57,13 @@ public class OrderDetailDaoImpl implements IOrderDetailDao {
 			return result;
 		}
 	}
+
+	@Override
+	public OrderDetail getOrderDetailById(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			OrderDetail result = session.get(OrderDetail.class, id);
+			session.close();
+			return result;
+		}
+	}
 }
