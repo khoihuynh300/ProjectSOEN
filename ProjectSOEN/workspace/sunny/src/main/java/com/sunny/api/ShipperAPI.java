@@ -18,8 +18,8 @@ import com.sunny.service.IShipperService;
 import com.sunny.service.impl.Result;
 import com.sunny.service.impl.ShipperServiceImpl;
 
-@RestController
-@RequestMapping("/shipper")
+@RestController(value = "ShipperControllerOfAdmin")
+@RequestMapping("/admin/shipper")
 public class ShipperAPI {
 	private IShipperService shipperService = new ShipperServiceImpl();
 

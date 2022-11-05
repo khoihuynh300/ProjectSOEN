@@ -15,4 +15,6 @@ public interface IEmployeeService {
 	List<Employee> getAllEmployees();
 
 	Employee getEmployeebyEmpId(int EmpId);
+	
+	Employee getEmployeeByUserId(int userId);
 }

@@ -76,4 +76,19 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 		}
 	}
 
+	@Override
+	public Employee getEmployeeByUserId(int userid) {
+		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+			Transaction t = session.beginTransaction();
+
+			String hql = "From Employee e Where UserId.UserId = :userid";
+
+			Employee employee = session.createQuery(hql, Employee.class).setParameter("userid", userid).uniqueResult();
+			t.commit();
+			session.close();
+
+			return employee;
+		}
+	}
+
 }

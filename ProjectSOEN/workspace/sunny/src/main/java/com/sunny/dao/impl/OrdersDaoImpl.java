@@ -13,6 +13,7 @@ import com.sunny.dao.IInvoiceDao;
 import com.sunny.dao.IOrdersDao;
 import com.sunny.model.CartItem;
 import com.sunny.model.Discount;
+import com.sunny.model.Employee;
 import com.sunny.model.OrderDetail;
 import com.sunny.model.Orders;
 import com.sunny.model.PaymentMethod;
@@ -81,5 +82,16 @@ public class OrdersDaoImpl implements IOrdersDao {
 			session.close();
 			return result;
 		}
+	}
+
+	@Override
+	public List<Orders> getOrdersByShipperId(Employee id, int status) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Query<Orders> query = session.createQuery("FROM Orders where ShipId = :id AND Status = :status", Orders.class)
+					.setParameter("id", id).setParameter("status", status);
+			List<Orders> result = query.getResultList();
+			session.close();
+			return result;
+		} 
 	}
 }

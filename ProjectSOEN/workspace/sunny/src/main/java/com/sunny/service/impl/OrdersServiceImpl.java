@@ -5,6 +5,7 @@ import java.util.List;
 import com.sunny.dao.IOrdersDao;
 import com.sunny.dao.impl.OrdersDaoImpl;
 import com.sunny.model.CartItem;
+import com.sunny.model.Employee;
 import com.sunny.model.Orders;
 import com.sunny.model.PaymentMethod;
 import com.sunny.service.IOrdersService;
@@ -32,5 +33,10 @@ public class OrdersServiceImpl implements IOrdersService {
 	@Override
 	public Orders getOrderById(int id) {
 		return ordersDao.getOrderById(id);
+	}
+
+	@Override
+	public List<Orders> getOrdersByShipperId(Employee emplId, int status) {
+		return ordersDao.getOrdersByShipperId(emplId, status);
 	}
 }

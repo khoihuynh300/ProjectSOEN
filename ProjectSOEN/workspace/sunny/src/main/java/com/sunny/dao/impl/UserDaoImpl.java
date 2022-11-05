@@ -186,7 +186,7 @@ public class UserDaoImpl implements IUserDao {
 			} else if (user.getRoleId().getRoleId() == 3) {
 				try {
 					employee = session.createNativeQuery(
-							"Select * from User, Customer where User.UserId = Employee.UserId and User.UserId = :userId",
+							"Select * from User, Employee where User.UserId = Employee.UserId and User.UserId = :userId",
 							Employee.class).setParameter("userId", userId).getSingleResult();
 				} catch (Exception e) {
 				}
