@@ -1,14 +1,10 @@
 package com.sunny;
 
+import org.hibernate.Session;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 
-import com.sunny.dao.IUserDao;
-import com.sunny.dao.impl.UserDaoImpl;
-import com.sunny.filter.AuthorizationFilter;
-import com.sunny.model.User;
+import com.sunny.connections.HibernateUtil;
 
 @SpringBootApplication
 
@@ -17,7 +13,9 @@ public class Application {
 	public static void main(String[] args) {
 
 		SpringApplication.run(Application.class, args);
-
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			session.close();
+		}
 	}
 	
 	/*

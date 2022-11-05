@@ -3,12 +3,14 @@ package com.sunny.service;
 import java.util.List;
 
 import com.sunny.model.ProductAttribute;
+import com.sunny.service.impl.Result;
 
 public interface IProductAttributeService {
-	ProductAttribute addProductAttribute(ProductAttribute productAttribute);
+	Result addProductAttribute(ProductAttribute productAttribute);
 
 	List<ProductAttribute> getAllProductAttributes();
 
-	void delete(int AtrId);
+	Result delete(int AtrId);
 
+	ProductAttribute getProductAttributeById(int id);
 }

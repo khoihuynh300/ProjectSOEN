@@ -5,20 +5,20 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import com.sunny.connections.HibernateUtil;
 import com.sunny.dao.ICartDao;
 import com.sunny.model.Cart;
 
+@Repository
 public class CartDaoImpl implements ICartDao {
 
 	@Override
 	public Cart create(Cart cart) {
-		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-			Transaction t = session.beginTransaction();
+		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+			Transaction t = session.getTransaction();
 			session.save(cart);
-			t.commit();
-			session.close();
 			return cart;
 		}
 	}
@@ -36,11 +36,8 @@ public class CartDaoImpl implements ICartDao {
 
 	@Override
 	public Cart getCartById(int id) {
-		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
-			Transaction t = session.beginTransaction();
-			Cart cart = (Cart) session.get(Cart.class, id);
-			t.commit();
-			return cart;
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			return session.get(Cart.class, id);
 		}
 	}
 }

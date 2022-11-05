@@ -20,4 +20,8 @@ public interface IProductService {
 	List<Product> getProducts(int pageNumber, int pageSize, Integer ptype);
 
 	Product getProductById(int id);
+	
+	List<Product> getRecommendedProducts(int size);
+
+	List<Product> getTopItemByPtype(int Ptype);
 }

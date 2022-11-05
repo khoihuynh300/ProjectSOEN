@@ -15,6 +15,10 @@ public interface IUserDao {
 	void updateUser(User user);
 
 	void delete(int id);
+	
+	void deleteUser(User user);
+	
+	User getUserById(int id);
 
 	User findUser(int userId);
 

@@ -2,34 +2,34 @@ package com.sunny.service.impl;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.sunny.dao.IProductAttributeDao;
 import com.sunny.dao.impl.ProductAttributeDaoImpl;
 import com.sunny.model.ProductAttribute;
 import com.sunny.service.IProductAttributeService;
 
-@Service
 public class ProductAttributeServiceImpl implements IProductAttributeService {
-	private IProductAttributeDao iProductAttribute = new ProductAttributeDaoImpl();
+	private IProductAttributeDao ProductAttributeDao = new ProductAttributeDaoImpl();
 
 	@Override
-	public ProductAttribute addProductAttribute(ProductAttribute productAttribute) {
-		// TODO Auto-generated method stub
-		return iProductAttribute.addProductAttribute(productAttribute);
+	public Result addProductAttribute(ProductAttribute productAttribute) {
+		ProductAttributeDao.addProductAttribute(productAttribute);
+		return new Result(true, "Create ProductAttribute successfully!!!");
 	}
 
 	@Override
 	public List<ProductAttribute> getAllProductAttributes() {
-		// TODO Auto-generated method stub
-		return iProductAttribute.getAllProductAttributes();
+		return ProductAttributeDao.getAllProductAttributes();
 	}
 
 	@Override
-	public void delete(int AtrId) {
-		// TODO Auto-generated method stub
-		iProductAttribute.delete(AtrId);
+	public Result delete(int AtrId) {
+		ProductAttributeDao.delete(AtrId);
+		return new Result(true, "Delete ProductAttribute successfully!!!");
+	}
 
+	@Override
+	public ProductAttribute getProductAttributeById(int id) {
+		return ProductAttributeDao.getProductAttributeById(id);
 	}
 
 }

@@ -2,44 +2,40 @@ package com.sunny.service.impl;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.sunny.dao.IProductToAttributeDao;
-import com.sunny.dao.impl.ProductToAttributeDaoImpl;
+import com.sunny.dao.impl.ProductToAttributeImpl;
 import com.sunny.model.ProductToAttribute;
 import com.sunny.service.IProductToAttributeService;
 
-@Service
 public class ProductToAttributeServiceImpl implements IProductToAttributeService {
-	private IProductToAttributeDao iProductToAttributeDao = new ProductToAttributeDaoImpl();
+	private IProductToAttributeDao productToAttributeDao = new ProductToAttributeImpl();
 
 	@Override
-	public ProductToAttribute addProductToAttribute(ProductToAttribute productToAttribute) throws Exception {
-		// TODO Auto-generated method stub
-		if (productToAttribute.getAtrId() != null) {
-			return iProductToAttributeDao.addProductToAttribute(productToAttribute);
-		} else {
-			throw new Exception("Er");
-		}
-
+	public Result addProductToAttribute(ProductToAttribute productToAttribute) throws Exception {
+		productToAttributeDao.addProductToAttribute(productToAttribute);
+		return new Result(true, "Create ProductToAttribute successfully!!!");
 	}
 
 	@Override
-	public void deleteProductToAttribute(int id) {
-		// TODO Auto-generated method stub
-		iProductToAttributeDao.deleteProductToAttribute(id);
+	public Result deleteProductToAttribute(int id) {
+		productToAttributeDao.deleteProductToAttribute(id);
+		return new Result(true, "Delete ProductToAttribute successfully!!!");
 	}
 
 	@Override
-	public void editProductToAttribute(int AtrId) {
-		// TODO Auto-generated method stub
-		iProductToAttributeDao.editProductToAttribute(AtrId);
+	public Result editProductToAttribute(int AtrId) {
+		productToAttributeDao.editProductToAttribute(AtrId);
+		return new Result(true, "Update ProductToAttribute successfully!!!");
 	}
 
 	@Override
 	public List<ProductToAttribute> getAllProducttoAttributebyPid(int Pid) {
-		// TODO Auto-generated method stub
-		return iProductToAttributeDao.getAllProducttoAttributebyPid(Pid);
+		return productToAttributeDao.getAllProducttoAttributebyPid(Pid);
+	}
+
+	@Override
+	public ProductToAttribute getProductToAttributeById(int id) {
+		return productToAttributeDao.getProductToAttributeById(id);
 	}
 
 }

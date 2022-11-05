@@ -39,6 +39,9 @@ public class Employee {
 	@Column(nullable = false)
 	private double LuongThang;
 
+	@Column(name = "isDeleted", nullable = false, columnDefinition = "tinyint(1) default 0")
+	private boolean isDeleted;
+
 	public int getEmpId() {
 		return EmpId;
 	}
@@ -101,6 +104,14 @@ public class Employee {
 
 	public void setLuongThang(double luongThang) {
 		LuongThang = luongThang;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 }

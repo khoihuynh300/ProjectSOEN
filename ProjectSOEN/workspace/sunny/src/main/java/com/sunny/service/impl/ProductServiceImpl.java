@@ -57,4 +57,14 @@ public class ProductServiceImpl implements IProductService {
 		productDao.deletedProduct(product);
 	}
 
+	@Override
+	public List<Product> getRecommendedProducts(int size) {
+		return productDao.getRecommendedProducts(size);
+	}
+
+	@Override
+	public List<Product> getTopItemByPtype(int Ptype) {
+		return productDao.getTopItemByPtype(Ptype);
+	}
+	
 }

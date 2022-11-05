@@ -11,4 +11,5 @@ public interface IProductAttributeDao {
 
 	void delete(int AtrId);
 
+	ProductAttribute getProductAttributeById(int id);
 }

@@ -1,40 +1,44 @@
 package com.sunny.api;
 
-import java.util.List;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunny.model.ProductAttribute;
 import com.sunny.service.IProductAttributeService;
 import com.sunny.service.impl.ProductAttributeServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/productAttribute")
 public class ProductAttributeAPI {
-	private IProductAttributeService iProductAttributeService = new ProductAttributeServiceImpl();
+	private IProductAttributeService productAttributeService = new ProductAttributeServiceImpl();
 
-	@PostMapping("/addProductAttribute")
+	@PostMapping("/add")
 	@ResponseBody
-	public ProductAttribute addProductAttribute(@RequestBody ProductAttribute productAttribute) {
-		return iProductAttributeService.addProductAttribute(productAttribute);
+	public Result addProductAttribute(@RequestBody ProductAttribute productAttribute) {
+		return productAttributeService.addProductAttribute(productAttribute);
 	}
 
-	@GetMapping("/getAllProductAttribute")
+	@GetMapping("/get")
 	@ResponseBody
-	public List<ProductAttribute> getAllProductAttribute() {
-		return iProductAttributeService.getAllProductAttributes();
+	public ResponseEntity<?> get(@RequestParam(required = false) Integer id) {
+		return id == null ? ResponseEntity.status(HttpStatus.OK).body(productAttributeService.getAllProductAttributes())
+				: ResponseEntity.status(HttpStatus.OK)
+						.body(productAttributeService.getProductAttributeById(id.intValue()));
 	}
 
-	@DeleteMapping("/deleteProductAttribute")
+	@DeleteMapping("/delete")
 	@ResponseBody
-	public void deleteProductAttribute(@RequestBody ProductAttribute productAttribute) {
-		iProductAttributeService.delete(productAttribute.getAtrId());
+	public Result deleteProductAttribute(@RequestBody ProductAttribute productAttribute) {
+		return productAttributeService.delete(productAttribute.getAtrId());
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sunny.connections.HibernateUtil;
 import com.sunny.dao.IProductToAttributeDao;
+import com.sunny.model.ProductAttribute;
 import com.sunny.model.ProductToAttribute;
 
 @Repository
@@ -67,5 +68,25 @@ public class ProductToAttributeDaoImpl implements IProductToAttributeDao {
 			return productToAttributes;
 
 		}
+	}
+
+	@Override
+	public ProductToAttribute getProductToAttributeById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductToAttribute> addAllAttributeToProductbyPid(int Pid,
+			List<ProductAttribute> listAllProductAttributes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductToAttribute> editAllAttributeToProductbyPid(int Pid,
+			List<ProductAttribute> listAllProductAttributes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

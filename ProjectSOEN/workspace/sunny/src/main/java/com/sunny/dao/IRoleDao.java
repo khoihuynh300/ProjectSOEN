@@ -3,5 +3,5 @@ package com.sunny.dao;
 import com.sunny.model.Role;
 
 public interface IRoleDao {
-	Role getRoleById(int roleid);
+	Role getRoleById(int id);
 }

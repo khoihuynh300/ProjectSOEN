@@ -2,46 +2,58 @@ package com.sunny.api;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sunny.model.Product;
 import com.sunny.model.ProductToAttribute;
 import com.sunny.service.IProductToAttributeService;
 import com.sunny.service.impl.ProductToAttributeServiceImpl;
+import com.sunny.service.impl.Result;
 
 @RestController
 @RequestMapping("/productToAttribute")
 public class ProductToAttributeAPI {
-	private IProductToAttributeService iProductToAttributeService = new ProductToAttributeServiceImpl();
+	private IProductToAttributeService productToAttributeService = new ProductToAttributeServiceImpl();
 
-	@PostMapping("/addProductToAttribute")
+	@PostMapping("/add")
 	@ResponseBody
-	public ProductToAttribute addProductToAttribute(@RequestBody ProductToAttribute productToAttribute)
-			throws Exception {
-		return iProductToAttributeService.addProductToAttribute(productToAttribute);
+	public Result addProductToAttribute(@RequestBody ProductToAttribute productToAttribute) throws Exception {
+		return productToAttributeService.addProductToAttribute(productToAttribute);
 	}
 
-	@DeleteMapping("/deleteProductToAttribute")
+	@DeleteMapping("/delete")
 	@ResponseBody
-	public void deleteProductToAttribute(@RequestBody ProductToAttribute productToAttribute) {
-		iProductToAttributeService.deleteProductToAttribute(productToAttribute.getId());
+	public Result deleteProductToAttribute(@RequestBody ProductToAttribute productToAttribute) {
+		return productToAttributeService.deleteProductToAttribute(productToAttribute.getId());
 	}
 
-	@PutMapping("/editProductToAttribute")
+	@PutMapping("/edit")
 	@ResponseBody
-	public void editProductToAttribute(@RequestBody ProductToAttribute productToAttribute) {
-		iProductToAttributeService.editProductToAttribute(productToAttribute.getId());
+	public Result editProductToAttribute(@RequestBody ProductToAttribute productToAttribute) {
+		return productToAttributeService.editProductToAttribute(productToAttribute.getId());
 	}
 
-	@PostMapping("/getAllProductToAtributebyPid")
+	/*
+	 * Thay POST thành GET Thay ReqBody thành ReqParam
+	 */
+	@GetMapping("/get-by-pid")
 	@ResponseBody()
-	public List<ProductToAttribute> getAllProductToAttributebyPid(@RequestBody Product product) {
-		return iProductToAttributeService.getAllProducttoAttributebyPid(product.getPid());
+	public List<ProductToAttribute> getAllProductToAttributebyPid(@RequestParam(required = true) Integer pid) {
+		return productToAttributeService.getAllProducttoAttributebyPid(pid.intValue());
+	}
+
+	@GetMapping("/get")
+	@Transactional
+	public ProductToAttribute getProductToAttributeById(@RequestParam(required = true) Integer id) {
+		return productToAttributeService.getProductToAttributeById(id.intValue());
 	}
 }

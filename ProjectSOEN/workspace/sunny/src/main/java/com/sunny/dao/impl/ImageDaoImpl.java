@@ -17,10 +17,40 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sunny.connections.HibernateUtil;
+import com.sunny.dao.IImageDao;
 import com.sunny.model.Image;
 
 @Repository
-public class ImageDaoImpl {
+public class ImageDaoImpl implements IImageDao {
+//	@Override
+//	public Image createImage(Image image) {
+//		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//			Transaction t = session.beginTransaction();
+//			session.save(image);
+//			t.commit();
+//			session.close();
+//			return image;
+//		}
+//	}
+//
+//	@Override
+//	public Image getImageById(int id) {
+//		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//			Image result = session.get(Image.class, id);
+//			session.close();
+//			return result;
+//		}
+//	}
+//
+//	@Override
+//	public void updateImage(Image image) {
+//		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//			Transaction t = session.beginTransaction();
+//			session.update(image);
+//			t.commit();
+//			session.close();
+//		}
+//	}
 	public String storeFile(MultipartFile file) throws Exception {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());

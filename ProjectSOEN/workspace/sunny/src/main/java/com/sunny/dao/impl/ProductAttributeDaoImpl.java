@@ -4,21 +4,21 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.springframework.stereotype.Repository;
+import org.hibernate.query.Query;
 
 import com.sunny.connections.HibernateUtil;
 import com.sunny.dao.IProductAttributeDao;
 import com.sunny.model.ProductAttribute;
 
-@Repository
 public class ProductAttributeDaoImpl implements IProductAttributeDao {
+
 	@Override
 	public ProductAttribute addProductAttribute(ProductAttribute productAttribute) {
 		// TODO Auto-generated method stub
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction transaction = session.beginTransaction();
 
-			session.persist(productAttribute);
+			session.save(productAttribute);
 			transaction.commit();
 			session.close();
 			return productAttribute;
@@ -32,11 +32,11 @@ public class ProductAttributeDaoImpl implements IProductAttributeDao {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction transaction = session.beginTransaction();
 
-			org.hibernate.query.Query<ProductAttribute> query = session.createQuery("From ProductAttribute",
-					ProductAttribute.class);
+			Query<ProductAttribute> query = session.createQuery("From ProductAttribute", ProductAttribute.class);
 			List<ProductAttribute> result = query.getResultList();
 
 			transaction.commit();
+			session.close();
 			return result;
 
 		}
@@ -48,12 +48,24 @@ public class ProductAttributeDaoImpl implements IProductAttributeDao {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction transaction = session.beginTransaction();
 
-			ProductAttribute productAttribute = session.get(ProductAttribute.class, AtrId);
-
-			session.remove(productAttribute);
+			Query query = session
+					.createQuery("update ProductAttribute set isDeleted = :isDeleted" + " where atrId = :atrId");
+			query.setParameter("isDeleted", true);
+			query.setParameter("atrId", AtrId);
+			query.executeUpdate();
 
 			transaction.commit();
 			session.close();
 		}
 	}
+
+	@Override
+	public ProductAttribute getProductAttributeById(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			ProductAttribute result = session.get(ProductAttribute.class, id);
+			session.close();
+			return result;
+		}
+	}
+
 }

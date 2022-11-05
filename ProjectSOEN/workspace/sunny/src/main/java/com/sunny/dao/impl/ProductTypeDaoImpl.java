@@ -13,7 +13,7 @@ import com.sunny.model.ProductType;
 public class ProductTypeDaoImpl implements IProductTypeDao {
 
 	@Override
-	public ProductType create(ProductType productType) {
+	public ProductType createProductType(ProductType productType) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction t = session.beginTransaction();
 			session.save(productType);
@@ -31,6 +31,35 @@ public class ProductTypeDaoImpl implements IProductTypeDao {
 			List<ProductType> result = query.getResultList();
 			t.commit();
 			return result;
+		}
+	}
+
+	@Override
+	public void updateProductType(ProductType productType) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction transaction = session.beginTransaction();
+			session.update(productType);
+			transaction.commit();
+			session.close();
+		}
+	}
+
+	@Override
+	public void deleteProductType(ProductType productType) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+			ProductType productTypeRes = getProductTypeById(productType.getPtype());
+			productTypeRes.setDeleted(true);
+			session.update(productTypeRes);
+			t.commit();
+			session.close();
+		}
+	}
+
+	@Override
+	public ProductType getProductTypeById(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			return session.get(ProductType.class, id);
 		}
 	}
 

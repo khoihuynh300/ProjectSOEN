@@ -50,6 +50,25 @@ public class UserDaoImpl implements IUserDao {
 		}
 
 	}
+	
+	@Override
+	public void deleteUser(User user) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+			User userRes = getUserById(user.getUserId());
+			userRes.setDeleted(true);
+			session.update(userRes);
+			t.commit();
+			session.close();
+		}
+	}
+	
+	@Override
+	public User getUserById(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			return session.get(User.class, id);
+		}
+	}
 
 	@Override
 	public User findUser(int userId) {
