@@ -17,7 +17,7 @@ public interface IProductDao {
 
 	Product getProductById(int id);
 
-	List<Product> getRecommendedProducts(int size);
+	List<Product> getRecommendedProducts(int ptype, int size);
 
 	List<Product> getTopItemByPtype(int Ptype);
 }

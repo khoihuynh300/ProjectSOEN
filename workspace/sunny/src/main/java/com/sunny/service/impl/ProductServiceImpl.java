@@ -47,8 +47,8 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<Product> getRecommendedProducts(int size) {
-		return productDao.getRecommendedProducts(size);
+	public List<Product> getRecommendedProducts(int ptype, int size) {
+		return productDao.getRecommendedProducts(ptype, size);
 	}
 
 	@Override

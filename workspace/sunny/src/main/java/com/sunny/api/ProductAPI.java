@@ -59,8 +59,9 @@ public class ProductAPI {
 
 	@GetMapping("/recommended")
 	@Transactional
-	public List<Product> getRecommendedProducts(@RequestParam(required = true) Integer size) {
-		return productService.getRecommendedProducts(size.intValue());
+	public List<Product> getRecommendedProducts(@RequestParam(required = true) Integer size,
+			@RequestParam(required = true) Integer ptype) {
+		return productService.getRecommendedProducts(ptype.intValue(), size.intValue());
 	}
 
 	@GetMapping("/topitem")
