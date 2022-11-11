@@ -54,6 +54,16 @@ public class UserAPI {
 		response.sendRedirect("/user/reset-password");
 	}
 
+	@PostMapping("/user/resend-otp")
+	public void resendOTP(HttpSession session) throws Exception {
+		if (session.getAttribute("user") != null) {
+			User user = (User) session.getAttribute("user");
+			if (user.isEnable() == false)
+				userservice.sendEmailVerify(user);
+		} else
+			throw new Exception("Phiên đăng nhập hết hạn");
+	}
+
 	@PutMapping("/user/register/verifyer")
 	@Transactional
 	public boolean verifyerRegister(@RequestParam(defaultValue = "") Integer code, HttpSession session)
@@ -72,7 +82,8 @@ public class UserAPI {
 
 	@PostMapping("/user/register")
 	@Transactional
-	public void createUser(@Validated @RequestBody User user, HttpServletResponse response, HttpSession session) throws Exception {
+	public void createUser(@Validated @RequestBody User user, HttpServletResponse response, HttpSession session)
+			throws Exception {
 		User userResp = userservice.getUserByAccountName(user);
 		if (userResp != null && userResp.isEnable() == false) {
 			session.setAttribute("user", userResp);
@@ -141,7 +152,7 @@ public class UserAPI {
 			if (userservice.checkUserInfo(userResp))
 				response.sendRedirect("/home");
 			else
-				//Sua lai trang cap nhat thong tin nguoi dung
+				// Sua lai trang cap nhat thong tin nguoi dung
 				response.sendRedirect("/info");
 		}
 	}
