@@ -23,8 +23,8 @@ public class ProductToAttributeServiceImpl implements IProductToAttributeService
 	}
 
 	@Override
-	public Result editProductToAttribute(int AtrId) {
-		productToAttributeDao.editProductToAttribute(AtrId);
+	public Result updateProductToAttribute(ProductToAttribute productToAttribute) {
+		productToAttributeDao.updateProductToAttribute(productToAttribute);
 		return new Result(true, "Update ProductToAttribute successfully!!!");
 	}
 

@@ -39,16 +39,14 @@ public class ProductToAttributeImpl implements IProductToAttributeDao {
 	}
 
 	@Override
-	public void editProductToAttribute(int AtrId) {
+	public void updateProductToAttribute(ProductToAttribute productToAttribute) {
 		// TODO Auto-generated method stub
-		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction transaction = session.beginTransaction();
-			ProductToAttribute productToAttribute = session.get(ProductToAttribute.class, AtrId);
 			session.update(productToAttribute);
 			transaction.commit();
 			session.close();
 		}
-
 	}
 
 	@Override

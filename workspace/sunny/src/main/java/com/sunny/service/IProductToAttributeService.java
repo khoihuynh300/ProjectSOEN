@@ -10,7 +10,7 @@ public interface IProductToAttributeService {
 
 	Result deleteProductToAttribute(int id);
 
-	Result editProductToAttribute(int AtrId);
+	Result updateProductToAttribute(ProductToAttribute productToAttribute);
 
 	List<ProductToAttribute> getAllProducttoAttributebyPid(int Pid);
 

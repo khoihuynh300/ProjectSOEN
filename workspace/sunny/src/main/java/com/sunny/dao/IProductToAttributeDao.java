@@ -10,7 +10,7 @@ public interface IProductToAttributeDao {
 
 	void deleteProductToAttribute(int id);
 
-	void editProductToAttribute(int AtrId);
+	void updateProductToAttribute(ProductToAttribute productToAttribute);
 
 	List<ProductToAttribute> getAllProducttoAttributebyPid(int Pid);
 

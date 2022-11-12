@@ -36,10 +36,10 @@ public class ProductToAttributeAPI {
 		return productToAttributeService.deleteProductToAttribute(productToAttribute.getId());
 	}
 
-	@PutMapping("/edit")
+	@PutMapping("/update")
 	@ResponseBody
-	public Result editProductToAttribute(@RequestBody ProductToAttribute productToAttribute) {
-		return productToAttributeService.editProductToAttribute(productToAttribute.getId());
+	public Result updateProductToAttribute(@RequestBody ProductToAttribute productToAttribute) {
+		return productToAttributeService.updateProductToAttribute(productToAttribute);
 	}
 
 	/*
