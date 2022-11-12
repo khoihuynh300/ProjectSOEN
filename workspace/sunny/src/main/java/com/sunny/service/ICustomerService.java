@@ -12,7 +12,7 @@ public interface ICustomerService {
 
 	Result updateCustomer(Customer customer);
 
-	List<Customer> getAllCustomers();
+	List<Customer> getAllCustomers(int viewdeleted);
 
 	Customer getCustomerbyCusId(int Cid);
 }

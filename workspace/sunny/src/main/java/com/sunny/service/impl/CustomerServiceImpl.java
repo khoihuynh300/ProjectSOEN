@@ -29,8 +29,8 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public List<Customer> getAllCustomers() {
-		return customerDao.getAllCustomers();
+	public List<Customer> getAllCustomers(int viewdeleted) {
+		return customerDao.getAllCustomers(viewdeleted);
 	}
 
 	@Override

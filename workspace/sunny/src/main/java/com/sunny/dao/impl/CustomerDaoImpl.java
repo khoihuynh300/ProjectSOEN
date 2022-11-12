@@ -53,11 +53,13 @@ public class CustomerDaoImpl implements ICustomerDao {
 	}
 
 	@Override
-	public List<Customer> getAllCustomers() {
+	public List<Customer> getAllCustomers(int viewdeleted) {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction t = session.beginTransaction();
 
-			Query<Customer> query = session.createQuery("From Customer", Customer.class);
+			Query<Customer> query = (viewdeleted == 0
+					? session.createQuery("From Customer WHERE UserId.isDeleted = false", Customer.class)
+					: session.createQuery("From Customer", Customer.class));
 			List<Customer> customers = query.getResultList();
 			t.commit();
 			session.close();

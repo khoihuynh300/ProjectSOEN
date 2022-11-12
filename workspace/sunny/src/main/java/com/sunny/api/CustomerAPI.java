@@ -54,8 +54,15 @@ public class CustomerAPI {
 //	}
 	@GetMapping("/get")
 	@Transactional
-	public ResponseEntity<?> get(@RequestParam(required = false) Integer id) {
-		return id == null ? ResponseEntity.status(HttpStatus.OK).body(customerService.getAllCustomers())
+	public ResponseEntity<?> get(@RequestParam(required = false) Integer id,
+			@RequestParam(required = false) Integer viewdeleted) {
+		if (viewdeleted == null)
+			viewdeleted = 0;
+		if (viewdeleted != 0 && viewdeleted != 1) {
+			throw new IllegalArgumentException("delted should be null or 1 or 0");
+		}
+		return id == null
+				? ResponseEntity.status(HttpStatus.OK).body(customerService.getAllCustomers(viewdeleted.intValue()))
 				: ResponseEntity.status(HttpStatus.OK).body(customerService.getCustomerbyCusId(id.intValue()));
 	}
 }
