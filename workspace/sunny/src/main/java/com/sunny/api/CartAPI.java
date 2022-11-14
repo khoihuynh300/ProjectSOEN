@@ -39,4 +39,10 @@ public class CartAPI {
 	public Cart getCartById(@RequestParam(required = true) Integer id) {
 		return cartService.getCartById(id.intValue());
 	}
+
+	@GetMapping("/get-by-customer-id")
+	@Transactional
+	public Cart getByCustomerId(@RequestParam(required = true) Integer id) {
+		return cartService.getCartByCustomerId(id.intValue());
+	}
 }

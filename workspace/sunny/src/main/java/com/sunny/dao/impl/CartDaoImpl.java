@@ -40,4 +40,14 @@ public class CartDaoImpl implements ICartDao {
 			return session.get(Cart.class, id);
 		}
 	}
+
+	@Override
+	public Cart getCartByCustomerId(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Cart result = session.createQuery("FROM Cart WHERE CusId.CusId = :CusId", Cart.class)
+					.setParameter("CusId", id).getSingleResult();
+			session.close();
+			return result;
+		}
+	}
 }

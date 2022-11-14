@@ -29,4 +29,9 @@ public class CartServiceImpl implements ICartService {
 		return cartDao.getCartById(id);
 	}
 
+	@Override
+	public Cart getCartByCustomerId(int id) {
+		return cartDao.getCartByCustomerId(id);
+	}
+
 }

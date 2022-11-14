@@ -10,4 +10,6 @@ public interface ICartDao {
 	List<Cart> getAllCart();
 
 	Cart getCartById(int id);
+
+	Cart getCartByCustomerId(int id);
 }

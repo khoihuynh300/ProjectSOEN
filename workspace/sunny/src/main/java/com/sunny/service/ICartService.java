@@ -10,4 +10,6 @@ public interface ICartService {
 	List<Cart> getAllCart();
 
 	Cart getCartById(int id);
+
+	Cart getCartByCustomerId(int id);
 }
