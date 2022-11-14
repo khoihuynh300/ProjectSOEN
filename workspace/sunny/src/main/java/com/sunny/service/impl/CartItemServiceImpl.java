@@ -50,4 +50,9 @@ public class CartItemServiceImpl implements ICartItemService {
 		return new Result(true, "Add to cart successfully!!!");
 	}
 
+	@Override
+	public void updateCartItem(CartItem cartItem) {
+		cartItemDao.updateCartItem(cartItem);
+	}
+
 }
