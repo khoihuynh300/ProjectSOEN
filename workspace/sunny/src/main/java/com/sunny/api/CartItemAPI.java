@@ -1,5 +1,6 @@
 package com.sunny.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -59,7 +60,11 @@ public class CartItemAPI {
 	@DeleteMapping("/remove-list")
 	@Transactional
 	public Result removeSelectedCartItem(@RequestBody List<CartItem> listCartItem) {
-		return cartItemService.removeSelectedCartItem(listCartItem);
+		List<CartItem> list = new ArrayList<>();
+		for (CartItem element : listCartItem) {
+			list.add(cartItemService.getCartItem(element.getCartId().getCartId(), element.getProductId().getPid()));
+		}
+		return cartItemService.removeSelectedCartItem(list);
 	}
 
 	@GetMapping("/get")
