@@ -82,4 +82,16 @@ public class CustomerDaoImpl implements ICustomerDao {
 		}
 	}
 
+	@Override
+	public Customer getCustomerByUserId(int userId) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			List<Customer> result = session.createQuery("FROM Customer WHERE UserId.UserId = :UserId", Customer.class)
+					.setParameter("UserId", userId).getResultList();
+			if (result.size() == 0)
+				return null;
+			session.close();
+			return result.get(0);
+		}
+	}
+
 }

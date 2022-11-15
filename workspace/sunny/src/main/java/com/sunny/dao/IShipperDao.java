@@ -18,4 +18,6 @@ public interface IShipperDao {
 
 	Shipper getShipperById(int id);
 
+	Shipper getShipperByUserId(int userId);
+
 }

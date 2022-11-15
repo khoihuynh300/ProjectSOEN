@@ -76,4 +76,16 @@ public class EmployeeDaoImpl implements IEmployeeDao {
 		}
 	}
 
+	@Override
+	public Employee getEmployeebyUserId(int userId) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			List<Employee> result = session.createQuery("FROM Employee WHERE UserId.UserId = :UserId", Employee.class)
+					.setParameter("UserId", userId).getResultList();
+			if (result.size() == 0)
+				return null;
+			session.close();
+			return result.get(0);
+		}
+	}
+
 }

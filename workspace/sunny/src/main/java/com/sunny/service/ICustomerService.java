@@ -15,4 +15,6 @@ public interface ICustomerService {
 	List<Customer> getAllCustomers(int viewdeleted);
 
 	Customer getCustomerbyCusId(int Cid);
+
+	Customer getCustomerByUserId(int userId);
 }

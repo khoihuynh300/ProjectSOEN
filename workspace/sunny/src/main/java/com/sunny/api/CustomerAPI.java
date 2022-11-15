@@ -65,4 +65,10 @@ public class CustomerAPI {
 				? ResponseEntity.status(HttpStatus.OK).body(customerService.getAllCustomers(viewdeleted.intValue()))
 				: ResponseEntity.status(HttpStatus.OK).body(customerService.getCustomerbyCusId(id.intValue()));
 	}
+
+	@GetMapping("/get-by-user-id")
+	@Transactional
+	public Customer getCustomerByUserId(@RequestParam(required = true) Integer userId) {
+		return customerService.getCustomerByUserId(userId.intValue());
+	}
 }

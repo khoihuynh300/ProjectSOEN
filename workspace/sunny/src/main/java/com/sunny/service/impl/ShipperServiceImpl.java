@@ -45,4 +45,9 @@ public class ShipperServiceImpl implements IShipperService {
 		return shipperDao.getShipperById(id);
 	}
 
+	@Override
+	public Shipper getShipperByUserId(int userId) {
+		return shipperDao.getShipperByUserId(userId);
+	}
+
 }

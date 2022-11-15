@@ -53,4 +53,10 @@ public class ShipperAPI {
 	public Result deleteShipper(@RequestBody Shipper shipper) {
 		return shipperService.deleteShipper(shipperService.getShipperById(shipper.getShipperId()));
 	}
+
+	@GetMapping("/get-by-user-id")
+	@Transactional
+	public Shipper getEmployeeByUserId(@RequestParam(required = true) Integer userId) {
+		return shipperService.getShipperByUserId(userId.intValue());
+	}
 }

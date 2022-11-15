@@ -39,4 +39,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
 		return employeeDao.getEmployeebyEmpId(EmpId);
 	}
 
+	@Override
+	public Employee getEmployeebyUserId(int userId) {
+		return employeeDao.getEmployeebyUserId(userId);
+	}
+
 }

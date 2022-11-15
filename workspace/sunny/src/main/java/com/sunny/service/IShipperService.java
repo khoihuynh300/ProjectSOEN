@@ -18,4 +18,6 @@ public interface IShipperService {
 
 	Shipper getShipperById(int id);
 
+	Shipper getShipperByUserId(int userId);
+
 }

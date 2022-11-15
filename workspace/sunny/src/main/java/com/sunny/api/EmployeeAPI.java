@@ -52,4 +52,10 @@ public class EmployeeAPI {
 	public Employee getbyEmpid(@RequestParam(required = true) Integer id) {
 		return employeeService.getEmployeebyEmpId(id.intValue());
 	}
+
+	@GetMapping("/get-by-user-id")
+	@Transactional
+	public Employee getEmployeeByUserId(@RequestParam(required = true) Integer userId) {
+		return employeeService.getEmployeebyUserId(userId.intValue());
+	}
 }

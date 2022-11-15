@@ -72,4 +72,16 @@ public class ShipperDaoImpl implements IShipperDao {
 			return result;
 		}
 	}
+
+	@Override
+	public Shipper getShipperByUserId(int userId) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			List<Shipper> result = session.createQuery("FROM Shipper WHERE UserId.UserId = :UserId", Shipper.class)
+					.setParameter("UserId", userId).getResultList();
+			if (result.size() == 0)
+				return null;
+			session.close();
+			return result.get(0);
+		}
+	}
 }

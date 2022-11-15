@@ -38,4 +38,9 @@ public class CustomerServiceImpl implements ICustomerService {
 		return customerDao.getCustomerbyCusId(Cid);
 	}
 
+	@Override
+	public Customer getCustomerByUserId(int userId) {
+		return customerDao.getCustomerByUserId(userId);
+	}
+
 }
