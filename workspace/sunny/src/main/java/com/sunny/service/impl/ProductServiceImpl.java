@@ -56,4 +56,24 @@ public class ProductServiceImpl implements IProductService {
 		return productDao.getTopItemByPtype(Ptype);
 	}
 
+	@Override
+	public Product bestSeller() {
+		return productDao.bestSeller();
+	}
+
+	@Override
+	public Product bestSellerOfAProductType(int id) {
+		return productDao.bestSellerOfAProductType(id);
+	}
+
+	@Override
+	public Product bestIncome() {
+		return productDao.bestIncome();
+	}
+
+	@Override
+	public Product bestIncomeOfAProductType(int id) {
+		return productDao.bestIncomeOfAProductType(id);
+	}
+
 }

@@ -21,4 +21,13 @@ public interface IProductService {
 	List<Product> getRecommendedProducts(int ptype, int size);
 
 	List<Product> getTopItemByPtype(int Ptype);
+
+	Product bestSeller();
+
+	Product bestSellerOfAProductType(int id);
+
+	Product bestIncome();
+
+	Product bestIncomeOfAProductType(int id);
+
 }

@@ -1,5 +1,6 @@
 package com.sunny.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.sunny.model.ProductType;
@@ -15,4 +16,12 @@ public interface IProductTypeService {
 	Result deleteProductType(ProductType productType);
 
 	ProductType getProductTypeById(int id);
+
+	double totalIncome();
+
+	double totalIncomeinInterval(Date start, Date end);
+
+	double incomeOfAProductType(int id);
+
+	double incomeOfAProductTypeinInterval(int id, Date start, Date end);
 }

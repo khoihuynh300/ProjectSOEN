@@ -69,4 +69,28 @@ public class ProductAPI {
 	public List<Product> getTopItemByPtype(@RequestParam(required = true) Integer ptype) {
 		return productService.getTopItemByPtype(ptype.intValue());
 	}
+
+	@GetMapping("/best-seller")
+	@Transactional
+	public Product bestSeller() {
+		return productService.bestSeller();
+	}
+
+	@GetMapping("/best-seller-of-a-producttype")
+	@Transactional
+	public Product bestSellerOfAProductType(@RequestParam(required = true) Integer ptype) {
+		return productService.bestSellerOfAProductType(ptype.intValue());
+	}
+
+	@GetMapping("/best-income")
+	@Transactional
+	public Product bestIncome() {
+		return productService.bestIncome();
+	}
+
+	@GetMapping("/best-income-of-a-producttype")
+	@Transactional
+	public Product bestIncomeOfAProductType(@RequestParam(required = true) Integer ptype) {
+		return productService.bestIncomeOfAProductType(ptype.intValue());
+	}
 }

@@ -158,4 +158,72 @@ public class ProductDaoImpl implements IProductDao {
 			return result;
 		}
 	}
+
+	@Override
+	public Product bestSeller() {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			List<OrderDetail> result = session.createNativeQuery(
+					"SELECT * FROM Orderdetail WHERE status = 6 group by pid order by sum(quantity) desc",
+					OrderDetail.class).getResultList();
+			if (result.isEmpty())
+				return null;
+			session.close();
+			return result.get(0).getProductId();
+		}
+	}
+
+	@Override
+	public Product bestSellerOfAProductType(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			List<Product> listProduct = session.createQuery("FROM Product WHERE Ptype.Ptype = :id", Product.class)
+					.setParameter("id", id).getResultList();
+			if (listProduct.isEmpty())
+				return null;
+			List<Integer> listProductId = new ArrayList<>();
+			for (Product product : listProduct) {
+				listProductId.add(product.getPid());
+			}
+			List<OrderDetail> result = session.createNativeQuery(
+					"SELECT * FROM Orderdetail WHERE status = 6 AND pid in (:list) group by pid order by sum(quantity) desc",
+					OrderDetail.class).setParameter("list", listProductId).getResultList();
+			if (result.isEmpty())
+				return null;
+			session.close();
+			return result.get(0).getProductId();
+		}
+	}
+
+	@Override
+	public Product bestIncome() {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			List<OrderDetail> result = session.createNativeQuery(
+					"SELECT * FROM Orderdetail WHERE status = 6 group by pid order by sum(quantity * price) - sum(discount) desc",
+					OrderDetail.class).getResultList();
+			if (result.isEmpty())
+				return null;
+			session.close();
+			return result.get(0).getProductId();
+		}
+	}
+
+	@Override
+	public Product bestIncomeOfAProductType(int id) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			List<Product> listProduct = session.createQuery("FROM Product WHERE Ptype.Ptype = :id", Product.class)
+					.setParameter("id", id).getResultList();
+			if (listProduct.isEmpty())
+				return null;
+			List<Integer> listProductId = new ArrayList<>();
+			for (Product product : listProduct) {
+				listProductId.add(product.getPid());
+			}
+			List<OrderDetail> result = session.createNativeQuery(
+					"SELECT * FROM Orderdetail WHERE status = 6 AND pid in (:list) group by pid order by sum(quantity * price) - sum(discount) desc",
+					OrderDetail.class).setParameter("list", listProductId).getResultList();
+			if (result.isEmpty())
+				return null;
+			session.close();
+			return result.get(0).getProductId();
+		}
+	}
 }
