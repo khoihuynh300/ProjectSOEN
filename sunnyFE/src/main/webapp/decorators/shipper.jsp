@@ -34,6 +34,7 @@
 	<div class="app">
 		<!-- header -->
 		<%@ include file="/common/shipper/header.jsp"%>
+		 <%@ include file="/common/notify/notify.jsp" %>
 		<!-- header -->
 
 

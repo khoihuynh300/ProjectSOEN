@@ -27,6 +27,7 @@
         </div>
     </header>
     <main>
+    <%@ include file="/common/notify/notify.jsp" %>
         <div class="row">
             <div class="col-6" id="background">
                 <img src="<c:url value='/views/login/img/logo1.png'/>" class="d-block">
