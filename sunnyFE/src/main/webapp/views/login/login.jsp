@@ -41,13 +41,13 @@
                             nhập</label>
                         <div>
                         <label>Tên tài khoản:</label>
-                        <input type="text" id="account" name="account" placeholder="Tên tài khoản" required>
+                        <input type="text" id="account" name="account" placeholder="Tên tài khoản" required pattern="^[a-z][a-z\d]{7,31}$">
                         </div>
                         <label>Mật khẩu:</label>
                         <div class="password-area" id="password-area">
                         
                             <input id="password" name="password" type="password" placeholder="Mật khẩu"
-                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" required>
+                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" required>
                             <div class="showpw"><a type="button" onclick="showPassword()"><i class="fa-regular fa-eye" id="eye" hidden="true"
                                         style="margin: 0; padding: 0;"></i><i class="fa-regular fa-eye-slash" id="eye1" style="margin:0; padding: 0;"></i></a>
                             </div>
