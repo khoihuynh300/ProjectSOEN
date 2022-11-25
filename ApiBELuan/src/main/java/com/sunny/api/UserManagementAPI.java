@@ -55,7 +55,7 @@ public class UserManagementAPI {
 	@Transactional
 	public ResponseEntity<?> deleteUser(@RequestBody User user) {
 		userService.deleteUser(user);
-		System.err.println("nammoadidaphat");
+		
 		return ResponseEntity.status(HttpStatus.OK).body("Xóa thành công");
 	}
 

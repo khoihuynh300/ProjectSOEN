@@ -203,6 +203,7 @@
           });
 
           $(".btn-showChangePasswd").click(function () {
+	
             $("#account-profile .page-content .container-fluid").empty();
             $("#account-profile .page-content .container-fluid").append(`<div class="menu-content-nav">
                 <p style ="font-size: 20px;"> Đổi Mật Khẩu</p>
@@ -215,15 +216,15 @@
                     <div class="form-row">
                       <div class="form-group col-md-6">
                         <label for="inputCurrentPasswd">Mật khẩu hiện tại</label>
-                        <input type="currenPasswd" class="form-control" id="inputName4" placeholder="">
+                        <input type="password" class="form-control" id="currentPasswd" placeholder="">
                       </div>
                       <div class="form-group col-md-6">
                         <label for="inputNewPasswd">Mật khẩu mới</label>
-                        <input type="newPasswd" class="form-control" id="inputEmail4" placeholder="">
+                        <input type="password" class="form-control" id="newPasswd" placeholder="">
                       </div>
                       <div class="form-group col-md-6">
                         <label for="inputConfNewPasswd">Xác nhận mật khẩu</label>
-                        <input type="confNewPasswd" class="form-control" id="inputPhonenumber4" placeholder="">
+                        <input type="password" class="form-control" id="confNewPasswd" placeholder="">
                       </div>
                     </div>
 
@@ -231,7 +232,47 @@
                   </form>
                 </div>
               </div>`)
+              
+              
           });
+          
+          $(document).on('click', '#confirmChangePasswd', function(){
+			let curpass = $('#currentPasswd').val().trim()
+			let newpass = $('#newPasswd').val().trim()
+			let cfmnewpass = $('#confNewPasswd').val().trim()
+			if(curpass == "" || newpass == ""  ||  cfmnewpass ==""){
+				alert("chưa nhập đầy đủ thông tin")
+			}
+			else if(newpass != cfmnewpass){
+				alert("xác nhận mật khẩu không đúng!")
+			}
+			else if(newpass == curpass){
+				alert("mật khẩu mới phải khác mật khẩu cũ")
+			}
+			
+			else{
+				var formdata = new FormData();
+				
+			    formdata.append('id','9')
+			     formdata.append('oldPassword',curpass)
+			    formdata.append('newPassword',newpass)
+			    fetch('http://localhost:8083/user/changepassword', {
+				  method: 'PUT',
+				  body: formdata
+				})
+				.then(r =>{
+					if(!r.ok){
+						if(r.status == 406){
+							alert("mật khẩu không chính xác!")
+						}
+					}else{
+						
+						alert("đổi thành công")
+					}
+					})
+				
+			}
+		})
           
           $(".btn-showAddress").click(function () {
             $("#account-profile .page-content .container-fluid").empty();

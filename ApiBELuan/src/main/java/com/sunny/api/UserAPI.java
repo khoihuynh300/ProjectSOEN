@@ -92,16 +92,21 @@ public class UserAPI {
 	}
 	
 	
-	@PutMapping("/user")
+	@PutMapping("/user/changepassword")
 	@Transactional
-	public void updateUser(@RequestParam String newPassword, @RequestParam String oldPassword, HttpSession session) {
-		if (session != null) {
-			User user = (User) session.getAttribute("user");
+	public ResponseEntity<?> updateUser(@RequestParam String newPassword, @RequestParam String oldPassword,@RequestParam Integer id, HttpSession session) {
+		//if (session != null) {
+			//User user = (User) session.getAttribute("user");
+			User user = userservice.getUserById(id);
 			if (BCrypt.checkpw(oldPassword, user.getPassword()) == true) {
-				user.setPassword(newPassword);
+				user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt(4)));
 				userservice.updateUser(user);
+				return ResponseEntity.status(HttpStatus.OK).body("Đổi  thành công");
 			}
-		}
+			else {
+				return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("mật khẩu cũ không chính xác");
+			}
+		//}
 	}
 
 //	@GetMapping("/user")
