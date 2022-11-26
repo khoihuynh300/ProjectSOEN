@@ -77,16 +77,27 @@ public class UserAPI {
 			session.setAttribute("user", userResp);
 			userservice.sendEmailVerify(user);
 			//response.sendRedirect("/user/register/verifyer");
-			return ResponseEntity.status(HttpStatus.FOUND).body(new Result(true, "tài khoản đã tồn tại nhưng chưa xác nhận"));
+			return ResponseEntity.status(HttpStatus.FOUND).body("tài khoản đã tồn tại nhưng chưa xác nhận");
 			
 		} else if (userResp != null && userResp.isEnable() == true) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(new Result(false, "tài khoản đã tồn tại"));
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("tài khoản đã tồn tại");
 		} else {
-			userResp = userservice.createUser(user);
-			session.setAttribute("user", userResp);
-			userservice.sendEmailVerify(user);
-			//response.sendRedirect("/user/register/verifyer");
-			return ResponseEntity.status(HttpStatus.OK).body(userResp);
+			try {
+				userResp = userservice.createUser(user);
+				//session.setAttribute("user", userResp);
+				userservice.sendEmailVerify(user);
+				//response.sendRedirect("/user/register/verifyer");
+				return ResponseEntity.status(HttpStatus.OK).body(userResp);
+			} catch (Exception e) {
+				System.err.println(e.getCause().getMessage());
+				if(e.getCause().getMessage().contains("Duplicate entry '" + user.getEmail()) ) {
+					return ResponseEntity.status(HttpStatus.CONFLICT).body("email đã tồn tại");
+				}
+				else
+					return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("An error occur!");
+			}
+			
+			
 		}
 
 	}

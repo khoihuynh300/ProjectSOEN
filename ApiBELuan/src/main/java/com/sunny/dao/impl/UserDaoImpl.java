@@ -88,6 +88,7 @@ public class UserDaoImpl implements IUserDao {
 	@Override
 	public User create(User user) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			
 			Transaction t = session.beginTransaction();
 			session.save(user);
 			user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(4)));
@@ -98,6 +99,7 @@ public class UserDaoImpl implements IUserDao {
 			
 			String[] email = user.getEmail().split("@");
 			user.setEmail(user.getEmail());
+			System.err.println("userdao");
 			t.commit();
 			session.close();
 			return user;
