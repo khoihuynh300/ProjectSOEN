@@ -31,6 +31,8 @@
 </head>
 <body>
 
+ <%@ include file="/common/notify/notify.jsp" %>
+
 	<header>
 		<div class="container-fluid">
 			<div class="logo">

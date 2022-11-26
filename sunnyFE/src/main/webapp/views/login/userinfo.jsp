@@ -18,6 +18,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+ <%@ include file="/common/notify/notify.jsp" %>
 <style>
 #frminfo div,
 #frminfo div input {

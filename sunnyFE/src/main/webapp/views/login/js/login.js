@@ -145,7 +145,13 @@ async function login(username ="", password = ""){
 			
 		}
 		else {
-			alert("tài khoản hoặc mật khẩu không đúng")
+			//alert("tài khoản hoặc mật khẩu không đúng")
+			toast({
+	          title: "title",
+	          message: "tài khoản hoặc mật khẩu không đúng",
+	          type: "error", //or success
+	        });
+	        
 		}
 	    console.log('Success1:', {jsonData:JSON.stringify(data)});
 	    

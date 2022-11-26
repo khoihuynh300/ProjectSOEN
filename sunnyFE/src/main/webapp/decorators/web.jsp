@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	<%@ include file="/common/taglib.jsp" %>
+	
 	<%@ page session="true" %>
 <!DOCTYPE html>
 <html>
@@ -119,8 +120,8 @@
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<c:url value='/views/web/js/home.js'/>"></script>
-<%@ include file="/common/web/header.jsp"%>
-	
+	<%@ include file="/common/web/header.jsp"%>
+	<%@ include file="/common/notify/notify.jsp" %>
 	<dec:body/>
 <%@ include file="/common/web/footer.jsp"%>
 
