@@ -1,5 +1,6 @@
 package com.sunny.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,5 +96,15 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	public Product bestIncomeOfAProductType(int id) {
 		return productDao.bestIncomeOfAProductType(id);
+	}
+
+	@Override
+	public List<Object[]> nProductBestIncome(int n) {
+		return productDao.nProductBestIncome(n);
+	}
+
+	@Override
+	public List<Object[]> nProdcutBestIncomeinInterval(int n, Date start, Date end) {
+		return productDao.nProdcutBestIncomeinInterval(n, start, end);
 	}
 }

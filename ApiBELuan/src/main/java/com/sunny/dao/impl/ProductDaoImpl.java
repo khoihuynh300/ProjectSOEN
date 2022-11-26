@@ -3,6 +3,7 @@ package com.sunny.dao.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -352,6 +353,72 @@ public class ProductDaoImpl implements IProductDao {
 				return null;
 			session.close();
 			return result.get(0).getProductId();
+		}
+	}
+
+	@Override
+	public List<Object[]> nProductBestIncome(int n) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			List<Object[]> res = new ArrayList<>();
+			List<Product> listProduct = session.createQuery("FROM Product", Product.class).getResultList();
+			if (listProduct.isEmpty())
+				return null;
+			for (Product product : listProduct) {
+				Object[] ele = new Object[2];
+				ele[0] = product.getPname();
+				try {
+					ele[1] = (double) session.createNativeQuery(
+							"SELECT sum(price * quantity) - sum(discount) FROM orderdetail WHERE status = 6 AND Pid = :Pid")
+							.setParameter("Pid", product.getPid()).getSingleResult();
+				} catch (NullPointerException ex) {
+					ele[1] = 0;
+				}
+				res.add(ele);
+			}
+			Collections.sort(res, Comparator.comparing(e -> -(double) e[1]));
+			List<Object[]> ans = new ArrayList<>();
+			for (Object[] ele : res) {
+				if ((double) ele[1] > 0 && ans.size() < n)
+					ans.add(ele);
+			}
+			session.close();
+			return ans;
+		}
+	}
+
+	@Override
+	public List<Object[]> nProdcutBestIncomeinInterval(int n, Date start, Date end) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			List<Object[]> res = new ArrayList<>();
+			List<Product> listProduct = session.createQuery("FROM Product", Product.class).getResultList();
+			if (listProduct.isEmpty())
+				return null;
+			List<Orders> listOrders = session
+					.createQuery("FROM Orders AS c WHERE c.OrderDate BETWEEN :startDate AND :endDate", Orders.class)
+					.setParameter("startDate", start).setParameter("endDate", end).getResultList();
+			if (listOrders.isEmpty())
+				return null;
+			for (Product product : listProduct) {
+				Object[] ele = new Object[2];
+				ele[0] = product.getPname();
+				try {
+					ele[1] = (double) session.createNativeQuery(
+							"SELECT sum(price * quantity) - sum(discount) FROM orderdetail WHERE status = 6 AND Pid = :Pid AND OrderId IN (:listOrder)")
+							.setParameter("Pid", product.getPid()).setParameter("listOrder", listOrders)
+							.getSingleResult();
+				} catch (NullPointerException ex) {
+					ele[1] = 0;
+				}
+				res.add(ele);
+			}
+			Collections.sort(res, Comparator.comparing(e -> -(double) e[1]));
+			List<Object[]> ans = new ArrayList<>();
+			for (Object[] ele : res) {
+				if ((double) ele[1] > 0 && ans.size() < n)
+					ans.add(ele);
+			}
+			session.close();
+			return ans;
 		}
 	}
 }

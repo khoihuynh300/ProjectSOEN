@@ -1,5 +1,6 @@
 package com.sunny.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.sunny.model.Product;
@@ -36,4 +37,8 @@ public interface IProductService {
 	Product bestIncome();
 
 	Product bestIncomeOfAProductType(int id);
+
+	List<Object[]> nProductBestIncome(int n);
+
+	List<Object[]> nProdcutBestIncomeinInterval(int n, Date start, Date end);
 }

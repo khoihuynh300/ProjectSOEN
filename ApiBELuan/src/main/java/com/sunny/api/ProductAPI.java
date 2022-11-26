@@ -1,7 +1,10 @@
 package com.sunny.api;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -203,5 +206,22 @@ public class ProductAPI {
 	@Transactional
 	public Product bestIncomeOfAProductType(@RequestParam(required = true) Integer ptype) {
 		return productService.bestIncomeOfAProductType(ptype.intValue());
+	}
+
+	@GetMapping("/n-product-best-income")
+	@Transactional
+	public List<Object[]> nProductBestIncome(@RequestParam(required = true) Integer n) {
+		return productService.nProductBestIncome(n.intValue());
+	}
+
+	@GetMapping("/n-product-best-income-in-interval")
+	@Transactional
+	public List<Object[]> nProductBestIncomeinInterval(@RequestParam(required = true) Integer n,
+			@RequestParam(required = true) String startDate, @RequestParam(required = true) String endDate)
+			throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		Date stDate = format.parse(startDate);
+		Date edDate = format.parse(endDate);
+		return productService.nProdcutBestIncomeinInterval(n.intValue(), stDate, edDate);
 	}
 }
