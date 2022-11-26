@@ -56,7 +56,7 @@
 
                         <input class="d-block submit-btn" type="submit" value="ĐĂNG NHẬP">
                     </form>
-                    <a href="#" style="text-decoration: none;">Quên mật khẩu</a>
+                    <a href="<c:url value='/account/forget'/>" style="text-decoration: none;">Quên mật khẩu</a>
                     <%-- <div class="anotherWay">
                         <div class="border"></div>
                         <span class="or">HOẶC</span>

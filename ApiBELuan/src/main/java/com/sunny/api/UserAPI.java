@@ -38,15 +38,37 @@ public class UserAPI {
 	private IUserService userservice;
 
 	@PostMapping("/user/reset-password")
-	public void resetPassword(@RequestBody User user, @RequestParam(defaultValue = "") Integer code) throws Exception {
-		userservice.resetPassword(user, code);
+	public ResponseEntity<?> resetPassword(@RequestBody User user, @RequestParam(defaultValue = "") Integer code) throws Exception {
+		try {
+			userservice.resetPassword(user, code);
+			return ResponseEntity.status(HttpStatus.OK).body("Đặt lại mật khẩu thành công");
+		} catch (Exception e) {
+			//System.err.println(e.getMessage());
+			if(e.getMessage().contains("không tìm thấy tài khoản")) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("không tìm thấy tài khoản");
+			}
+			else if(e.getMessage().contains("OTP code không chính xác")) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("OTP code không chính xác");
+			}
+			else if(e.getMessage().contains("Chưa gửi yêu cầu lấy lại mật khẩu")) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("Chưa gửi yêu cầu lấy lại mật khẩu");
+			}
+			else
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("An error occur!");
+		}
+		
 	}
 	
 	//quên mk
 	@PostMapping("/user/forget-password")
-	public void forgetPassword(@RequestBody User user, HttpServletResponse response) throws Exception {
-		userservice.sendEmailVerify(user);
-		response.sendRedirect("/user/reset-password");
+	public ResponseEntity<?> forgetPassword(@RequestBody User user, HttpServletResponse response) throws Exception {
+		User userresp = userservice.getUserByAccountName(user);
+		if(userresp == null) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Không tìm thấy tài khoản");
+		}
+		userservice.sendEmailVerify(userresp);
+		return ResponseEntity.status(HttpStatus.OK).body("Thành công");
+		//response.sendRedirect("/user/reset-password");
 	}
 	
 	//xác thực

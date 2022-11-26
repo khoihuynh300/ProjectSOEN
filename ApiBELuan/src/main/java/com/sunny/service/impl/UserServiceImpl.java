@@ -136,12 +136,18 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void resetPassword(User user, int code) throws Exception {
 		User check1 = userdao.findUserByAccountName(user.getAccountName());
+		if(verifyerCode == null) 
+			throw new Exception("Chưa gửi yêu cầu lấy lại mật khẩu");
 		if (check1 != null) {
 			if (code == verifyerCode) {
 				userdao.update(user.getAccountName(), user.getPassword());
 			}
-		} else
-			throw new Exception("Email và tài khoản không trùng khớp");
+			else
+				throw new Exception("OTP code không chính xác");
+		} else {
+			//System.err.println("userservice");
+			throw new Exception("không tìm thấy tài khoản");
+		}
 	}
 
 	@Override
