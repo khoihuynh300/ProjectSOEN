@@ -157,18 +157,23 @@ async function login(username ="", password = ""){
 		else {
 			//alert("tài khoản hoặc mật khẩu không đúng")
 			toast({
-	          title: "title",
-	          message: "tài khoản hoặc mật khẩu không đúng",
+	          title: "Đăng nhập thất bại",
+	          message: "Tài khoản hoặc mật khẩu không đúng",
 	          type: "error", //or success
 	        });
 	        
 		}
-	    console.log('Success1:', {jsonData:JSON.stringify(data)});
+	    //console.log('Success1:', {jsonData:JSON.stringify(data)});
 	    
 	    
 	  })
 	  .catch((error) => {
-		alert("tài khoản hoặc mật khẩu không đúng")
+		//alert("tài khoản hoặc mật khẩu không đúng")
+		toast({
+	          title: "ERROR",
+	          message: "An error occur!",
+	          type: "error", //or success
+	        });
 	    console.error('Error:', error);
 	  });
 	  
@@ -187,12 +192,17 @@ async function login(username ="", password = ""){
 				//alert("Đăng nhập thành công")
 				window.location.href = "http://"+location.host+"/sunnyFE/web";
 			}).fail(function(){
-				alert('không thể đăng nhập')
+				toast({
+		          title: "ERROR",
+		          message: "An error occur!",
+		          type: "error", //or success
+		        });
+				//alert('không thể đăng nhập')
 			})
 			
 		}
 		else if(account.roleId.roleId == 4){
-			alert(account.userId)
+			//alert(account.userId)
 			await fetch('http://localhost:8083/usermanagement/shipper/get-by-user-id?userId=' + account.userId)
 			  .then((response) => response.json())
 			  .then((data) => user=data);
@@ -203,7 +213,12 @@ async function login(username ="", password = ""){
 				//alert("Đăng nhập thành công ")
 				window.location.href = "http://"+location.host+"/sunnyFE/shipper";
 			}).fail(function(){
-				alert('không thể đăng nhập')
+				toast({
+		          title: "ERROR",
+		          message: "An error occur!",
+		          type: "error", //or success
+		        });
+				//alert('không thể đăng nhập')
 			})
 		}
 		else if(account.roleId.roleId == 1){
@@ -216,7 +231,12 @@ async function login(username ="", password = ""){
 				//alert("Đăng nhập thành công ")
 				window.location.href = "http://"+location.host+"/sunnyFE/admin";
 			}).fail(function(){
-				alert('không thể đăng nhập')
+				toast({
+		          title: "ERROR",
+		          message: "An error occur!",
+		          type: "error", //or success
+		        });
+				//alert('không thể đăng nhập')
 			})
 		}
 		else if(account.roleId.roleId == 3){
@@ -231,11 +251,17 @@ async function login(username ="", password = ""){
 				//alert("Đăng nhập thành công ")
 				window.location.href = "http://"+location.host+"/sunnyFE/admin";
 			}).fail(function(){
-				alert('không thể đăng nhập')
+				toast({
+		          title: "ERROR",
+		          message: "An error occur!",
+		          type: "error", //or success
+		        });
+				//alert('không thể đăng nhập')
 			})
 		}
 }
 
+//
 function getCusId(UserId){
-	return 0;
+	
 }
