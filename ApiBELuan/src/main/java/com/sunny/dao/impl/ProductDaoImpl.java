@@ -30,7 +30,7 @@ public class ProductDaoImpl implements IProductDao {
 			session.save(product);
 			t.commit();
 			session.close();
-			
+
 			return product;
 		}
 	}
@@ -89,30 +89,27 @@ public class ProductDaoImpl implements IProductDao {
 			return result;
 		}
 	}
-	
+
 	@Override
-	public List<Product> getProductByPrice(Double start, Double end){
+	public List<Product> getProductByPrice(Double start, Double end) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			Transaction t = session.beginTransaction();
 			List<Product> result = new ArrayList<>();
 			if (start != null && end == null) {
 				Query<Product> query = session
-						.createQuery("From Product p WHERE p.Price >= :start ORDER BY p.Price",
-								Product.class)
+						.createQuery("From Product p WHERE p.Price >= :start ORDER BY p.Price", Product.class)
 						.setParameter("start", start.doubleValue());
 				result = query.getResultList();
 			} else if (start == null && end != null) {
 				Query<Product> query = session
-						.createQuery("From Product p WHERE p.Price <= :end ORDER BY p.Price DESC",
-								Product.class)
+						.createQuery("From Product p WHERE p.Price <= :end ORDER BY p.Price DESC", Product.class)
 						.setParameter("end", end.doubleValue());
 				result = query.getResultList();
 			} else if (start != null && end != null) {
 				Query<Product> query = session
 						.createQuery("FROM Product p WHERE p.Price BETWEEN :start AND :end ORDER BY p.Price",
 								Product.class)
-						.setParameter("start", start.doubleValue())
-						.setParameter("end", end.doubleValue());
+						.setParameter("start", start.doubleValue()).setParameter("end", end.doubleValue());
 				result = query.getResultList();
 			}
 			t.commit();
@@ -175,7 +172,7 @@ public class ProductDaoImpl implements IProductDao {
 			t.commit();
 		}
 	}
-	
+
 	@Override
 	public List<Product> getRecommendedProducts(int ptype, int size) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -197,6 +194,8 @@ public class ProductDaoImpl implements IProductDao {
 				for (Product product : listProduct) {
 					listProductId.add(product.getPid());
 				}
+				if (listOrderId.isEmpty() || listProductId.isEmpty())
+					continue;
 				Query<OrderDetail> query_orderDetail = session
 						.createQuery("FROM OrderDetail WHERE ProductId.Pid IN (:listp) AND OrderId.OrderId IN (:list)",
 								OrderDetail.class)
@@ -245,7 +244,7 @@ public class ProductDaoImpl implements IProductDao {
 			return result;
 		}
 	}
-	
+
 	@Override
 	public List<Product> getAllProductByPtype(int Ptype, int pageNumber, int pageSize) {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
@@ -266,26 +265,24 @@ public class ProductDaoImpl implements IProductDao {
 	public Long count(Integer cateid) {
 		try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
 			Transaction t = session.beginTransaction();
-			//System.err.println(cateid);
-			if(cateid == 0) {
+			// System.err.println(cateid);
+			if (cateid == 0) {
 				Query query = session.createQuery("select count(*) FROM Product");
-				
-				Long count = (Long)query.uniqueResult(); 
+
+				Long count = (Long) query.uniqueResult();
 				t.commit();
 				return count;
-			}
-			else {
-				
+			} else {
+
 				Query query = session.createQuery("select count(*) FROM Product where Ptype =" + cateid);
-				
-				Long count = (Long)query.uniqueResult(); 
+
+				Long count = (Long) query.uniqueResult();
 				t.commit();
-				//System.err.println(count);
+				// System.err.println(count);
 				return count;
 			}
-			
-		}
-		catch (Exception e) {
+
+		} catch (Exception e) {
 			return null;
 		}
 	}
