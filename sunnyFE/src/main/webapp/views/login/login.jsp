@@ -42,7 +42,7 @@
                             nhập</label>
                         <div>
                         <label>Tên tài khoản:</label>
-                        <input type="text" id="account" name="account" placeholder="Tên tài khoản" required pattern="^[a-z][a-z\d]{7,31}$">
+                        <input type="text" id="account" name="account" placeholder="Tên tài khoản" required pattern="^[a-z][a-z\d]{3,20}$">
                         </div>
                         <label>Mật khẩu:</label>
                         <div class="password-area" id="password-area">

@@ -62,7 +62,7 @@
 							id="email" required>
 						<div class="account-area" id="account-area">
 							<input type="text" id="account" name="account"
-								placeholder="Account" required pattern="^[a-z][a-z\d]{7,31}$"
+								placeholder="Account" required pattern="^[a-z][a-z\d]{3,20}$"
 								onkeyup="check_account();">
 							<div style="margin-right: 5px;">
 								<i class="fa-solid fa-check" id="correct2" style="color: green;"
@@ -228,7 +228,7 @@
 		}
 
 		function check_account() {
-			let pattern = /^[a-z][a-z\d]{7,31}$/;
+			let pattern = /^[a-z][a-z\d]{3,20}$/;
 			if (pattern.test(document.getElementById("account").value)) {
 				document.getElementById("correct2").hidden = false;
 				document.getElementById("wrong2").hidden = true;
