@@ -21,15 +21,25 @@ function AddCustomer(user, name,gender,address ){
 	  .then((data) => {
 		if(status == 200){
 			console.log('Success:', data)
-			//alert(data.message)
+			
 			window.location.href = "http://"+location.host+"/sunnyFE/account/login";
 		}
 	    else{
-			alert('fail! some error occur')
+			toast({
+	          title: "ERROR",
+	          message: "An error occur!",
+	          type: "error", //or success
+	        });
+			
 		}
 	   
 	  })
 	  .catch((error) => {
+		toast({
+	          title: "ERROR",
+	          message: "An error occur!",
+	          type: "error", //or success
+	        });
 	    console.error('Error:', error);
 	  });
 }
@@ -38,7 +48,7 @@ function AddCustomer(user, name,gender,address ){
 function verify(code,userId){
 	var status;	
 	let url = "http://localhost:8083/user/register/verifyer?code=" + code + "&userId=" + userId;
-	//alert(url)
+	
 	fetch(url, {
 	  method: 'PUT', 
 	  headers: {
@@ -51,20 +61,30 @@ function verify(code,userId){
 		return response.json()
 		})
 	  .then((data) => {
-	    //console.log('Success1:', {jsonData:JSON.stringify(data)});
+	    
 	    
 	    if(status==200){
 			window.location.href = "http://"+location.host+"/sunnyFE/account/signup/userinfo";
-			//alert('xác thực thành công. vui lòng nhập thông tin người dùng')
+			
 		}
 		else {
-			alert('mã xác thực không chính xác')
+			
+			toast({
+	          title: "Xác thực không thành công",
+	          message: "Mã xác thực không chính xác",
+	          type: "error", //or success
+	        });
 		}
 	   	
 	  })
 	  .catch((error) => {
 	    console.error('Error:', error);
-	    alert(error)
+	    
+	    toast({
+	          title: "ERROR",
+	          message: "An error occur!",
+	          type: "error", //or success
+	        });
 	  });
 }
 
@@ -92,7 +112,7 @@ function signup(email,username, password, phone){
 		if(response.status != 200){
 			response.text().then(function (text) {
 			  toast({
-		          title: "đăng ký thất bại",
+		          title: "Đăng ký thất bại",
 		          message: text,
 		          type: "error", //or success
 		        });
@@ -110,15 +130,20 @@ function signup(email,username, password, phone){
 				}).fail(function(){
 					console.log('không thể đăng nhập')
 			})
-			//alert("vui lòng xác nhận tài khoản qua email")		
+			
 			window.location.href = "http://"+location.host+"/sunnyFE/account/signup/verify";
-			//window.location.href = location.host + "/sunnyFE/account/login/verify";
+			
 			
 		}
-	    console.log('Success1:', {jsonData:JSON.stringify(data)});
+	    
 	   
 	  })
 	  .catch((error) => {
+		toast({
+	          title: "ERROR",
+	          message: "An error occur!",
+	          type: "error", //or success
+	        });
 	    console.error('Error:', error);
 	  });
 }
@@ -155,7 +180,7 @@ async function login(username ="", password = ""){
 			
 		}
 		else {
-			//alert("tài khoản hoặc mật khẩu không đúng")
+			
 			toast({
 	          title: "Đăng nhập thất bại",
 	          message: "Tài khoản hoặc mật khẩu không đúng",
@@ -168,7 +193,7 @@ async function login(username ="", password = ""){
 	    
 	  })
 	  .catch((error) => {
-		//alert("tài khoản hoặc mật khẩu không đúng")
+		
 		toast({
 	          title: "ERROR",
 	          message: "An error occur!",
@@ -178,8 +203,8 @@ async function login(username ="", password = ""){
 	  });
 	  
 	  
-	  //alert(123)
-		//alert(account.roleId.roleId)
+	 
+		
 		if(account.roleId.roleId == 2){
 			
 			await fetch('http://localhost:8083/customer/get-by-user-id?userId=' + account.userId)
@@ -189,7 +214,7 @@ async function login(username ="", password = ""){
 			$.post("http://"+location.host+"/sunnyFE/account/login",
 		  	{userId:JSON.stringify(account),cus:JSON.stringify(user)},
 			function(){
-				//alert("Đăng nhập thành công")
+				
 				window.location.href = "http://"+location.host+"/sunnyFE/web";
 			}).fail(function(){
 				toast({
@@ -197,20 +222,20 @@ async function login(username ="", password = ""){
 		          message: "An error occur!",
 		          type: "error", //or success
 		        });
-				//alert('không thể đăng nhập')
+				
 			})
 			
 		}
 		else if(account.roleId.roleId == 4){
-			//alert(account.userId)
+			
 			await fetch('http://localhost:8083/usermanagement/shipper/get-by-user-id?userId=' + account.userId)
 			  .then((response) => response.json())
 			  .then((data) => user=data);
-			//alert("login")
+			
 			$.post("http://"+location.host+"/sunnyFE/account/login",
 		  	{userId:JSON.stringify(account),shipper:JSON.stringify(user)},
 			function(){
-				//alert("Đăng nhập thành công ")
+				
 				window.location.href = "http://"+location.host+"/sunnyFE/shipper";
 			}).fail(function(){
 				toast({
@@ -218,17 +243,17 @@ async function login(username ="", password = ""){
 		          message: "An error occur!",
 		          type: "error", //or success
 		        });
-				//alert('không thể đăng nhập')
+				
 			})
 		}
 		else if(account.roleId.roleId == 1){
-			//alert(account.userId)
 			
-			//alert("login")
+			
+			
 			$.post("http://"+location.host+"/sunnyFE/account/login",
 		  	{userId:JSON.stringify(account)},
 			function(){
-				//alert("Đăng nhập thành công ")
+				
 				window.location.href = "http://"+location.host+"/sunnyFE/admin";
 			}).fail(function(){
 				toast({
@@ -236,19 +261,19 @@ async function login(username ="", password = ""){
 		          message: "An error occur!",
 		          type: "error", //or success
 		        });
-				//alert('không thể đăng nhập')
+				
 			})
 		}
 		else if(account.roleId.roleId == 3){
-			//alert(account.userId)
+			
 			await fetch('http://localhost:8083/usermanagement/shipper/get-by-user-id?userId=' + account.userId)
 			  .then((response) => response.json())
 			  .then((data) => user=data);
-			//alert("login")
+			
 			$.post("http://"+location.host+"/sunnyFE/account/login",
 		  	{userId:JSON.stringify(account),Employee:JSON.stringify(user)},
 			function(){
-				//alert("Đăng nhập thành công ")
+				
 				window.location.href = "http://"+location.host+"/sunnyFE/admin";
 			}).fail(function(){
 				toast({
@@ -256,7 +281,7 @@ async function login(username ="", password = ""){
 		          message: "An error occur!",
 		          type: "error", //or success
 		        });
-				//alert('không thể đăng nhập')
+				
 			})
 		}
 }

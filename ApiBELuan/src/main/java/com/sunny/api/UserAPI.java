@@ -61,11 +61,11 @@ public class UserAPI {
 			//User userResp = (User) session.getAttribute("user");
 			User userResp = userservice.getUserById(userId);
 			if (userservice.verifyerRegister(userResp, code.intValue())) {
-				return ResponseEntity.status(HttpStatus.OK).body(new Result(true, "xác thực thành công"));
+				return ResponseEntity.status(HttpStatus.OK).body(new Result(true, "Xác thực thành công"));
 			}
 			//return userservice.verifyerRegister(userResp, code.intValue());
 		//}
-		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new Result(true, "xác thực không thành công"));
+		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new Result(true, "Xác thực không thành công"));
 	}
 	
 	//đăng kí tài khoản mới
@@ -77,10 +77,10 @@ public class UserAPI {
 			session.setAttribute("user", userResp);
 			userservice.sendEmailVerify(user);
 			//response.sendRedirect("/user/register/verifyer");
-			return ResponseEntity.status(HttpStatus.FOUND).body("tài khoản đã tồn tại nhưng chưa xác nhận");
+			return ResponseEntity.status(HttpStatus.FOUND).body("Tài khoản đã tồn tại nhưng chưa xác nhận");
 			
 		} else if (userResp != null && userResp.isEnable() == true) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("tài khoản đã tồn tại");
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("Tài khoản đã tồn tại");
 		} else {
 			try {
 				userResp = userservice.createUser(user);
@@ -91,7 +91,7 @@ public class UserAPI {
 			} catch (Exception e) {
 				System.err.println(e.getCause().getMessage());
 				if(e.getCause().getMessage().contains("Duplicate entry '" + user.getEmail()) ) {
-					return ResponseEntity.status(HttpStatus.CONFLICT).body("email đã tồn tại");
+					return ResponseEntity.status(HttpStatus.CONFLICT).body("Email đã tồn tại");
 				}
 				else
 					return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("An error occur!");
@@ -115,7 +115,7 @@ public class UserAPI {
 				return ResponseEntity.status(HttpStatus.OK).body("Đổi  thành công");
 			}
 			else {
-				return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("mật khẩu cũ không chính xác");
+				return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Mật khẩu cũ không chính xác");
 			}
 		//}
 	}
@@ -155,14 +155,14 @@ public class UserAPI {
 		
 		session.setAttribute("user", userResp);
 		if (userResp == null || userResp.isDeleted() == true)
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new Result(false, "tài khoản hoặc mật khẩu không chính xác"));
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new Result(false, "Tài khoản hoặc mật khẩu không chính xác"));
 		else {
 			if (userservice.checkUserInfo(userResp))
 				return ResponseEntity.status(HttpStatus.OK).body(userResp);
 			else if(userResp.isEnable())
-				return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Result(true, "tài khoản chưa nhập thông tin người dùng"));
+				return ResponseEntity.status(HttpStatus.ACCEPTED).body(new Result(true, "Tài khoản chưa nhập thông tin người dùng"));
 			else 
-				return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new Result(true, "tài khoản chưa được xác thực"));
+				return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new Result(true, "Tài khoản chưa được xác thực"));
 		}
 	}
 	
