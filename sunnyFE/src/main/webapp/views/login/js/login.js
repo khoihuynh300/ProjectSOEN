@@ -116,6 +116,7 @@ function signup(email,username, password, phone){
 		          message: text,
 		          type: "error", //or success
 		        });
+		        
 			});
 		}
 		return response.json()
@@ -130,20 +131,11 @@ function signup(email,username, password, phone){
 				}).fail(function(){
 					console.log('không thể đăng nhập')
 			})
-			
-			window.location.href = "http://"+location.host+"/sunnyFE/account/signup/verify";
-			
-			
+			window.location.href = "http://"+location.host+"/sunnyFE/account/signup/verify";	
 		}
-	    
-	   
 	  })
 	  .catch((error) => {
-		toast({
-	          title: "ERROR",
-	          message: "An error occur!",
-	          type: "error", //or success
-	        });
+		
 	    console.error('Error:', error);
 	  });
 }
