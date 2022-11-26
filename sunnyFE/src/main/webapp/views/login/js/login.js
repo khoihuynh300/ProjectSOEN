@@ -88,6 +88,16 @@ function signup(email,username, password, phone){
 	})
 	  .then((response) =>{ 
 		status = response.status
+		
+		if(response.status != 200){
+			response.text().then(function (text) {
+			  toast({
+		          title: "đăng ký thất bại",
+		          message: text,
+		          type: "error", //or success
+		        });
+			});
+		}
 		return response.json()
 		})
 	  .then((data) => {
