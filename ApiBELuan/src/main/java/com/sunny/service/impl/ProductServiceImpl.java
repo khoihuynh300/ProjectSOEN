@@ -35,7 +35,7 @@ public class ProductServiceImpl implements IProductService {
 		List<Product> result = productDao.searchProductWithPtypeAndName(name, ptype, pageNumber, pageSize);
 		return result;
 	}
-	
+
 	@Override
 	public List<Product> getProductByPrice(Double start, Double end) {
 		List<Product> result = productDao.getProductByPrice(start, end);
@@ -66,14 +66,34 @@ public class ProductServiceImpl implements IProductService {
 	public List<Product> getTopItemByPtype(int Ptype) {
 		return productDao.getTopItemByPtype(Ptype);
 	}
-	
+
 	public List<Product> getAllProductByPtype(int Ptype, int pageNumber, int pageSize) {
-		return productDao.getAllProductByPtype(Ptype,pageNumber,pageSize);
+		return productDao.getAllProductByPtype(Ptype, pageNumber, pageSize);
 	}
 
 	@Override
 	public Long count(Integer cateid) {
 		// TODO Auto-generated method stub
 		return productDao.count(cateid);
+	}
+
+	@Override
+	public Product bestSeller() {
+		return productDao.bestSeller();
+	}
+
+	@Override
+	public Product bestSellerOfAProductType(int id) {
+		return productDao.bestSellerOfAProductType(id);
+	}
+
+	@Override
+	public Product bestIncome() {
+		return productDao.bestIncome();
+	}
+
+	@Override
+	public Product bestIncomeOfAProductType(int id) {
+		return productDao.bestIncomeOfAProductType(id);
 	}
 }

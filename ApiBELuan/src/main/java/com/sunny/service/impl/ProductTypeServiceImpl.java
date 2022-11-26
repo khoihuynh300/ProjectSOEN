@@ -1,5 +1,6 @@
 package com.sunny.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import com.sunny.dao.IProductTypeDao;
@@ -37,6 +38,26 @@ public class ProductTypeServiceImpl implements IProductTypeService {
 	@Override
 	public ProductType getProductTypeById(int id) {
 		return productTypeDao.getProductTypeById(id);
+	}
+
+	@Override
+	public double totalIncome() {
+		return productTypeDao.totalIncome();
+	}
+
+	@Override
+	public double totalIncomeinInterval(Date start, Date end) {
+		return productTypeDao.totalIncomeinInterval(start, end);
+	}
+
+	@Override
+	public double incomeOfAProductType(int id) {
+		return productTypeDao.incomeOfAProductType(id);
+	}
+
+	@Override
+	public double incomeOfAProductTypeinInterval(int id, Date start, Date end) {
+		return productTypeDao.incomeOfAProductTypeinInterval(id, start, end);
 	}
 
 }

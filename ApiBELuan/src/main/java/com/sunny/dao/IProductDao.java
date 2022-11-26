@@ -24,7 +24,16 @@ public interface IProductDao {
 	List<Product> getRecommendedProducts(int ptype, int size);
 
 	List<Product> getTopItemByPtype(int Ptype);
+
 	List<Product> getAllProductByPtype(int Ptype, int pageNumber, int pageSize);
 
 	Long count(Integer cateid);
+
+	Product bestSeller();
+
+	Product bestSellerOfAProductType(int id);
+
+	Product bestIncome();
+
+	Product bestIncomeOfAProductType(int id);
 }
