@@ -14,7 +14,10 @@
 			        
 			    </c:when>    
 			    <c:otherwise>
-			    	<img style="height: 60px;" src="<c:url value='/views/image/avatardefault_92824.jpg'/>" alt="defautlavt">
+			    	<div class="clickavt">
+			    	<img  style="height: 60px;" src="<c:url value='/views/image/avatardefault_92824.jpg'/>" alt="defautlavt">
+			    	<a href="">${sessionScope.accountName}</a>
+			    	</div>
 			        <%-- <li style="border-radius: 10px" ><a href="">${sessionScope.accountName}</a></li> --%>
 			        <div class="accountoption">
 			        	<div>Đổi mật khẩu</div>
@@ -24,5 +27,11 @@
 			</c:choose>
 		
 	</ul>
+	
+	<script type="text/javascript">
+	$(".clickavt").click(function () {
+		$(".accountoption").toggleClass( "active" );
+	})
+	</script>
 </div>
 

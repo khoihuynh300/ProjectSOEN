@@ -363,13 +363,18 @@ public class ProductDaoImpl implements IProductDao {
 			List<Product> listProduct = session.createQuery("FROM Product", Product.class).getResultList();
 			if (listProduct.isEmpty())
 				return null;
+			List<Orders> listOrders = session
+					.createQuery("FROM Orders AS c WHERE status = 3 ", Orders.class).getResultList();
+			if (listOrders.isEmpty())
+				return null;
 			for (Product product : listProduct) {
 				Object[] ele = new Object[2];
 				ele[0] = product.getPname();
 				try {
 					ele[1] = (double) session.createNativeQuery(
-							"SELECT sum(price * quantity) - sum(discount) FROM orderdetail WHERE status = 6 AND Pid = :Pid")
-							.setParameter("Pid", product.getPid()).getSingleResult();
+							"SELECT sum(price * quantity) - sum(discount) FROM orderdetail WHERE Pid = :Pid AND OrderId IN (:listOrder)")
+							.setParameter("Pid", product.getPid()).setParameter("listOrder", listOrders)
+							.getSingleResult();
 				} catch (NullPointerException ex) {
 					ele[1] = (double) 0.0;
 				}

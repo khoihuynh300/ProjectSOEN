@@ -30,6 +30,14 @@
     font-size: 16px;
     width: 150px;
     right: 0;
+    display: none;
+}
+.clickavt:hover{
+	background-color: #84aff4;
+	border-radius: 20px;
+}
+.header .accountoption.active{
+	display: block;	
 }
 .header .accountoption div {
 	padding: 10px;
@@ -670,4 +678,9 @@ tbody tr:nth-child(odd) {
 .sendtocustomer{
 	font-size: 16px;
     margin: 20px;
+}
+
+.optionBieuDo{
+	font-size: 16px;
+	margin: 10px;
 }

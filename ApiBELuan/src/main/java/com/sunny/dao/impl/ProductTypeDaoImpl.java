@@ -70,12 +70,16 @@ public class ProductTypeDaoImpl implements IProductTypeDao {
 	@Override
 	public double totalIncome() {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			List<Orders> listOrders = session
+					.createQuery("FROM Orders AS c WHERE status = 3", Orders.class)
+					.getResultList();
+			if (listOrders.isEmpty())
+				return 0;
 			double result;
 			try {
-				result = (double) session
-						.createNativeQuery(
-								"SELECT sum(price * quantity) - sum(discount) FROM orderdetail WHERE status = 6")
-						.getSingleResult();
+				result = (double) session.createNativeQuery(
+						"SELECT sum(price * quantity) - sum(discount) FROM orderdetail WHERE  OrderId IN (:list)")
+						.setParameter("list", listOrders).getSingleResult();
 				session.close();
 			} catch (NullPointerException ex) {
 				session.close();
@@ -89,14 +93,14 @@ public class ProductTypeDaoImpl implements IProductTypeDao {
 	public double totalIncomeinInterval(Date start, Date end) {
 		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
 			List<Orders> listOrders = session
-					.createQuery("FROM Orders AS c WHERE c.OrderDate BETWEEN :startDate AND :endDate", Orders.class)
+					.createQuery("FROM Orders AS c WHERE status = 3 AND c.OrderDate BETWEEN :startDate AND :endDate", Orders.class)
 					.setParameter("startDate", start).setParameter("endDate", end).getResultList();
 			if (listOrders.isEmpty())
 				return 0;
 			double result;
 			try {
 				result = (double) session.createNativeQuery(
-						"SELECT sum(price * quantity) - sum(discount) FROM orderdetail WHERE status = 6 AND OrderId IN (:list)")
+						"SELECT sum(price * quantity) - sum(discount) FROM orderdetail WHERE  OrderId IN (:list)")
 						.setParameter("list", listOrders).getSingleResult();
 				session.close();
 			} catch (NullPointerException ex) {
