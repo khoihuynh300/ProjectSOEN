@@ -371,7 +371,7 @@ public class ProductDaoImpl implements IProductDao {
 							"SELECT sum(price * quantity) - sum(discount) FROM orderdetail WHERE status = 6 AND Pid = :Pid")
 							.setParameter("Pid", product.getPid()).getSingleResult();
 				} catch (NullPointerException ex) {
-					ele[1] = 0;
+					ele[1] = (double) 0.0;
 				}
 				res.add(ele);
 			}
@@ -407,7 +407,7 @@ public class ProductDaoImpl implements IProductDao {
 							.setParameter("Pid", product.getPid()).setParameter("listOrder", listOrders)
 							.getSingleResult();
 				} catch (NullPointerException ex) {
-					ele[1] = 0;
+					ele[1] = (double) 0.0;
 				}
 				res.add(ele);
 			}
