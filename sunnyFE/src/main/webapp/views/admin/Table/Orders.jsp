@@ -40,7 +40,7 @@
     </table>
 	</div>
 	<div class="main_content__footer">
-		<i class="fa-solid fa-arrows-rotate refreshbtn grow-btn-when-hover"></i>
+		<!-- <i class="fa-solid fa-arrows-rotate refreshbtn grow-btn-when-hover"></i> -->
 		<!-- <i class="fa-solid fa-box next-status grow-btn-when-hover"></i> -->
 		<button class="grow-btn-when-hover next-status">Xác nhận đơn hàng</button>
 		<!-- <i class="fa-solid fa-people-carry-box handingbox grow-btn-when-hover"></i> -->
@@ -110,8 +110,6 @@
     			colstt.css('color','green')
     		}
     		colstt.html(status[colstt.html()])
-    		
-    		
 		})
 	}
 	</script>

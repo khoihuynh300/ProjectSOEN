@@ -14,7 +14,12 @@
 			        
 			    </c:when>    
 			    <c:otherwise>
+			    	<img style="height: 60px;" src="<c:url value='/views/image/avatardefault_92824.jpg'/>" alt="defautlavt">
 			        <%-- <li style="border-radius: 10px" ><a href="">${sessionScope.accountName}</a></li> --%>
+			        <div class="accountoption">
+			        	<div>Đổi mật khẩu</div>
+			        	<div>Đăng xuất</div>
+			        </div>
 			    </c:otherwise>
 			</c:choose>
 		

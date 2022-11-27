@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<style>.maintable tr > *:nth-child(11) {display: none;}</style>
+ <style>.maintable tr > *:nth-child(11) {display: none;}</style>
 	<div class="main_content__body">
 		<p hidden="true" id="geturl" data-value="/employee/get"></p>
 		<p hidden="true" id="addurl" data-value="/employee/create"></p>
@@ -25,7 +25,20 @@
 		
 		<table class="table maintable">
         <thead>
-            
+            <tr>
+            <th class="cbx-all" style="width:10px;"><input  type="checkbox" id="" name="" value=""></th>
+            <th></th>
+            <th>ID</th>
+            <th>Tên nhân viên</th>
+            <th>Tên tài khoản</th>
+            <th>Giới tính</th>
+            <th>Ngày sinh</th>
+            <th>Địa chỉ</th>
+            <th>Công việc</th>
+            <th>Lương</th>
+            <th></th>
+            <th>Deleted</th>
+            </tr>
         </thead>
         <tbody>
         
@@ -56,17 +69,17 @@
 	      <h2>Nhân viên</h2>
 	    </div>
 	    <div class="modal-body">
-	    	<label>empId:</label><input disabled name="empId"></br>
-	    	<label>userId:</label><input  onkeydown="return false" class="obj" data-objkey="key" data-objvalue="val" id="userId" name="userId"><button data-inputid="userId" data-url="/usermanagement/get?pageNumber=0" class="btnchooseobj">chọn</button> </br>
-	    	<label>name:</label><input name="name"></br>
-	    	<label>gender:</label><select name="gender">
+	    	<label>ID:</label><input disabled name="empId"></br>
+	    	<label>Tài khoản:</label><input  onkeydown="return false" class="obj toggledisable2" data-objkey="key" data-objvalue="val" id="userId" name="userId"><button data-inputid="userId" data-url="/usermanagement/get?pageNumber=0" class="btnchooseobj toggledisable2">chọn</button> </br>
+	    	<label>Tên nhân viên:</label><input name="name"></br>
+	    	<label>Giới tính:</label><select name="gender">
 								  <option value="F">Female</option>
 								  <option value="M">Male</option>
 								</select></br>
-	    	<label>dateofBirth:</label><input name="DateofBirth"></br>
-	    	<label>address:</label><input name="address"></br>
-	    	<label>job:</label><input name="job"></br>
-	    	<label>luongThang:</label><input name="luongThang"></br>
+	    	<label>Ngày sinh:</label><input name="DateofBirth"></br>
+	    	<label>Địa chỉ:</label><input name="address"></br>
+	    	<label>Công việc:</label><input name="job"></br>
+	    	<label>Lương:</label><input name="luongThang"></br>
 	    	
 	    </div>
 	    <div class="modal-footer">

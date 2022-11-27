@@ -22,6 +22,23 @@
     justify-content: space-between;
     z-index: 999;
 }
+.header .accountoption{
+	position: fixed;
+    background-color: #F6F8F8;
+    top: 60px;
+    border: 1px black solid;
+    font-size: 16px;
+    width: 150px;
+    right: 0;
+}
+.header .accountoption div {
+	padding: 10px;
+	
+}
+.header .accountoption div:hover{
+	background-color:#dbdbdb;
+}
+
 .header ul{
     display: flex;
     list-style: none;

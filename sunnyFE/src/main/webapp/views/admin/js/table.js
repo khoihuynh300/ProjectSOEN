@@ -19,7 +19,7 @@ function getmaxpage(){
 			lastpage =  parseInt( (parseInt(data)-1) / 10 )+1 
 			//console.log(lastpage)
 	}) 
-	//alert(lastpage)
+	
 }
 
 // get data
@@ -31,7 +31,9 @@ function LoadTable(url="",type="GET",data={}) {
 				}
 			}
 			else{
-				url = url + "?viewdeleted=0"
+				if($("#showdeleted").prop("checked") ){
+					url = url + "?viewdeleted=1"
+				}
 			}
 		
 			$.ajax({
@@ -41,25 +43,25 @@ function LoadTable(url="",type="GET",data={}) {
 				dataType: "json",
 				
 				success : function(result) {
-					$('.maintable thead tr').remove()
+					//$('.maintable thead tr').remove()
 					$('.maintable tbody tr').remove()
 					var keys = Object.keys(result[0])
 					var keyslength = keys.length
-					//xóa hết trươc khi thêm vào
 					
 					
-					$('.maintable thead').append(`<tr></tr>`)
-					$('.maintable thead tr').append(`<th class="cbx-all" style="width:10px;"><input  type="checkbox" id="" name="" value=""></th>`)
-					$('.maintable thead tr').append(`<th></th>`)
+					
+					//$('.maintable thead').append(`<tr></tr>`)
+					//$('.maintable thead tr').append(`<th class="cbx-all" style="width:10px;"><input  type="checkbox" id="" name="" value=""></th>`)
+					//$('.maintable thead tr').append(`<th></th>`)
 					
 					for (var i = 0; i<keyslength; i++){
 						// nếu là 1 object {} thì đổi tên thành trường thứ 2(index = 1) của object 
 						if(typeof result[0][keys[i]] === 'object' && result[0][keys[i]] !== null){
-							$('.maintable thead tr').append(`<th>${keys[i]}</th>`)
-							//$('.maintable thead tr').append(`<th>${Object.keys(result[0][keys[i]])[0]}</th>`)
+							//$('.maintable thead tr').append(`<th>${keys[i]}</th>`)
+							//$('.maintable thead tr').append(`<th>${Object.keys(result[0][keys[i]])[1]}</th>`)
 						}
 						else {
-							$('.maintable thead tr').append(`<th>${keys[i]}</th>`)
+							//$('.maintable thead tr').append(`<th>${keys[i]}</th>`)
 						}
 						
 						//$('#AddAndEdit .modal-body').append(`<label >${keys[i]}</label><input name="${keys[i]}"></br>`)
@@ -94,7 +96,7 @@ function LoadTable(url="",type="GET",data={}) {
 								        
 								      </div>
 								    </div>
-								${result[i][keys[j]][Object.keys(result[i][keys[j]])[0]]}
+								${result[i][keys[j]][Object.keys(result[i][keys[j]])[1]]}
 								</td>`)
 							}
 							else //không phải là object
@@ -110,7 +112,12 @@ function LoadTable(url="",type="GET",data={}) {
 
 				},
 				error : function(error) {
-					alert('an error occur!')
+					
+					toast({
+			          title: "ERROR",
+			          message: "An error occur!",
+			          type: "error", //or success
+			        });
 				}
 			});
 		}
@@ -133,8 +140,13 @@ function EditTable(url="",type="POST",data={}) {
 	  .then((data) => {
 		
 		if(status == 200){
+			toast({
+	          title: "SUCCESS",
+	          message: "oke",
+	          type: "success", //or success
+	        });
 			//console.log('Success:', data)
-			//alert(data)
+		
 			let url = $(".main_content__body #geturl").data("value")
 			
 			let curpage = parseInt($("#currentpage").val())
@@ -143,11 +155,21 @@ function EditTable(url="",type="POST",data={}) {
 			getmaxpage()
 		}
 	    else{
-			alert('fail! some error occur')
+		toast({
+	          title: "ERROR",
+	          message: "An error occur!",
+	          type: "error", //or success
+	        });
+			
 		}
 	   
 	  })
 	  .catch((error) => {
+		toast({
+	          title: "ERROR",
+	          message: "An error occur!",
+	          type: "error", //or success
+	        });
 	    console.error('Error:', error);
 	  });
 	/*.then((response) =>{ 
@@ -162,7 +184,7 @@ function EditTable(url="",type="POST",data={}) {
 		console.log(status)
 		if(status == 200){
 			console.log('Success:', data)
-			alert(data.message)
+			
 			let url = $(".main_content__body #geturl").data("value")
 			
 			let curpage = parseInt($("#currentpage").val())
@@ -170,24 +192,24 @@ function EditTable(url="",type="POST",data={}) {
 			LoadTable(url+"?pageNumber=" + curpage);
 		}
 	    else{
-			alert(data.message)
+			
 		}
 	   
 	  })
 	  .catch((error) => {
-	    alert('Error:', error);
+	   
 	  });
 	 /* .then((response) => 
 	  {
 		if(response.status == 200){
-			alert("success")
+			
 		}
 		else{
-			alert("fail")
+			
 		}
 	})
 	.catch((error) => {
-	    alert("error:", error)
+	    
 	   
 	  });*/
 	  
@@ -211,6 +233,7 @@ $("table").on("click", ".edit-row", function (e) {
 	execUrl = $(".main_content__body #editurl").data("value")
 	execType = "PUT"
 	$(".modal-body .toggledisable").prop('disabled', false);
+	$(".modal-body .toggledisable2").prop('disabled', true);
     
     let row = $(this).closest('tr');
    // var keys = $('thead tr').find("th");
@@ -255,7 +278,7 @@ $(".main_content").on("click", ".refreshbtn", function (e) {
 })
 
 $(".main_content").on("click", ".findbtn", function (e) {
-	//alert(1)
+	
 	$('#FindRecord').css("display", "block")
 })
 
@@ -266,7 +289,11 @@ $(".main_content").on("click", ".next-status", function (e) {
 			obj['status'] = (parseInt($(this).closest('tr').find('td').eq(5).data('originstatus')) + 1)
 			obj['orderId'] = $(this).closest('tr').find('td').eq(1).html()
 			if(obj['status']!=1 ){
-				alert("Bạn không thể làm điều này")
+				toast({
+		          title: "Thông báo",
+		          message: "Đơn hàng đã được xác nhận!",
+		          type: "error", //or success
+		        });
 				return false;
 			}
 			
@@ -301,7 +328,11 @@ $(".main_content").on("click", ".handingbox", function (e) {
 			obj['status'] = (parseInt($(this).closest('tr').find('td').eq(5).data('originstatus')) + 1)
 			obj['orderId'] = $(this).closest('tr').find('td').eq(2).html()
 			if(obj['status']!=3 ){
-				alert("Bạn không thể làm điều này")
+				toast({
+		          title: "Cảnh báo",
+		          message: "Cần có đơn hàng có trạng thái chưa giao!",
+		          type: "error", //or success
+		        });
 				return false;
 			}
 			//let newobj = {"orderId": 4,"status": 5}
@@ -324,7 +355,11 @@ $(".main_content").on("click", ".deliver", function (e) {
 			}
 			else{
 				
-				alert("Bạn không thể làm điều này")
+				toast({
+		          title: "Cảnh báo",
+		          message: "Đơn hàng đã có người khác nhận",
+		          type: "error", //or success
+		        });
 				return false;
 			}
 			//let newobj = {"orderId": 4,"status": 5}
@@ -408,6 +443,7 @@ $("#AddAndEdit").on("click", ".close", function (e) {
 	resetInput();
 	$('#AddAndEdit').css("display", "none");
 	$(".modal-body .toggledisable").prop('disabled', true);
+	$(".modal-body .toggledisable2").prop('disabled', false);
 	//console.log($('.maintable thead tr').length)
 });
 
@@ -504,7 +540,11 @@ $("#AddAndEdit").on("click", ".btnchooseobj", function (e) {
 			$('#TblChooseObj').css("display", "block");
 		},
 		error : function(error) {
-			alert('an error occur!')
+			toast({
+	          title: "ERROR",
+	          message: "An error occur!",
+	          type: "error", //or success
+	        });
 		}
 	});
 });
@@ -518,7 +558,7 @@ $("#TblChooseObj").on("click", "button.btnsubmit", function (e) {
 	input.val($(this).closest('tr').find('td').eq(1).html())
 	
 	$('#TblChooseObj').css("display", "none");
-	//alert($('.subtable #inputId').html())
+	
 });
 
 //on change page number 
@@ -528,7 +568,11 @@ $(document).on('change','#currentpage' , function(e){
 	
 	let curpage = parseInt($(this).val())
 	if(curpage < 1 || curpage>lastpage){
-		alert("hông có trang này")
+		toast({
+	          title: "Thông báo",
+	          message: "Trang bạn nhập không chính xác",
+	          type: "error", //or success
+	        });
 		return false;
 	}
 	LoadTable(url+"?pageNumber=" + curpage);
@@ -547,7 +591,11 @@ $(document).on('click','#first-page' , function(e){
 $(document).on('click','#pre-page' , function(e){
 	let prepage = parseInt($("#currentpage").val()) -1 
 	if(prepage < 1){
-		alert("hông có trang này")
+		toast({
+	          title: "Thông báo",
+	          message: "Trang bạn nhập không chính xác",
+	          type: "error", //or success
+	        });
 		return false;
 	}
 	
@@ -563,7 +611,11 @@ $(document).on('click','#next-page' , function(e){
 	let url = $(".main_content__body #geturl").data("value")
 	
 	if(nextpage >lastpage){
-		alert("hông có trang này")
+		toast({
+	          title: "Thông báo",
+	          message: "Trang bạn nhập không chính xác",
+	          type: "error", //or success
+	        });
 		return false;
 	}
 	
@@ -620,13 +672,13 @@ function FilterTable(url="",field, search, pagenum = 1) {
 		filter = 1;
 		gfield = field;
 		gsearch= search;
-		//alert(url)
+		
 		url = url + (url.includes("?"))?"?":"&";
 
 		url = url + $("#showdeleted").prop("checked")?"viewdeleted=1":"viewdeleted=0"
 			
 			url = url + "&pageNumber=0"
-			//alert(url)
+			
 			$.ajax({
 				url : rootURL+url,
 				type : "GET",
@@ -696,7 +748,11 @@ function FilterTable(url="",field, search, pagenum = 1) {
 
 				},
 				error : function(error) {
-					alert('an error occur!')
+					toast({
+			          title: "ERROR",
+			          message: "An error occur!",
+			          type: "error", //or success
+			        });
 				}
 			});
 		}
@@ -739,14 +795,18 @@ function FilterTable(url="",field, search, pagenum = 1) {
 					decoratetable();
 				},
 				error : function(error) {
-					alert('an error occur!')
+					toast({
+			          title: "ERROR",
+			          message: "An error occur!",
+			          type: "error", //or success
+			        });
 				}
 			});
 		}
 		
 $(document).on('click', '.showorderdetail', function(){
 	let id = $(this).data('orderid')
-	//alert(id)
+	
 	
 	$.ajax({
 		url : "http://localhost:8083/orderdetail/get-all-order-detail?orderid=" + id,
@@ -776,7 +836,11 @@ $(document).on('click', '.showorderdetail', function(){
 			$('#TblChooseObj').css("display", "block");
 		},
 		error : function(error) {
-			alert('an error occur!')
+			toast({
+	          title: "ERROR",
+	          message: "An error occur!",
+	          type: "error", //or success
+	        });
 		}
 	});
 })

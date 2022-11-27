@@ -9,7 +9,7 @@
               <b></b>
               <a href="<c:url value='/admin'/>" class=" item active">
                 <span class="icon"><i class="fa-solid fa-house"></i></span>
-                <span class="title">Home</span>
+                <span class="title">Trang chủ</span>
                 <i class="fa-solid fa-angle-right dropdown"></i>
               </a>
               
@@ -19,19 +19,19 @@
               <b></b>
               <a class="sub-btn item ">
                 <span class="icon"><i class="fa-solid fa-user"></i></i></span>
-                <span class="title">Account & user</span>
+                <span class="title">Tài khoản</span>
                 <i class="fa-solid fa-angle-right dropdown"></i>
               </a>
               
               <div class="sub-menu">
                 <a href="<c:url value='/admin/user'/>" class="item sub-item">
-                  Account
+                  Tài khoản
                 </a>
                 <a href="<c:url value='/admin/customer'/>" class="item sub-item">
-                  Customer
+                  Khách hàng
                 </a>
                 <a href="<c:url value='/admin/employee'/>" class="item sub-item">
-                  Employee
+                  Nhân viên
                 </a>
                 <%-- <a href="<c:url value=''/>" class="item sub-item">
                   Shipper
@@ -44,23 +44,23 @@
               <b></b>
               <a class="sub-btn item">
                 <span class="icon"><i class="fa-solid fa-laptop"></i></span>
-                <span class="title">Product</span>
+                <span class="title">Sản phẩm & đơn hàng</span>
                 <i class="fa-solid fa-angle-right dropdown"></i>
               </a>
               
               <div class="sub-menu">
                 
                 <a href="<c:url value='/admin/Product'/>" class="item sub-item">
-                  Product
+                  Sản phẩm
                 </a>
                 <a href="<c:url value='/admin/order'/>" class="item sub-item">
-                  Order
+                  Đơn hàng
                 </a>
                 <%-- <a href="<c:url value='admin/discount'/>" class="item sub-item">
                   Discount
                 </a> --%>
                 <a href="<c:url value='/admin/bill'/>" class="item sub-item">
-                  Bill
+                  Hóa đơn
                 </a>
               </div>
             </li>

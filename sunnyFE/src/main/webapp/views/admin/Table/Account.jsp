@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<style>.maintable tr > *:nth-child(5) {display: none;}</style>
+ <style>.maintable tr > *:nth-child(5) {display: none;}</style>
 	<div class="main_content__body">
 		<p hidden="true" id="geturl" data-value="/usermanagement/get"></p>
 		<p hidden="true" id="addurl" data-value="/usermanagement/create"></p>
@@ -26,7 +26,18 @@
 		</div>
 		<table  class="table maintable">
         <thead>
-            
+            <tr>
+            <th class="cbx-all" style="width:10px;"><input  type="checkbox" id="" name="" value=""></th>
+            <th></th>
+            <th>User ID</th>
+            <th>Tên tài khoản</th>
+            <th></th>
+            <th>Email</th>
+            <th>SĐT</th>
+            <th>Role</th>
+            <th>Deleted</th>
+            <th>Enable</th>
+            </tr>
         </thead>
         <tbody>
         
@@ -61,17 +72,17 @@
 	    <div class="modal-body">
 	    	
 	    	
-	    	<label>userId:</label><input disabled name="userId"></br>
-	    	<label>accountName:</label><input name="accountName"></br>
-	    	<label>password:</label><input type="password" name="password"></br>
-	    	<label>email:</label><input name="email"></br>
-	    	<label>phone:</label><input name="phone"></br>
-	    	<label>role:</label><input onkeydown="return false" class="obj" data-objkey="" data-objvalue="" id="roleId" name="roleId"><button data-inputid="roleId" data-url="/role/get" class="btnchooseobj">chọn</button> </br>
-	    	<label>enable:</label><select class="toggledisable" disabled name="enable">
+	    	<label>User ID:</label><input disabled name="userId"></br>
+	    	<label>Tên tài khoản:</label><input class="toggledisable2" name="accountName"></br>
+	    	<label>Mật khẩu:</label><input class="toggledisable2" type="password" name="password"></br>
+	    	<label>Email:</label><input name="email"></br>
+	    	<label>Số điện thoại:</label><input name="phone"></br>
+	    	<label>Role:</label><input onkeydown="return false" class="obj" data-objkey="" data-objvalue="" id="roleId" name="roleId"><button data-inputid="roleId" data-url="/role/get" class="btnchooseobj">chọn</button> </br>
+	    	<label>Enable:</label><select class="toggledisable" disabled name="enable">
 								  <option value="true">true</option>
 								  <option value="false">false</option>
 								</select></br>
-	    	<label>deleted:</label><select class="toggledisable" disabled name="deleted">
+	    	<label>Deleted:</label><select class="toggledisable" disabled name="deleted">
 								  <option value="false">false</option>
 								  <option value="true">true</option>
 								</select></br>

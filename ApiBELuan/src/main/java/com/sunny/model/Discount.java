@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @Table(name = "Discount")
 @Check(constraints = "Percent >= 0 AND Percent <= 1")
 
-@JsonPropertyOrder({ "discountId", "amount", "percent","deleted"})
+@JsonPropertyOrder({ "discountId",  "percent", "amount", "deleted"})
 public class Discount {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

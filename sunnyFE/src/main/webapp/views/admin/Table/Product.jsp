@@ -12,8 +12,10 @@
 <body>
 <style>
 .maintable tr > *:nth-child(12) {display: none;}
-
-.maintable tr > *:nth-child(2) {display: none;}
+.maintable tr > *:nth-child(8) {display: none;}
+.maintable tr > *:nth-child(13) {display: none;} 
+.maintable tr > *:nth-child(11) {display: none;}  
+ 
 .input-head{
 	display: flex;
 	align-items: center;
@@ -48,7 +50,21 @@
 		
 		<table class="maintable">
         <thead>
-            
+            <tr>
+            <th class="cbx-all" style="width:10px;"><input  type="checkbox" id="" name="" value=""></th>
+            <th></th>
+            <th>ID</th>
+            <th>Loại sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Mô tả</th>
+            <th>sl</th>
+            <th>Giảm giá</th>
+            <th>Deleted</th>
+            <th>p</th>
+            <th>p</th>
+            <th>w</th>
+            </tr>
         </thead>
         <tbody>
         
@@ -58,7 +74,6 @@
 	<div class="main_content__footer">
 		<i class="fa-solid fa-circle-plus addbtn grow-btn-when-hover"></i>
 		<i hidden class="fa-solid fa-trash delete-multi-row grow-btn-when-hover"></i>
-		<i class="fa-solid fa-arrows-rotate refreshbtn grow-btn-when-hover"></i>
 		
 		<div class="pagination">
 		  <a href="#" id="pfirst-page"><i class="fa-solid fa-angles-left"></i></a>
@@ -256,7 +271,11 @@
 			let unit = $('#AddAtribute input[name=unit]').val();
 			
 			if( (atrName == "" || atrName == null ) || (unit == "" || unit == null ) ){
-				alert("vui lòng nhập thông tin đầy đủ")
+				toast({
+			          title: "Thông báo",
+			          message: "Chưa nhập đầy đủ thông tin",
+			          type: "error", //or success
+			        });
 				return false;
 			}
 			
@@ -275,7 +294,11 @@
 				})
 				  .then((response) => {
 					  if(response.status == 200){
-						  alert('thêm thành công')
+						  toast({
+					          title: "SUCCESS",
+					          message: "Thêm thành công",
+					          type: "success", //or success
+					        });
 						  $('#AddAtribute input[name=unit]').val("")
 						  $('#AddAtribute input[name=unit]').val("")
 						  $(this).closest('#AddAtribute').css("display", "none");
@@ -349,7 +372,7 @@
 				obj.discountId = null
 			}
 			console.log(obj)
-			//alert(execType)
+			
 			var formdata = new FormData();
 			
 		    formdata.append('imageFile',inputimg.eq(0).prop('files')[0])
@@ -419,7 +442,11 @@
 				$('#TblChooseAttr').css("display", "block");
 			},
 			error : function(error) {
-				alert('an error occur!')
+				toast({
+			          title: "ERROR",
+			          message: "An error occur!",
+			          type: "error", //or success
+			        });
 			}
 		});
 	})
@@ -436,22 +463,22 @@
 		
 		if($(this).data("ptype")){
 			//$('#counturl').data('value', $('#origincounturl').data('value') + "?cateid=" + $(this).data("ptype"))
-			//alert($('#counturl').data('value'))
+			
 			cateid = $(this).data("ptype")
 			LoadProductByPtype($(this).data("ptype"))
 		}
 		else{
 			//$('#counturl').data('value', $('#origincounturl').data('value') + "?cateid=0")
-			//alert($('#counturl').data('value'))
+			
 			cateid = 0
 		}
 		 $(".main_content__body #counturl").data("value", "/product/count?cateid=" + cateid)
-		 //alert($(".main_content__body #counturl").data("value"))
+		 
 		 $("#pcurrentpage").val(1)
 	})
 	//show image
 	 $(document).on('change','#imageFile' , function(e){
-		  //alert('change')
+		  
 		  const currFiles = e.target.files
 		  if(currFiles.length > 0){
 			  let src = URL.createObjectURL(currFiles[0])
@@ -573,7 +600,11 @@
 			}
 		}
 		else{
-			alert("xin nhập value cho attribute này")
+			toast({
+		          title: "ERROR",
+		          message: "Chưa nhập value cho attribute này",
+		          type: "error", //or success
+		        });
 		}
 	})
 		
@@ -587,7 +618,12 @@ $(document).on('change','#pcurrentpage' , function(e){
 	
 	let curpage = parseInt($(this).val())
 	if(curpage < 1 || curpage>lastpage){
-		alert("hông có trang này")
+		
+		toast({
+	          title: "Thông báo",
+	          message: "Trang bạn nhập không chính xác",
+	          type: "error", //or success
+	        });
 		return false;
 	}
 	
@@ -626,7 +662,11 @@ $(document).on('click','#pfirst-page' , function(e){
 $(document).on('click','#ppre-page' , function(e){
 	let prepage = parseInt($("#pcurrentpage").val()) -1 
 	if(prepage < 1){
-		alert("hông có trang này")
+		toast({
+	          title: "Thông báo",
+	          message: "Trang bạn nhập không chính xác",
+	          type: "error", //or success
+	        });
 		return false;
 	}
 	
@@ -649,7 +689,11 @@ $(document).on('click','#pnext-page' , function(e){
 	let url = $(".main_content__body #geturl").data("value")
 	
 	if(nextpage >lastpage){
-		alert("hông có trang này")
+		toast({
+	          title: "Thông báo",
+	          message: "Trang bạn nhập không chính xác",
+	          type: "error", //or success
+	        });
 		return false;
 	}
 	if(cateid != 0){
@@ -688,9 +732,9 @@ $('#addnewcategory').on('click', '.close', function () {
 })
 
 $('#addnewcategory').on('click', '#addcate', function () {
-	//alert(1)
+	
 	let d = $('#addnewcategory input').val()
-	//alert(d)
+	
 	let data = {"ptypeName":d}
 	fetch('http://localhost:8083/producttype/create', {
 		  method: 'POST', // or 'PUT'

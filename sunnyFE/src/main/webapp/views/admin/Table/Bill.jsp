@@ -10,8 +10,9 @@
 <body>
 <style>.maintable tr > *:nth-child(8) {display: none;}</style>
 <style>.maintable tr > *:nth-child(9) {display: none;}</style>
-
-<style>.maintable tr > *:nth-child(2) {display: none;}</style>
+<style>.maintable tr > *:nth-child(5) {display: none;}</style> 
+<style>.maintable tr > *:nth-child(11) {display: none;}</style> 
+<style>.maintable tr > *:nth-child(2) {display: none;}</style>  
 	<div class="main_content__body">
 		<p hidden="true" id="geturl" data-value="/invoice/get"></p>
 		<p hidden="true" id="addurl" data-value="/discount/get"></p>
@@ -24,7 +25,19 @@
 		
 		<table class="table maintable">
         <thead>
-            
+            <tr>
+            <th class="cbx-all" style="width:10px;"><input  type="checkbox" id="" name="" value=""></th>
+            <th></th>
+            <th>ID</th>
+            <th>Tên khách hàng</th>
+            <th></th>
+            <th>Tổng tiền</th>
+            <th>Thanh toán</th>
+            <th></th>
+            <th></th>
+            <th>Ngày tạo</th>
+            <th>Ngày thanh toán</th>
+            </tr> 
         </thead>
         <tbody>
         
@@ -33,7 +46,7 @@
 	</div>
 	<div class="main_content__footer">
 		
-		<i class="fa-solid fa-arrows-rotate refreshbtn grow-btn-when-hover"></i>
+		<!-- <i class="fa-solid fa-arrows-rotate refreshbtn grow-btn-when-hover"></i> -->
 		
 	</div>
 	
@@ -77,6 +90,16 @@
 		let url = $(".main_content__body #geturl").data("value")
 		
 		LoadTable(url);
+		
+		function decoratetable(){
+			let tr = $('.maintable tbody tr')
+	    	tr.each(function () {
+	    		let colmonney = $(this).children().eq(5)
+	    		let mn = colmonney.html()
+	    		mn =  formatmoney(mn, " đ")
+	    		colmonney.html(mn)
+			})
+		}
 	</script>
 </body>
 </html>
