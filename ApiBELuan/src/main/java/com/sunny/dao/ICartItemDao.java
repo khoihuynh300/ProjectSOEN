@@ -18,4 +18,6 @@ public interface ICartItemDao {
 	CartItem getCartItem(int cartId, int pId);
 
 	CartItem getCartItemById(int id);
+
+	void updateCartItem(CartItem cartItem);
 }

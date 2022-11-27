@@ -110,4 +110,14 @@ public class CartItemDaoImpl implements ICartItemDao {
 			session.close();
 		}
 	}
+
+	@Override
+	public void updateCartItem(CartItem cartItem) {
+		try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+			Transaction t = session.beginTransaction();
+			session.update(cartItem);
+			t.commit();
+			session.close();
+		}
+	}
 }
