@@ -74,9 +74,19 @@ $(document).on("click", ".getorder", function(){
 				fetch("http://localhost:8083/employee/shipper/get-order?shipperid=" +shipperid + "&orderid=" +orderid)
 				  .then((response) =>{
 					console.log("success")
+					toast({
+			          title: "SUCCESS",
+			          message: "Nhận đơn hàng thành công!",
+			          type: "success", //or success
+			        });
 					myDisplay()
 					if(response.status == 406){
-						alert("đơn hàng " + orderid + " đã có người nhận!")
+						//alert("đơn hàng " + orderid + " đã có người nhận!")
+						toast({
+			          title: "Thất bại",
+			          message: "đơn hàng " + orderid + " đã có người nhận!",
+			          type: "error", 
+			        });
 					}
 				})
 				   
@@ -108,6 +118,11 @@ $(".main_content").on("click", ".sendtocustomer", function (e) {
 			})
 			  .then((response) => response.json())
 			  .then((data) => {
+				toast({
+			          title: "SUCCESS",
+			          message: "Giao đơn hàng thành công",
+			          type: "success", //or success
+			        });
 			    console.log('Success:', data);
 			    myDisplay()
 			  })

@@ -150,7 +150,11 @@ function EditTable(url="",type="POST",data={}) {
 			let url = $(".main_content__body #geturl").data("value")
 			
 			let curpage = parseInt($("#currentpage").val())
-			
+			/*toast({
+	          title: "SUCCESS",
+	          message: "Thành công!",
+	          type: "success", 
+	        });*/
 			LoadTable(url+"?pageNumber=" + curpage);
 			getmaxpage()
 		}
@@ -306,9 +310,14 @@ $(".main_content").on("click", ".next-status", function (e) {
 			})
 			  .then((response) => response.json())
 			  .then((data) => {
+				toast({
+		          title: "SUCCESS",
+		          message: "Xác nhận đơn hàng thành công",
+		          type: "success", //or success
+		        });
 			    console.log('Success:', data);
 			    let url = $(".main_content__body #geturl").data("value")
-		
+				
 				LoadTable2(url);
 			  })
 			  .catch((error) => {

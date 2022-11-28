@@ -119,7 +119,7 @@
 			    	<label>pname:</label><input name="pname"></br>
 			    	<label>price:</label><input name="price"></br>
 			    	<label>description:</label><input name="description"></br>
-			    	<label>quantity:</label><input name="quantity"></br>
+			    	<!-- <label>quantity:</label><input name="quantity" value=0></br> -->
 			    	<label>discountId:</label><input onkeydown="return false" class="obj" data-objkey="" data-objvalue="" id="discountId" name="discountId"><button data-inputid="discountId" data-url="/discount/get" class="btnchooseobj">chọn</button> </br>
 			    	<label>deleted:</label><select class="toggledisable" disabled name="deleted">
 								  <option value="false">false</option>

@@ -43,8 +43,8 @@
     	</table>
 	</div>
 	<div class="main_content__footer">
-		<i class="fa-solid fa-arrows-rotate refreshbtn grow-btn-when-hover" ></i>
-		<i class="fa-solid fa-eye viewdetail grow-btn-when-hover"></i>
+		<!-- <i class="fa-solid fa-arrows-rotate refreshbtn grow-btn-when-hover" ></i> -->
+		<!-- <i class="fa-solid fa-eye viewdetail grow-btn-when-hover"></i> -->
 		
 		
 	</div>
