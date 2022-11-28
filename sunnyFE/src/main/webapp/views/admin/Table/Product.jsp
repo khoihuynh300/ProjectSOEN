@@ -12,6 +12,7 @@
 <body>
 <style>
 .maintable tr > *:nth-child(12) {display: none;}
+.maintable tr > *:nth-child(2) {display: none;}
 .maintable tr > *:nth-child(8) {display: none;}
 .maintable tr > *:nth-child(13) {display: none;} 
 .maintable tr > *:nth-child(11) {display: none;}  
@@ -73,7 +74,7 @@
 	</div>
 	<div class="main_content__footer">
 		<i class="fa-solid fa-circle-plus addbtn grow-btn-when-hover"></i>
-		<i hidden class="fa-solid fa-trash delete-multi-row grow-btn-when-hover"></i>
+		<!-- <i hidden class="fa-solid fa-trash delete-multi-row grow-btn-when-hover"></i> -->
 		
 		<div class="pagination">
 		  <a href="#" id="pfirst-page"><i class="fa-solid fa-angles-left"></i></a>

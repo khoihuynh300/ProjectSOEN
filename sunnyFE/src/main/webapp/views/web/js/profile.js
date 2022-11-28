@@ -367,22 +367,15 @@
                       <table class="table table-striped">
                         <thead>
                           <tr>
-                            
-                            <tr>
-                          <th></th>
-                          <th scope="col">Tên</th
-                          <th scope="col">Đơn giá</th>
-                          <th scope="col" class="text-center" >Số lượng</th>
-                          <th scope="col" class="text-center">Thành tiền</th>
-                          <th scope="col" class="text-center">Trạng thái</th>
-                          
-                          
-                        </tr>
-                            
-                            <!-- <th></th> -->
-                            
-                            
-                          </tr>
+	                          <th></th>
+	                          <th scope="col">Tên</th>
+	                          <th scope="col">Đơn giá</th>
+	                          <th scope="col" class="text-center" >Số lượng</th>
+	                          <th scope="col" class="text-center">Thành tiền</th>
+	                          <th scope="col" class="text-center">Trạng thái</th>
+	                          
+	                          
+	                        </tr>
                         </thead>
                         <tbody>
                           

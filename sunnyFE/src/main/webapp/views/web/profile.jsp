@@ -564,18 +564,31 @@
 							success : function(result) {
 								console.log(result)
 								for(let i = 0; i < result.length; i++){
+									let fmDonGia = result[i].productId.price
+									let fmTongTien = parseInt(result[i].productId.price)*parseInt(result[i].quantity)
+									let fmDonGiaGiam = "";
+									
+									if(result[i].productId.discountId != null){
+										fmDonGiaGiam = fmDonGia
+										fmDonGia = parseInt(fmDonGia) -  parseFloat(result[i].productId.discountId.percent)*parseInt(fmDonGia) -  parseInt(result[i].productId.discountId.amount)
+										fmTongTien = parseInt(fmTongTien) -parseInt( result[i].discount)
+										fmDonGiaGiam = formatmoney(fmDonGiaGiam, 'đ') 
+									}
+									
+									fmDonGia = formatmoney(fmDonGia, 'đ') 
+									fmTongTien =  formatmoney(fmTongTien, 'đ') 
 									
 									$("#account-profile .page-content .container-fluid tbody").append(` <tr>
 											<c:url value="/image?fname=\${result[i].productId.image.picture1}" var="imgUrl"></c:url>
 					                          <td  id="product-img"><img style="height: 60px;width: 60px;" src="${imgUrl}" /></td>
 					                          <td id="product-name">\${result[i].productId.pname} </td>
-					                          <td id="product-price">\${result[i].productId.price}</td>
+					                          <td id="product-price"><p style=" text-decoration: line-through;">\${fmDonGiaGiam}</p> \${fmDonGia} </td>
 					                          <td id="form-product-quantity">
 					                            
 					                            <input class="form-control" type="text" value="\${result[i].quantity}" disabled/>
 					                            
 					                          </td>
-					                          <td id="product-totalmoney" class="text-center">\${result[i].price}</td>
+					                          <td id="product-totalmoney" class="text-center">\${fmTongTien}</td>
 					                          <td id="product-status" class="text-center" style="color: green; font-weight: 600;"> \${statusmes}</td>
 					                          
 					                        </tr>`)
@@ -629,17 +642,31 @@
   								console.log(result)
   								for(let i = 0; i < result.length; i++){
   									
+  									let fmDonGia = result[i].productId.price
+									let fmTongTien = parseInt(result[i].productId.price)*parseInt(result[i].quantity)
+									let fmDonGiaGiam = "";
+									
+									if(result[i].productId.discountId != null){
+										fmDonGiaGiam = fmDonGia
+										fmDonGia = parseInt(fmDonGia) -  parseFloat(result[i].productId.discountId.percent)*parseInt(fmDonGia) -  parseInt(result[i].productId.discountId.amount)
+										fmTongTien = parseInt(fmTongTien) -parseInt( result[i].discount)
+										fmDonGiaGiam = formatmoney(fmDonGiaGiam, 'đ') 
+									}
+									
+									fmDonGia = formatmoney(fmDonGia, 'đ') 
+									fmTongTien =  formatmoney(fmTongTien, 'đ') 
+  									
   									$("#account-profile .page-content .container-fluid tbody").append(` <tr>
   											<c:url value="/image?fname=\${result[i].productId.image.picture1}" var="imgUrl"></c:url>
   					                          <td  id="product-img"><img style="height: 60px;width: 60px;" src="${imgUrl}" /></td>
   					                          <td id="product-name">\${result[i].productId.pname} </td>
-  					                          <td id="product-price">\${result[i].productId.price}</td>
+  					                          <td id="product-price"><p style=" text-decoration: line-through;">\${fmDonGiaGiam}</p> \${fmDonGia}</td>
   					                          <td id="form-product-quantity">
   					                            
   					                            <input class="form-control" type="text" value="\${result[i].quantity}" disabled/>
   					                            
   					                          </td>
-  					                          <td id="product-totalmoney" class="text-center">\${result[i].price}</td>
+  					                          <td id="product-totalmoney" class="text-center">\${fmTongTien}</td>
   					                          <td id="product-status" class="text-center" style="color: green; font-weight: 600;"> \${statusmes}</td>
   					                          
   					                        </tr>`)
