@@ -30,7 +30,7 @@
 			<div class="optionBieuDo">
 				<a>Loại:</a><select class="type" name="type">
 								  <option value="year">Năm</option>
-								  <option value="season">Quý</option>
+								 <!--  <option value="season">Quý</option> -->
 								  <option value="month">Tháng</option>
 								  <option value="day">Ngày</option>
 								</select>
@@ -64,10 +64,22 @@
 		
 	});
 	function datetostring(d) {
+		//console.log(d)
 		let date = d.toJSON().slice(0, 10);
         let nDate = date.slice(8, 10) + '/'
                 + date.slice(5, 7) + '/'
                 + date.slice(0, 4);
+        //console.log(nDate)
+        return nDate;
+	}
+	function datetostring2(d) {
+		d.setDate(d.getDate() + 1);
+		//console.log(d)
+		let date = d.toJSON().slice(0, 10);
+        let nDate = date.slice(8, 10) + '/'
+                + date.slice(5, 7) + '/'
+                + date.slice(0, 4);
+        //console.log(nDate)
         return nDate;
 	}
 	function getfirstdateofnextyear(d) {
@@ -91,6 +103,22 @@
 		let fdate =  new Date(year+1, 0, 1)
 		return datetostring(fdate)
 	}
+	function getfirstdayofmonth(d, optiond = 1, optionm = 0 ) { //1 0 firstofyear, 0 1 lastofyear
+		let dateParts = d.split("/");
+		let dateObject = new Date(+dateParts[2], dateParts[1], +dateParts[0]);
+		let year = dateObject.getFullYear()
+		let fdate =  new Date(year, dateObject.getMonth() + optionm, 1 + optiond)
+		return datetostring(fdate)
+	}
+	function getnexday(d) {
+		let dateParts = d.split("/");
+		let strday = parseInt(dateParts[0]) + 1
+		let dateObject = new Date(+dateParts[2], dateParts[1] - 1, + dateParts[0]);
+		let year = dateObject.getFullYear()
+		//console.log(dateObject)
+		let fdate =  new Date(year, dateObject.getMonth(), strday)
+		return fdate
+	}
 	
 	async function showchart() {
 		let type = $('.optionBieuDo .type').val()
@@ -100,14 +128,14 @@
 		var newcate = []
 		var newdata = []
 		if(type=="year"){
-			console.log("getyear")
+			//console.log("getyear")
 			let tempdate = strSDate
 			while(true){
 				let sdate = tempdate
 				let edate = getlastdateofyear(tempdate)
 				tempdate = getfirstdateofnextyear(tempdate)
-				console.log(sdate)
-				console.log(edate)
+				//console.log(sdate)
+				//console.log(edate)
 				
 				await new Promise((resolve, reject) => {
 					fetch('http://localhost:8083/producttype/total-income-in-interval?startDate='+sdate+'&endDate=' + edate)
@@ -115,7 +143,7 @@
 					.then((data) =>{
 						newcate.push({"label": sdate.split("/")[2]})
 						newdata.push({"value": data})
-						console.log(data)
+						//console.log(data)
 						resolve()
 					});
 				});
@@ -125,7 +153,68 @@
 				}
 			}
 			
+		}else if(type=="month"){
+			let tempdate = strSDate
+			while(true){
+				let sdate = tempdate
+				let edate = getfirstdayofmonth(tempdate,0,0)
+				tempdate = getfirstdayofmonth(tempdate, 1,0)
+				let nowdate = new Date
+				let str = tempdate.split("/")[2]
+				let tdate = new Date(tempdate.split("/")[2] + "-" + tempdate.split("/")[1] )
+				console.log("s:" + sdate)
+				console.log("e:"+ edate)
+				console.log("t:"+ tempdate)
+				//console.log(tdate>=nowdate)
+				
+				
+				await new Promise((resolve, reject) => {
+					fetch('http://localhost:8083/producttype/total-income-in-interval?startDate='+sdate+'&endDate=' + edate)
+					.then((response) => response.json())
+					.then((data) =>{
+						newcate.push({"label": sdate.split("/")[1] + "/ " + sdate.split("/")[2]})
+						newdata.push({"value": data})
+						console.log(data)
+						resolve()
+					});
+				});
+				
+				if(tdate >= nowdate){
+					break
+				}
+				
+			}
 		}
+		else if(type=="day"){
+			let tempdate = strSDate
+			while(true){
+				let sdate = tempdate
+				tempdate = getnexday(tempdate)
+				tempdate = datetostring2(tempdate)
+				let edate = tempdate
+				//console.log("s:"+sdate)
+			//	console.log("e:"+edate)
+				//console.log("t:"+tempdate)
+				
+				await new Promise((resolve, reject) => {
+					fetch('http://localhost:8083/producttype/total-income-in-interval?startDate='+sdate+'&endDate=' + edate)
+					.then((response) => response.json())
+					.then((data) =>{
+						newcate.push({"label": sdate})
+						newdata.push({"value": data})
+						console.log(data)
+						resolve()
+					});
+				});
+				
+				if(getnexday(sdate) >= new Date){
+					break
+				}
+				
+				
+			}
+		}
+		
 		
 		
 		
