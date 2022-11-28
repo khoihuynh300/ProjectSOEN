@@ -344,10 +344,12 @@ footer a {
                         <input type="text" id="code" name="code" placeholder="OTP code" required>
                         </div>
                         <div>
-                        <input type="password" id="resetPw" name="resetPw" placeholder="Nhập mật khẩu mới" required>
+                        <input type="password" id="resetPw" name="resetPw" placeholder="Nhập mật khẩu mới" 
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" required>
                         </div>
                         <div>
-                        <input type="password" id="Pw2" name="Pw2" placeholder="Nhập lại mật khẩu" required>
+                        <input type="password" id="Pw2" name="Pw2" placeholder="Nhập lại mật khẩu" 
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" required>
                         </div>
 
                         <input class="d-block submit-btn" type="submit" value="Xác nhận ">
