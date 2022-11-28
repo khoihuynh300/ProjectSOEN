@@ -17,7 +17,7 @@
 	
 }
 .BieuDoTron{
-	width: 40%;
+	width: 700px;
 }
 .wrap-bieudo{
 	display: flex;
@@ -39,9 +39,27 @@
 				<div id="chart-container"></div>
 		</div>
 		<div class="BieuDoTron">
-			<canvas id="myChart" style="width:40%;max-width:500px"></canvas>
+			<canvas id="myChart" style="width:700px;"></canvas>
 		</div>
 	</div>
+	<div style="display: flex; flex-direction: row; font-size: 18px; font-weight: 700; color: white; ">
+    <div style = "width: 200px; height: 180px; margin-left: 30px; background-color: #0D6EFD; padding: 20px; border-radius: 5px;">
+        <p style ="height: 40%;">Tổng doanh thu</p>
+        <p id="tongdoanhthu" style = "height: 50%; width: 100%; word-break: break-all;
+    white-space: normal;text-align: center;"> </p>
+        
+    </div>
+    <div style = "width: 200px; height: 180px; margin-left: 30px; background-color: #DC3545; padding: 20px; border-radius: 5px;">
+        <p style ="height: 40%;">Tổng đơn hàng</p>
+        <p id="tongsp" style = "height: 50%; width: 100%; word-break: break-all;
+    white-space: normal;text-align: center;"> </p>
+    </div>
+    <div style = "width: 200px; height: 180px; margin-left: 30px; background-color: #FFC107; padding: 20px; border-radius: 5px;">
+        <p style ="height: 40%;">Tổng khách hàng</p>
+        <p id="tongkh" style = "height: 50%; width: 100%; word-break: break-all;
+    white-space: normal;text-align: center;"> </p>
+    </div>
+ </div>
 	<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
 	<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 	
@@ -60,9 +78,33 @@
 		});
 		showchart() 
 		showchart2()
-		
+		showstatistical()
 		
 	});
+	function showstatistical(){
+		
+		fetch('http://localhost:8083/producttype/total-income')
+		.then((response) => response.json())
+		.then((data) =>{
+			$('#tongdoanhthu').html(formatmoney(data, 'đ'))
+		});
+		
+		
+		fetch('http://localhost:8083/usermanagement/count?table=Customer')
+		.then((response) => response.json())
+		.then((data) =>{
+			$('#tongkh').html(formatmoney(data, ''))
+		});
+		
+		fetch('http://localhost:8083/orders/get')
+		.then((response) => response.json())
+		.then((data) =>{
+			let sl = data.length
+			$('#tongsp').html(formatmoney(sl, ''))
+		});
+		
+		
+	}
 	function datetostring(d) {
 		//console.log(d)
 		let date = d.toJSON().slice(0, 10);
